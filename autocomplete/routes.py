@@ -1,6 +1,11 @@
 from schemas import AutocompleteRequest
-from entrypoint import app
+from fastapi import APIRouter
 
-@app.post("/autocomplete/")
+router = APIRouter(
+    tags=['autocomplete'],
+    prefix='/autocomplete'
+)
+
+@router.post("/")
 async def autocomplete(request: AutocompleteRequest):
-    return {"suggestions": [f"{request.text}1", f"{request.text}2"]}
+    return {"suggestions": "test"}

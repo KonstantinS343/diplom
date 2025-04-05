@@ -14,4 +14,4 @@ RUN pip install -r requirements.txt
 
 COPY . .
 
-CMD ["uvicorn", "entrypoint:app", "--host", "0.0.0.0", "--port", "3000"]
+CMD ["uvicorn", "entrypoint:app", "--host", "0.0.0.0", "--port", "3000", "--reload"]

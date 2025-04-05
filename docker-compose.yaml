@@ -21,6 +21,32 @@ services:
         limits:
           memory: 256M
 
+  mongodb:
+    image: mongo
+    container_name: mongodb
+    restart: always
+    environment:
+      MONGO_INITDB_ROOT_USERNAME: root
+      MONGO_INITDB_ROOT_PASSWORD: root
+    healthcheck:
+      test: echo 'db.runCommand("ping").ok' | mongosh mongodb://root:root@localhost:27017 --quiet || exit 1
+      interval: 10s
+      timeout: 5s
+      retries: 5
+      start_period: 30s
+
+  mongodb_gui:
+    image: mongoclient/mongoclient
+    container_name: mongodb_gui
+    restart: always
+    ports:
+      - "3011:3000"
+    environment:
+      - MONGOCLIENT_DEFAULT_CONNECTION_URL=mongodb://root:root@mongodb:27017/admin
+    depends_on:
+      mongodb:
+        condition: service_healthy
+
   keycloak: # https://habr.com/ru/articles/716232/
     image: quay.io/keycloak/keycloak:20.0.2
     container_name: keycloak
