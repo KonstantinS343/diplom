@@ -1,11 +1,8 @@
 from transformers import AutoTokenizer, AutoModelForSeq2SeqLM
-import json
 from fastapi import HTTPException
-from typing import Mapping
-
-# Загрузка языкового mapping из JSON
-with open('languages.json', 'r', encoding='utf-8') as f:
-    LANGUAGE_MAP = json.load(f)
+from sqlalchemy.ext.asyncio import AsyncSession
+from typing import Mapping, Sequence
+from models import TranslatorDAO
 
 class TranslationService:
     # Кэш для токенизаторов и моделей
@@ -37,12 +34,14 @@ class TranslationService:
         return cls._tokenizers[model_key], cls._models[model_key]
     
     @classmethod
-    async def preload_models(cls):
+    async def preload_models(cls, translator_dao: TranslatorDAO, db: AsyncSession):
         """Предзагрузка всех возможных языковых пар"""
+        languages = await translator_dao.get_languages(db)
+
         supported_pairs = [
             (source, target)
-            for source in LANGUAGE_MAP.keys()
-            for target in LANGUAGE_MAP.keys()
+            for source in languages.keys()
+            for target in languages.keys()
             if source != target  # Исключаем перевод с языка на тот же язык
         ]
         
@@ -53,9 +52,35 @@ class TranslationService:
                 print(f"Model for {source_lang} -> {target_lang} loaded successfully")
             except HTTPException as e:
                 print(f"Failed to load model for {source_lang} -> {target_lang}: {e.detail}")
+                
+    @classmethod
+    def _split_text_with_overlap(cls, text: str, tokenizer: AutoTokenizer, max_length: int, overlap: int = 50) -> Sequence[str]:
+        """Разбивает текст на части с перекрытием."""
+        tokens = tokenizer.encode(text, add_special_tokens=False)
+        if len(tokens) <= max_length:
+            return [text]
+
+        chunks = []
+        start = 0
+        
+        while start < len(tokens):
+            end = min(start + max_length, len(tokens))
+            chunk_tokens = tokens[start:end]
+            chunk_text = tokenizer.decode(chunk_tokens, skip_special_tokens=True).strip()
+            chunks.append(chunk_text)
+            start += max_length - overlap
+            if end == len(tokens):
+                break
+        
+        return chunks
 
     @classmethod
-    async def translate(cls, source_lang: str, target_lang: str, text: str) -> str:
+    def _merge_translated_chunks(cls, translated_chunks: Sequence[str]) -> str:
+        """Простое объединение переведённых кусков с минимальной обработкой."""
+        return " ".join(chunk.strip() for chunk in translated_chunks)
+
+    @classmethod
+    async def translate(cls, source_lang: str, target_lang: str, text: str, translator_dao: TranslatorDAO, db: AsyncSession) -> str:
         """
         Переводит текст с одного языка на другой
         
@@ -69,23 +94,37 @@ class TranslationService:
         Raises:
             HTTPException: если язык не поддерживается или возникла ошибка
         """
-        if source_lang not in LANGUAGE_MAP or target_lang not in LANGUAGE_MAP:
+        languages = await translator_dao.get_languages(db)
+        
+        if source_lang not in languages or target_lang not in languages:
             raise HTTPException(
                 status_code=400,
-                detail=f"Unsupported language code. Supported codes: {", ".join(LANGUAGE_MAP.keys())}"
+                detail=f"Unsupported language code. Supported codes: {", ".join(languages.keys())}"
             )
 
         # Получаем токенизатор и модель для данной языковой пары
         tokenizer, model = await cls._load_translation_tools(source_lang, target_lang)
         
         # Формируем промпт для перевода
-        source_lang_name = LANGUAGE_MAP[source_lang]
-        target_lang_name = LANGUAGE_MAP[target_lang]
-        input_text = f"translate {source_lang_name} to {target_lang_name}: {text}"
+        source_lang_name = languages[source_lang]
+        target_lang_name = languages[target_lang]
+        prompt_prefix = f"translate {source_lang_name} to {target_lang_name}: "
+        overlap = 16
         
-        # Кодируем и генерируем перевод
-        input_ids = tokenizer.encode(input_text, return_tensors='pt')
-        output_ids = model.generate(input_ids)
-        translated_text = tokenizer.decode(output_ids[0], skip_special_tokens=True)
+        # Вычисляем максимальную длину с учётом промпта
+        max_model_length = 512 - len(tokenizer.encode(prompt_prefix))
         
-        return translated_text
+        # Разбиваем текст на куски с перекрытием
+        text_chunks = cls._split_text_with_overlap(text, tokenizer, max_length=max_model_length, overlap=overlap)
+        
+        # Переводим каждый кусок
+        translated_chunks = []
+        for chunk in text_chunks:
+            input_text = prompt_prefix + chunk
+            input_ids = tokenizer.encode(input_text, return_tensors='pt')
+            output_ids = model.generate(input_ids, max_length=512)
+            translated_text = tokenizer.decode(output_ids[0], skip_special_tokens=True)
+            translated_chunks.append(translated_text)
+        
+        # Объединяем переведённые куски с учётом перекрытия
+        return cls._merge_translated_chunks(translated_chunks, overlap, tokenizer)
