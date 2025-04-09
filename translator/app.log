@@ -127,3 +127,948 @@ FROM languages
 2025-04-08 19:59:51 [INFO] sqlalchemy.engine.Engine: SELECT languages.language, languages.iso 
 FROM languages
 2025-04-08 19:59:51 [INFO] sqlalchemy.engine.Engine: [generated in 0.00022s] ()
+2025-04-08 20:01:09 [INFO] sqlalchemy.engine.Engine: ROLLBACK
+2025-04-09 18:28:38 [INFO] sqlalchemy.engine.Engine: select pg_catalog.version()
+2025-04-09 18:28:38 [INFO] sqlalchemy.engine.Engine: [raw sql] ()
+2025-04-09 18:28:38 [INFO] sqlalchemy.engine.Engine: select current_schema()
+2025-04-09 18:28:38 [INFO] sqlalchemy.engine.Engine: [raw sql] ()
+2025-04-09 18:28:38 [INFO] sqlalchemy.engine.Engine: show standard_conforming_strings
+2025-04-09 18:28:38 [INFO] sqlalchemy.engine.Engine: [raw sql] ()
+2025-04-09 18:28:38 [INFO] sqlalchemy.engine.Engine: BEGIN (implicit)
+2025-04-09 18:28:38 [INFO] sqlalchemy.engine.Engine: SELECT languages.language, languages.iso 
+FROM languages
+2025-04-09 18:28:38 [INFO] sqlalchemy.engine.Engine: [generated in 0.00077s] ()
+2025-04-09 18:29:19 [INFO] sqlalchemy.engine.Engine: ROLLBACK
+2025-04-09 18:29:27 [INFO] sqlalchemy.engine.Engine: select pg_catalog.version()
+2025-04-09 18:29:27 [INFO] sqlalchemy.engine.Engine: [raw sql] ()
+2025-04-09 18:29:27 [INFO] sqlalchemy.engine.Engine: select current_schema()
+2025-04-09 18:29:27 [INFO] sqlalchemy.engine.Engine: [raw sql] ()
+2025-04-09 18:29:27 [INFO] sqlalchemy.engine.Engine: show standard_conforming_strings
+2025-04-09 18:29:27 [INFO] sqlalchemy.engine.Engine: [raw sql] ()
+2025-04-09 18:29:27 [INFO] sqlalchemy.engine.Engine: BEGIN (implicit)
+2025-04-09 18:29:27 [INFO] sqlalchemy.engine.Engine: SELECT languages.language, languages.iso 
+FROM languages
+2025-04-09 18:29:27 [INFO] sqlalchemy.engine.Engine: [generated in 0.00020s] ()
+2025-04-09 18:29:48 [INFO] sqlalchemy.engine.Engine: ROLLBACK
+2025-04-09 18:29:55 [INFO] sqlalchemy.engine.Engine: select pg_catalog.version()
+2025-04-09 18:29:55 [INFO] sqlalchemy.engine.Engine: [raw sql] ()
+2025-04-09 18:29:55 [INFO] sqlalchemy.engine.Engine: select current_schema()
+2025-04-09 18:29:55 [INFO] sqlalchemy.engine.Engine: [raw sql] ()
+2025-04-09 18:29:55 [INFO] sqlalchemy.engine.Engine: show standard_conforming_strings
+2025-04-09 18:29:55 [INFO] sqlalchemy.engine.Engine: [raw sql] ()
+2025-04-09 18:29:55 [INFO] sqlalchemy.engine.Engine: BEGIN (implicit)
+2025-04-09 18:29:55 [INFO] sqlalchemy.engine.Engine: SELECT languages.language, languages.iso 
+FROM languages
+2025-04-09 18:29:55 [INFO] sqlalchemy.engine.Engine: [generated in 0.00032s] ()
+2025-04-09 18:31:21 [INFO] sqlalchemy.engine.Engine: ROLLBACK
+2025-04-09 18:31:29 [INFO] sqlalchemy.engine.Engine: select pg_catalog.version()
+2025-04-09 18:31:29 [INFO] sqlalchemy.engine.Engine: [raw sql] ()
+2025-04-09 18:31:29 [INFO] sqlalchemy.engine.Engine: select current_schema()
+2025-04-09 18:31:29 [INFO] sqlalchemy.engine.Engine: [raw sql] ()
+2025-04-09 18:31:29 [INFO] sqlalchemy.engine.Engine: show standard_conforming_strings
+2025-04-09 18:31:29 [INFO] sqlalchemy.engine.Engine: [raw sql] ()
+2025-04-09 18:31:29 [INFO] sqlalchemy.engine.Engine: BEGIN (implicit)
+2025-04-09 18:31:29 [INFO] sqlalchemy.engine.Engine: SELECT languages.language, languages.iso 
+FROM languages
+2025-04-09 18:31:29 [INFO] sqlalchemy.engine.Engine: [generated in 0.00026s] ()
+2025-04-09 18:31:46 [INFO] sqlalchemy.engine.Engine: select pg_catalog.version()
+2025-04-09 18:31:46 [INFO] sqlalchemy.engine.Engine: [raw sql] ()
+2025-04-09 18:31:46 [INFO] sqlalchemy.engine.Engine: select current_schema()
+2025-04-09 18:31:46 [INFO] sqlalchemy.engine.Engine: [raw sql] ()
+2025-04-09 18:31:46 [INFO] sqlalchemy.engine.Engine: show standard_conforming_strings
+2025-04-09 18:31:46 [INFO] sqlalchemy.engine.Engine: [raw sql] ()
+2025-04-09 18:31:46 [INFO] sqlalchemy.engine.Engine: BEGIN (implicit)
+2025-04-09 18:31:46 [INFO] sqlalchemy.engine.Engine: SELECT languages.language, languages.iso 
+FROM languages
+2025-04-09 18:31:46 [INFO] sqlalchemy.engine.Engine: [generated in 0.00027s] ()
+2025-04-09 18:31:55 [INFO] sqlalchemy.engine.Engine: select pg_catalog.version()
+2025-04-09 18:31:55 [INFO] sqlalchemy.engine.Engine: [raw sql] ()
+2025-04-09 18:31:55 [INFO] sqlalchemy.engine.Engine: select current_schema()
+2025-04-09 18:31:55 [INFO] sqlalchemy.engine.Engine: [raw sql] ()
+2025-04-09 18:31:55 [INFO] sqlalchemy.engine.Engine: show standard_conforming_strings
+2025-04-09 18:31:55 [INFO] sqlalchemy.engine.Engine: [raw sql] ()
+2025-04-09 18:31:55 [INFO] sqlalchemy.engine.Engine: BEGIN (implicit)
+2025-04-09 18:31:55 [INFO] sqlalchemy.engine.Engine: SELECT languages.language, languages.iso 
+FROM languages
+2025-04-09 18:31:55 [INFO] sqlalchemy.engine.Engine: [generated in 0.00022s] ()
+2025-04-09 18:32:04 [INFO] sqlalchemy.engine.Engine: ROLLBACK
+2025-04-09 18:32:10 [INFO] sqlalchemy.engine.Engine: select pg_catalog.version()
+2025-04-09 18:32:10 [INFO] sqlalchemy.engine.Engine: [raw sql] ()
+2025-04-09 18:32:10 [INFO] sqlalchemy.engine.Engine: select current_schema()
+2025-04-09 18:32:10 [INFO] sqlalchemy.engine.Engine: [raw sql] ()
+2025-04-09 18:32:10 [INFO] sqlalchemy.engine.Engine: show standard_conforming_strings
+2025-04-09 18:32:10 [INFO] sqlalchemy.engine.Engine: [raw sql] ()
+2025-04-09 18:32:10 [INFO] sqlalchemy.engine.Engine: BEGIN (implicit)
+2025-04-09 18:32:10 [INFO] sqlalchemy.engine.Engine: SELECT languages.language, languages.iso 
+FROM languages
+2025-04-09 18:32:10 [INFO] sqlalchemy.engine.Engine: [generated in 0.00028s] ()
+2025-04-09 18:32:22 [INFO] sqlalchemy.engine.Engine: select pg_catalog.version()
+2025-04-09 18:32:22 [INFO] sqlalchemy.engine.Engine: [raw sql] ()
+2025-04-09 18:32:22 [INFO] sqlalchemy.engine.Engine: select current_schema()
+2025-04-09 18:32:22 [INFO] sqlalchemy.engine.Engine: [raw sql] ()
+2025-04-09 18:32:22 [INFO] sqlalchemy.engine.Engine: show standard_conforming_strings
+2025-04-09 18:32:22 [INFO] sqlalchemy.engine.Engine: [raw sql] ()
+2025-04-09 18:32:22 [INFO] sqlalchemy.engine.Engine: BEGIN (implicit)
+2025-04-09 18:32:22 [INFO] sqlalchemy.engine.Engine: SELECT languages.language, languages.iso 
+FROM languages
+2025-04-09 18:32:22 [INFO] sqlalchemy.engine.Engine: [generated in 0.00026s] ()
+2025-04-09 18:32:39 [INFO] sqlalchemy.engine.Engine: select pg_catalog.version()
+2025-04-09 18:32:39 [INFO] sqlalchemy.engine.Engine: [raw sql] ()
+2025-04-09 18:32:39 [INFO] sqlalchemy.engine.Engine: select current_schema()
+2025-04-09 18:32:39 [INFO] sqlalchemy.engine.Engine: [raw sql] ()
+2025-04-09 18:32:39 [INFO] sqlalchemy.engine.Engine: show standard_conforming_strings
+2025-04-09 18:32:39 [INFO] sqlalchemy.engine.Engine: [raw sql] ()
+2025-04-09 18:32:39 [INFO] sqlalchemy.engine.Engine: BEGIN (implicit)
+2025-04-09 18:32:39 [INFO] sqlalchemy.engine.Engine: SELECT languages.language, languages.iso 
+FROM languages
+2025-04-09 18:32:39 [INFO] sqlalchemy.engine.Engine: [generated in 0.00025s] ()
+2025-04-09 18:32:44 [INFO] sqlalchemy.engine.Engine: ROLLBACK
+2025-04-09 18:40:19 [INFO] sqlalchemy.engine.Engine: select pg_catalog.version()
+2025-04-09 18:40:19 [INFO] sqlalchemy.engine.Engine: [raw sql] ()
+2025-04-09 18:40:19 [INFO] sqlalchemy.engine.Engine: select current_schema()
+2025-04-09 18:40:19 [INFO] sqlalchemy.engine.Engine: [raw sql] ()
+2025-04-09 18:40:19 [INFO] sqlalchemy.engine.Engine: show standard_conforming_strings
+2025-04-09 18:40:19 [INFO] sqlalchemy.engine.Engine: [raw sql] ()
+2025-04-09 18:40:19 [INFO] sqlalchemy.engine.Engine: BEGIN (implicit)
+2025-04-09 18:40:19 [INFO] sqlalchemy.engine.Engine: SELECT languages.language, languages.iso 
+FROM languages
+2025-04-09 18:40:19 [INFO] sqlalchemy.engine.Engine: [generated in 0.00026s] ()
+2025-04-09 18:40:19 [INFO] sqlalchemy.engine.Engine: ROLLBACK
+2025-04-09 18:40:36 [INFO] sqlalchemy.engine.Engine: BEGIN (implicit)
+2025-04-09 18:40:36 [INFO] sqlalchemy.engine.Engine: SELECT languages.language, languages.iso 
+FROM languages
+2025-04-09 18:40:36 [INFO] sqlalchemy.engine.Engine: [cached since 17.17s ago] ()
+2025-04-09 18:40:40 [INFO] sqlalchemy.engine.Engine: ROLLBACK
+2025-04-09 18:41:16 [INFO] sqlalchemy.engine.Engine: select pg_catalog.version()
+2025-04-09 18:41:16 [INFO] sqlalchemy.engine.Engine: [raw sql] ()
+2025-04-09 18:41:16 [INFO] sqlalchemy.engine.Engine: select current_schema()
+2025-04-09 18:41:16 [INFO] sqlalchemy.engine.Engine: [raw sql] ()
+2025-04-09 18:41:16 [INFO] sqlalchemy.engine.Engine: show standard_conforming_strings
+2025-04-09 18:41:16 [INFO] sqlalchemy.engine.Engine: [raw sql] ()
+2025-04-09 18:41:16 [INFO] sqlalchemy.engine.Engine: BEGIN (implicit)
+2025-04-09 18:41:16 [INFO] sqlalchemy.engine.Engine: SELECT languages.language, languages.iso 
+FROM languages
+2025-04-09 18:41:16 [INFO] sqlalchemy.engine.Engine: [generated in 0.00035s] ()
+2025-04-09 18:41:17 [INFO] sqlalchemy.engine.Engine: ROLLBACK
+2025-04-09 18:41:41 [INFO] sqlalchemy.engine.Engine: BEGIN (implicit)
+2025-04-09 18:41:41 [INFO] sqlalchemy.engine.Engine: SELECT languages.language, languages.iso 
+FROM languages
+2025-04-09 18:41:41 [INFO] sqlalchemy.engine.Engine: [cached since 25.16s ago] ()
+2025-04-09 18:41:47 [INFO] sqlalchemy.engine.Engine: ROLLBACK
+2025-04-09 18:47:12 [INFO] sqlalchemy.engine.Engine: select pg_catalog.version()
+2025-04-09 18:47:12 [INFO] sqlalchemy.engine.Engine: [raw sql] ()
+2025-04-09 18:47:12 [INFO] sqlalchemy.engine.Engine: select current_schema()
+2025-04-09 18:47:12 [INFO] sqlalchemy.engine.Engine: [raw sql] ()
+2025-04-09 18:47:12 [INFO] sqlalchemy.engine.Engine: show standard_conforming_strings
+2025-04-09 18:47:12 [INFO] sqlalchemy.engine.Engine: [raw sql] ()
+2025-04-09 18:47:12 [INFO] sqlalchemy.engine.Engine: BEGIN (implicit)
+2025-04-09 18:47:12 [INFO] sqlalchemy.engine.Engine: SELECT languages.language, languages.iso 
+FROM languages
+2025-04-09 18:47:12 [INFO] sqlalchemy.engine.Engine: [generated in 0.00030s] ()
+2025-04-09 18:47:15 [INFO] sqlalchemy.engine.Engine: ROLLBACK
+2025-04-09 18:49:20 [INFO] sqlalchemy.engine.Engine: select pg_catalog.version()
+2025-04-09 18:49:20 [INFO] sqlalchemy.engine.Engine: [raw sql] ()
+2025-04-09 18:49:20 [INFO] sqlalchemy.engine.Engine: select current_schema()
+2025-04-09 18:49:20 [INFO] sqlalchemy.engine.Engine: [raw sql] ()
+2025-04-09 18:49:20 [INFO] sqlalchemy.engine.Engine: show standard_conforming_strings
+2025-04-09 18:49:20 [INFO] sqlalchemy.engine.Engine: [raw sql] ()
+2025-04-09 18:49:20 [INFO] sqlalchemy.engine.Engine: BEGIN (implicit)
+2025-04-09 18:49:20 [INFO] sqlalchemy.engine.Engine: SELECT languages.language, languages.iso 
+FROM languages
+2025-04-09 18:49:20 [INFO] sqlalchemy.engine.Engine: [generated in 0.00029s] ()
+2025-04-09 18:49:20 [WARNING] root: Loading model for en -> de
+2025-04-09 18:49:21 [WARNING] root: Model for en -> de loaded successfully
+2025-04-09 18:49:21 [WARNING] root: Loading model for de -> en
+2025-04-09 18:49:22 [WARNING] root: Model for de -> en loaded successfully
+2025-04-09 18:49:45 [INFO] sqlalchemy.engine.Engine: ROLLBACK
+2025-04-09 18:50:05 [INFO] sqlalchemy.engine.Engine: select pg_catalog.version()
+2025-04-09 18:50:05 [INFO] sqlalchemy.engine.Engine: [raw sql] ()
+2025-04-09 18:50:05 [INFO] sqlalchemy.engine.Engine: select current_schema()
+2025-04-09 18:50:05 [INFO] sqlalchemy.engine.Engine: [raw sql] ()
+2025-04-09 18:50:05 [INFO] sqlalchemy.engine.Engine: show standard_conforming_strings
+2025-04-09 18:50:05 [INFO] sqlalchemy.engine.Engine: [raw sql] ()
+2025-04-09 18:50:05 [INFO] sqlalchemy.engine.Engine: BEGIN (implicit)
+2025-04-09 18:50:05 [INFO] sqlalchemy.engine.Engine: SELECT languages.language, languages.iso 
+FROM languages
+2025-04-09 18:50:05 [INFO] sqlalchemy.engine.Engine: [generated in 0.00039s] ()
+2025-04-09 18:50:05 [WARNING] root: Loading model for en -> de
+2025-04-09 18:50:06 [WARNING] root: Model for en -> de loaded successfully
+2025-04-09 18:50:06 [WARNING] root: Loading model for de -> en
+2025-04-09 18:50:07 [WARNING] root: Model for de -> en loaded successfully
+2025-04-09 18:50:36 [INFO] sqlalchemy.engine.Engine: ROLLBACK
+2025-04-09 18:50:41 [INFO] sqlalchemy.engine.Engine: select pg_catalog.version()
+2025-04-09 18:50:41 [INFO] sqlalchemy.engine.Engine: [raw sql] ()
+2025-04-09 18:50:41 [INFO] sqlalchemy.engine.Engine: select current_schema()
+2025-04-09 18:50:41 [INFO] sqlalchemy.engine.Engine: [raw sql] ()
+2025-04-09 18:50:41 [INFO] sqlalchemy.engine.Engine: show standard_conforming_strings
+2025-04-09 18:50:41 [INFO] sqlalchemy.engine.Engine: [raw sql] ()
+2025-04-09 18:50:41 [INFO] sqlalchemy.engine.Engine: BEGIN (implicit)
+2025-04-09 18:50:42 [INFO] sqlalchemy.engine.Engine: SELECT languages.language, languages.iso 
+FROM languages
+2025-04-09 18:50:42 [INFO] sqlalchemy.engine.Engine: [generated in 0.00018s] ()
+2025-04-09 18:50:42 [WARNING] root: Loading model for en -> de
+2025-04-09 18:50:43 [WARNING] root: Model for en -> de loaded successfully
+2025-04-09 18:50:43 [WARNING] root: Loading model for de -> en
+2025-04-09 18:50:43 [WARNING] root: Model for de -> en loaded successfully
+2025-04-09 18:50:49 [INFO] sqlalchemy.engine.Engine: select pg_catalog.version()
+2025-04-09 18:50:49 [INFO] sqlalchemy.engine.Engine: [raw sql] ()
+2025-04-09 18:50:49 [INFO] sqlalchemy.engine.Engine: select current_schema()
+2025-04-09 18:50:49 [INFO] sqlalchemy.engine.Engine: [raw sql] ()
+2025-04-09 18:50:49 [INFO] sqlalchemy.engine.Engine: show standard_conforming_strings
+2025-04-09 18:50:49 [INFO] sqlalchemy.engine.Engine: [raw sql] ()
+2025-04-09 18:50:49 [INFO] sqlalchemy.engine.Engine: BEGIN (implicit)
+2025-04-09 18:50:49 [INFO] sqlalchemy.engine.Engine: SELECT languages.language, languages.iso 
+FROM languages
+2025-04-09 18:50:49 [INFO] sqlalchemy.engine.Engine: [generated in 0.00035s] ()
+2025-04-09 18:50:49 [WARNING] root: Loading model for en -> de
+2025-04-09 18:50:50 [WARNING] root: Model for en -> de loaded successfully
+2025-04-09 18:50:50 [WARNING] root: Loading model for de -> en
+2025-04-09 18:50:51 [WARNING] root: Model for de -> en loaded successfully
+2025-04-09 18:50:54 [INFO] sqlalchemy.engine.Engine: ROLLBACK
+2025-04-09 18:51:05 [INFO] sqlalchemy.engine.Engine: select pg_catalog.version()
+2025-04-09 18:51:05 [INFO] sqlalchemy.engine.Engine: [raw sql] ()
+2025-04-09 18:51:05 [INFO] sqlalchemy.engine.Engine: select current_schema()
+2025-04-09 18:51:05 [INFO] sqlalchemy.engine.Engine: [raw sql] ()
+2025-04-09 18:51:05 [INFO] sqlalchemy.engine.Engine: show standard_conforming_strings
+2025-04-09 18:51:05 [INFO] sqlalchemy.engine.Engine: [raw sql] ()
+2025-04-09 18:51:05 [INFO] sqlalchemy.engine.Engine: BEGIN (implicit)
+2025-04-09 18:51:05 [INFO] sqlalchemy.engine.Engine: SELECT languages.language, languages.iso 
+FROM languages
+2025-04-09 18:51:05 [INFO] sqlalchemy.engine.Engine: [generated in 0.00025s] ()
+2025-04-09 18:51:05 [WARNING] root: Loading model for en -> de
+2025-04-09 18:51:06 [WARNING] root: Model for en -> de loaded successfully
+2025-04-09 18:51:06 [WARNING] root: Loading model for de -> en
+2025-04-09 18:51:08 [WARNING] root: Model for de -> en loaded successfully
+2025-04-09 18:51:14 [INFO] sqlalchemy.engine.Engine: select pg_catalog.version()
+2025-04-09 18:51:14 [INFO] sqlalchemy.engine.Engine: [raw sql] ()
+2025-04-09 18:51:14 [INFO] sqlalchemy.engine.Engine: select current_schema()
+2025-04-09 18:51:14 [INFO] sqlalchemy.engine.Engine: [raw sql] ()
+2025-04-09 18:51:14 [INFO] sqlalchemy.engine.Engine: show standard_conforming_strings
+2025-04-09 18:51:14 [INFO] sqlalchemy.engine.Engine: [raw sql] ()
+2025-04-09 18:51:14 [INFO] sqlalchemy.engine.Engine: BEGIN (implicit)
+2025-04-09 18:51:14 [INFO] sqlalchemy.engine.Engine: SELECT languages.language, languages.iso 
+FROM languages
+2025-04-09 18:51:14 [INFO] sqlalchemy.engine.Engine: [generated in 0.00021s] ()
+2025-04-09 18:51:14 [WARNING] root: Loading model for en -> de
+2025-04-09 18:51:15 [WARNING] root: Model for en -> de loaded successfully
+2025-04-09 18:51:15 [WARNING] root: Loading model for de -> en
+2025-04-09 18:51:16 [WARNING] root: Model for de -> en loaded successfully
+2025-04-09 18:51:21 [INFO] sqlalchemy.engine.Engine: select pg_catalog.version()
+2025-04-09 18:51:21 [INFO] sqlalchemy.engine.Engine: [raw sql] ()
+2025-04-09 18:51:21 [INFO] sqlalchemy.engine.Engine: select current_schema()
+2025-04-09 18:51:21 [INFO] sqlalchemy.engine.Engine: [raw sql] ()
+2025-04-09 18:51:21 [INFO] sqlalchemy.engine.Engine: show standard_conforming_strings
+2025-04-09 18:51:21 [INFO] sqlalchemy.engine.Engine: [raw sql] ()
+2025-04-09 18:51:21 [INFO] sqlalchemy.engine.Engine: BEGIN (implicit)
+2025-04-09 18:51:21 [INFO] sqlalchemy.engine.Engine: SELECT languages.language, languages.iso 
+FROM languages
+2025-04-09 18:51:21 [INFO] sqlalchemy.engine.Engine: [generated in 0.00022s] ()
+2025-04-09 18:51:21 [WARNING] root: Loading model for en -> de
+2025-04-09 18:51:22 [WARNING] root: Model for en -> de loaded successfully
+2025-04-09 18:51:22 [WARNING] root: Loading model for de -> en
+2025-04-09 18:51:23 [WARNING] root: Model for de -> en loaded successfully
+2025-04-09 18:51:28 [INFO] sqlalchemy.engine.Engine: ROLLBACK
+2025-04-09 18:54:27 [INFO] sqlalchemy.engine.Engine: select pg_catalog.version()
+2025-04-09 18:54:27 [INFO] sqlalchemy.engine.Engine: [raw sql] ()
+2025-04-09 18:54:27 [INFO] sqlalchemy.engine.Engine: select current_schema()
+2025-04-09 18:54:27 [INFO] sqlalchemy.engine.Engine: [raw sql] ()
+2025-04-09 18:54:27 [INFO] sqlalchemy.engine.Engine: show standard_conforming_strings
+2025-04-09 18:54:27 [INFO] sqlalchemy.engine.Engine: [raw sql] ()
+2025-04-09 18:54:27 [INFO] sqlalchemy.engine.Engine: BEGIN (implicit)
+2025-04-09 18:54:27 [INFO] sqlalchemy.engine.Engine: SELECT languages.language, languages.iso 
+FROM languages
+2025-04-09 18:54:27 [INFO] sqlalchemy.engine.Engine: [generated in 0.00043s] ()
+2025-04-09 18:54:27 [WARNING] root: Loading model for en -> de
+2025-04-09 18:54:28 [WARNING] root: Model for en -> de loaded successfully
+2025-04-09 18:54:28 [WARNING] root: Loading model for de -> en
+2025-04-09 18:54:29 [WARNING] root: Model for de -> en loaded successfully
+2025-04-09 18:55:11 [INFO] sqlalchemy.engine.Engine: select pg_catalog.version()
+2025-04-09 18:55:11 [INFO] sqlalchemy.engine.Engine: [raw sql] ()
+2025-04-09 18:55:11 [INFO] sqlalchemy.engine.Engine: select current_schema()
+2025-04-09 18:55:11 [INFO] sqlalchemy.engine.Engine: [raw sql] ()
+2025-04-09 18:55:11 [INFO] sqlalchemy.engine.Engine: show standard_conforming_strings
+2025-04-09 18:55:11 [INFO] sqlalchemy.engine.Engine: [raw sql] ()
+2025-04-09 18:55:11 [INFO] sqlalchemy.engine.Engine: BEGIN (implicit)
+2025-04-09 18:55:11 [INFO] sqlalchemy.engine.Engine: SELECT languages.language, languages.iso 
+FROM languages
+2025-04-09 18:55:11 [INFO] sqlalchemy.engine.Engine: [generated in 0.00020s] ()
+2025-04-09 18:55:11 [WARNING] root: Loading model for en -> de
+2025-04-09 18:55:13 [WARNING] root: Model for en -> de loaded successfully
+2025-04-09 18:55:13 [WARNING] root: Loading model for de -> en
+2025-04-09 18:55:14 [WARNING] root: Model for de -> en loaded successfully
+2025-04-09 18:55:14 [INFO] sqlalchemy.engine.Engine: ROLLBACK
+2025-04-09 18:55:19 [INFO] sqlalchemy.engine.Engine: select pg_catalog.version()
+2025-04-09 18:55:19 [INFO] sqlalchemy.engine.Engine: [raw sql] ()
+2025-04-09 18:55:19 [INFO] sqlalchemy.engine.Engine: select current_schema()
+2025-04-09 18:55:19 [INFO] sqlalchemy.engine.Engine: [raw sql] ()
+2025-04-09 18:55:19 [INFO] sqlalchemy.engine.Engine: show standard_conforming_strings
+2025-04-09 18:55:19 [INFO] sqlalchemy.engine.Engine: [raw sql] ()
+2025-04-09 18:55:19 [INFO] sqlalchemy.engine.Engine: BEGIN (implicit)
+2025-04-09 18:55:19 [INFO] sqlalchemy.engine.Engine: SELECT languages.language, languages.iso 
+FROM languages
+2025-04-09 18:55:19 [INFO] sqlalchemy.engine.Engine: [generated in 0.00025s] ()
+2025-04-09 18:55:19 [WARNING] root: Loading model for en -> de
+2025-04-09 18:55:21 [WARNING] root: Model for en -> de loaded successfully
+2025-04-09 18:55:21 [WARNING] root: Loading model for de -> en
+2025-04-09 18:55:22 [WARNING] root: Model for de -> en loaded successfully
+2025-04-09 18:55:27 [INFO] sqlalchemy.engine.Engine: select pg_catalog.version()
+2025-04-09 18:55:27 [INFO] sqlalchemy.engine.Engine: [raw sql] ()
+2025-04-09 18:55:27 [INFO] sqlalchemy.engine.Engine: select current_schema()
+2025-04-09 18:55:27 [INFO] sqlalchemy.engine.Engine: [raw sql] ()
+2025-04-09 18:55:27 [INFO] sqlalchemy.engine.Engine: show standard_conforming_strings
+2025-04-09 18:55:27 [INFO] sqlalchemy.engine.Engine: [raw sql] ()
+2025-04-09 18:55:27 [INFO] sqlalchemy.engine.Engine: BEGIN (implicit)
+2025-04-09 18:55:27 [INFO] sqlalchemy.engine.Engine: SELECT languages.language, languages.iso 
+FROM languages
+2025-04-09 18:55:27 [INFO] sqlalchemy.engine.Engine: [generated in 0.00023s] ()
+2025-04-09 18:55:27 [WARNING] root: Loading model for en -> de
+2025-04-09 18:55:28 [WARNING] root: Model for en -> de loaded successfully
+2025-04-09 18:55:28 [WARNING] root: Loading model for de -> en
+2025-04-09 18:55:29 [WARNING] root: Model for de -> en loaded successfully
+2025-04-09 18:55:31 [INFO] sqlalchemy.engine.Engine: ROLLBACK
+2025-04-09 18:55:37 [INFO] sqlalchemy.engine.Engine: select pg_catalog.version()
+2025-04-09 18:55:37 [INFO] sqlalchemy.engine.Engine: [raw sql] ()
+2025-04-09 18:55:37 [INFO] sqlalchemy.engine.Engine: select current_schema()
+2025-04-09 18:55:37 [INFO] sqlalchemy.engine.Engine: [raw sql] ()
+2025-04-09 18:55:37 [INFO] sqlalchemy.engine.Engine: show standard_conforming_strings
+2025-04-09 18:55:37 [INFO] sqlalchemy.engine.Engine: [raw sql] ()
+2025-04-09 18:55:37 [INFO] sqlalchemy.engine.Engine: BEGIN (implicit)
+2025-04-09 18:55:37 [INFO] sqlalchemy.engine.Engine: SELECT languages.language, languages.iso 
+FROM languages
+2025-04-09 18:55:37 [INFO] sqlalchemy.engine.Engine: [generated in 0.00027s] ()
+2025-04-09 18:55:37 [WARNING] root: Loading model for en -> de
+2025-04-09 18:55:38 [WARNING] root: Model for en -> de loaded successfully
+2025-04-09 18:55:38 [WARNING] root: Loading model for de -> en
+2025-04-09 18:55:39 [WARNING] root: Model for de -> en loaded successfully
+2025-04-09 18:55:44 [INFO] sqlalchemy.engine.Engine: select pg_catalog.version()
+2025-04-09 18:55:44 [INFO] sqlalchemy.engine.Engine: [raw sql] ()
+2025-04-09 18:55:44 [INFO] sqlalchemy.engine.Engine: select current_schema()
+2025-04-09 18:55:44 [INFO] sqlalchemy.engine.Engine: [raw sql] ()
+2025-04-09 18:55:44 [INFO] sqlalchemy.engine.Engine: show standard_conforming_strings
+2025-04-09 18:55:44 [INFO] sqlalchemy.engine.Engine: [raw sql] ()
+2025-04-09 18:55:44 [INFO] sqlalchemy.engine.Engine: BEGIN (implicit)
+2025-04-09 18:55:44 [INFO] sqlalchemy.engine.Engine: SELECT languages.language, languages.iso 
+FROM languages
+2025-04-09 18:55:44 [INFO] sqlalchemy.engine.Engine: [generated in 0.00019s] ()
+2025-04-09 18:55:44 [WARNING] root: Loading model for en -> de
+2025-04-09 18:55:45 [WARNING] root: Model for en -> de loaded successfully
+2025-04-09 18:55:45 [WARNING] root: Loading model for de -> en
+2025-04-09 18:55:46 [WARNING] root: Model for de -> en loaded successfully
+2025-04-09 18:55:51 [INFO] sqlalchemy.engine.Engine: select pg_catalog.version()
+2025-04-09 18:55:51 [INFO] sqlalchemy.engine.Engine: [raw sql] ()
+2025-04-09 18:55:51 [INFO] sqlalchemy.engine.Engine: select current_schema()
+2025-04-09 18:55:51 [INFO] sqlalchemy.engine.Engine: [raw sql] ()
+2025-04-09 18:55:51 [INFO] sqlalchemy.engine.Engine: show standard_conforming_strings
+2025-04-09 18:55:51 [INFO] sqlalchemy.engine.Engine: [raw sql] ()
+2025-04-09 18:55:51 [INFO] sqlalchemy.engine.Engine: BEGIN (implicit)
+2025-04-09 18:55:51 [INFO] sqlalchemy.engine.Engine: SELECT languages.language, languages.iso 
+FROM languages
+2025-04-09 18:55:51 [INFO] sqlalchemy.engine.Engine: [generated in 0.00022s] ()
+2025-04-09 18:55:51 [WARNING] root: Loading model for en -> de
+2025-04-09 18:55:53 [WARNING] root: Model for en -> de loaded successfully
+2025-04-09 18:55:53 [WARNING] root: Loading model for de -> en
+2025-04-09 18:55:54 [WARNING] root: Model for de -> en loaded successfully
+2025-04-09 18:55:59 [INFO] sqlalchemy.engine.Engine: select pg_catalog.version()
+2025-04-09 18:55:59 [INFO] sqlalchemy.engine.Engine: [raw sql] ()
+2025-04-09 18:55:59 [INFO] sqlalchemy.engine.Engine: select current_schema()
+2025-04-09 18:55:59 [INFO] sqlalchemy.engine.Engine: [raw sql] ()
+2025-04-09 18:55:59 [INFO] sqlalchemy.engine.Engine: show standard_conforming_strings
+2025-04-09 18:55:59 [INFO] sqlalchemy.engine.Engine: [raw sql] ()
+2025-04-09 18:55:59 [INFO] sqlalchemy.engine.Engine: BEGIN (implicit)
+2025-04-09 18:55:59 [INFO] sqlalchemy.engine.Engine: SELECT languages.language, languages.iso 
+FROM languages
+2025-04-09 18:55:59 [INFO] sqlalchemy.engine.Engine: [generated in 0.00020s] ()
+2025-04-09 18:55:59 [WARNING] root: Loading model for en -> de
+2025-04-09 18:56:02 [WARNING] root: Model for en -> de loaded successfully
+2025-04-09 18:56:02 [WARNING] root: Loading model for de -> en
+2025-04-09 18:56:03 [WARNING] root: Model for de -> en loaded successfully
+2025-04-09 18:56:09 [INFO] sqlalchemy.engine.Engine: select pg_catalog.version()
+2025-04-09 18:56:09 [INFO] sqlalchemy.engine.Engine: [raw sql] ()
+2025-04-09 18:56:09 [INFO] sqlalchemy.engine.Engine: select current_schema()
+2025-04-09 18:56:09 [INFO] sqlalchemy.engine.Engine: [raw sql] ()
+2025-04-09 18:56:09 [INFO] sqlalchemy.engine.Engine: show standard_conforming_strings
+2025-04-09 18:56:09 [INFO] sqlalchemy.engine.Engine: [raw sql] ()
+2025-04-09 18:56:09 [INFO] sqlalchemy.engine.Engine: BEGIN (implicit)
+2025-04-09 18:56:09 [INFO] sqlalchemy.engine.Engine: SELECT languages.language, languages.iso 
+FROM languages
+2025-04-09 18:56:09 [INFO] sqlalchemy.engine.Engine: [generated in 0.00018s] ()
+2025-04-09 18:56:09 [WARNING] root: Loading model for en -> de
+2025-04-09 18:56:10 [WARNING] root: Model for en -> de loaded successfully
+2025-04-09 18:56:10 [WARNING] root: Loading model for de -> en
+2025-04-09 18:56:11 [WARNING] root: Model for de -> en loaded successfully
+2025-04-09 18:56:25 [INFO] sqlalchemy.engine.Engine: ROLLBACK
+2025-04-09 18:56:31 [INFO] sqlalchemy.engine.Engine: select pg_catalog.version()
+2025-04-09 18:56:31 [INFO] sqlalchemy.engine.Engine: [raw sql] ()
+2025-04-09 18:56:31 [INFO] sqlalchemy.engine.Engine: select current_schema()
+2025-04-09 18:56:31 [INFO] sqlalchemy.engine.Engine: [raw sql] ()
+2025-04-09 18:56:31 [INFO] sqlalchemy.engine.Engine: show standard_conforming_strings
+2025-04-09 18:56:31 [INFO] sqlalchemy.engine.Engine: [raw sql] ()
+2025-04-09 18:56:31 [INFO] sqlalchemy.engine.Engine: BEGIN (implicit)
+2025-04-09 18:56:31 [INFO] sqlalchemy.engine.Engine: SELECT languages.language, languages.iso 
+FROM languages
+2025-04-09 18:56:31 [INFO] sqlalchemy.engine.Engine: [generated in 0.00017s] ()
+2025-04-09 18:56:31 [WARNING] root: Loading model for en -> de
+2025-04-09 18:56:32 [WARNING] root: Model for en -> de loaded successfully
+2025-04-09 18:56:32 [WARNING] root: Loading model for de -> en
+2025-04-09 18:56:33 [WARNING] root: Model for de -> en loaded successfully
+2025-04-09 18:56:59 [INFO] sqlalchemy.engine.Engine: BEGIN (implicit)
+2025-04-09 18:56:59 [INFO] sqlalchemy.engine.Engine: SELECT languages.language, languages.iso 
+FROM languages
+2025-04-09 18:56:59 [INFO] sqlalchemy.engine.Engine: [cached since 28.27s ago] ()
+2025-04-09 18:57:01 [INFO] sqlalchemy.engine.Engine: ROLLBACK
+2025-04-09 18:57:15 [INFO] sqlalchemy.engine.Engine: BEGIN (implicit)
+2025-04-09 18:57:15 [INFO] sqlalchemy.engine.Engine: SELECT languages.language, languages.iso 
+FROM languages
+2025-04-09 18:57:15 [INFO] sqlalchemy.engine.Engine: [cached since 44.78s ago] ()
+2025-04-09 18:57:17 [INFO] sqlalchemy.engine.Engine: ROLLBACK
+2025-04-09 18:57:28 [INFO] sqlalchemy.engine.Engine: BEGIN (implicit)
+2025-04-09 18:57:28 [INFO] sqlalchemy.engine.Engine: SELECT languages.language, languages.iso 
+FROM languages
+2025-04-09 18:57:28 [INFO] sqlalchemy.engine.Engine: [cached since 57.85s ago] ()
+2025-04-09 18:57:29 [INFO] sqlalchemy.engine.Engine: ROLLBACK
+2025-04-09 19:00:58 [INFO] sqlalchemy.engine.Engine: ROLLBACK
+2025-04-09 19:01:04 [INFO] sqlalchemy.engine.Engine: select pg_catalog.version()
+2025-04-09 19:01:04 [INFO] sqlalchemy.engine.Engine: [raw sql] ()
+2025-04-09 19:01:04 [INFO] sqlalchemy.engine.Engine: select current_schema()
+2025-04-09 19:01:04 [INFO] sqlalchemy.engine.Engine: [raw sql] ()
+2025-04-09 19:01:04 [INFO] sqlalchemy.engine.Engine: show standard_conforming_strings
+2025-04-09 19:01:04 [INFO] sqlalchemy.engine.Engine: [raw sql] ()
+2025-04-09 19:01:04 [INFO] sqlalchemy.engine.Engine: BEGIN (implicit)
+2025-04-09 19:01:04 [INFO] sqlalchemy.engine.Engine: SELECT languages.language, languages.iso 
+FROM languages
+2025-04-09 19:01:04 [INFO] sqlalchemy.engine.Engine: [generated in 0.00026s] ()
+2025-04-09 19:01:04 [WARNING] root: Loading model for en -> de
+2025-04-09 19:01:06 [WARNING] root: Model for en -> de loaded successfully
+2025-04-09 19:01:06 [WARNING] root: Loading model for de -> en
+2025-04-09 19:01:06 [WARNING] root: Model for de -> en loaded successfully
+2025-04-09 19:07:40 [INFO] sqlalchemy.engine.Engine: ROLLBACK
+2025-04-09 19:07:45 [INFO] sqlalchemy.engine.Engine: select pg_catalog.version()
+2025-04-09 19:07:45 [INFO] sqlalchemy.engine.Engine: [raw sql] ()
+2025-04-09 19:07:45 [INFO] sqlalchemy.engine.Engine: select current_schema()
+2025-04-09 19:07:45 [INFO] sqlalchemy.engine.Engine: [raw sql] ()
+2025-04-09 19:07:45 [INFO] sqlalchemy.engine.Engine: show standard_conforming_strings
+2025-04-09 19:07:45 [INFO] sqlalchemy.engine.Engine: [raw sql] ()
+2025-04-09 19:07:45 [INFO] sqlalchemy.engine.Engine: BEGIN (implicit)
+2025-04-09 19:07:45 [INFO] sqlalchemy.engine.Engine: SELECT languages.language, languages.iso 
+FROM languages
+2025-04-09 19:07:45 [INFO] sqlalchemy.engine.Engine: [generated in 0.00021s] ()
+2025-04-09 19:07:45 [WARNING] root: Loading model for en -> de
+2025-04-09 19:07:47 [WARNING] root: Model for en -> de loaded successfully
+2025-04-09 19:07:47 [WARNING] root: Loading model for de -> en
+2025-04-09 19:07:48 [WARNING] root: Model for de -> en loaded successfully
+2025-04-09 19:07:54 [INFO] sqlalchemy.engine.Engine: ROLLBACK
+2025-04-09 19:07:59 [INFO] sqlalchemy.engine.Engine: select pg_catalog.version()
+2025-04-09 19:07:59 [INFO] sqlalchemy.engine.Engine: [raw sql] ()
+2025-04-09 19:07:59 [INFO] sqlalchemy.engine.Engine: select current_schema()
+2025-04-09 19:07:59 [INFO] sqlalchemy.engine.Engine: [raw sql] ()
+2025-04-09 19:07:59 [INFO] sqlalchemy.engine.Engine: show standard_conforming_strings
+2025-04-09 19:07:59 [INFO] sqlalchemy.engine.Engine: [raw sql] ()
+2025-04-09 19:07:59 [INFO] sqlalchemy.engine.Engine: BEGIN (implicit)
+2025-04-09 19:07:59 [INFO] sqlalchemy.engine.Engine: SELECT languages.language, languages.iso 
+FROM languages
+2025-04-09 19:07:59 [INFO] sqlalchemy.engine.Engine: [generated in 0.00021s] ()
+2025-04-09 19:07:59 [WARNING] root: Loading model for en -> de
+2025-04-09 19:08:00 [WARNING] root: Model for en -> de loaded successfully
+2025-04-09 19:08:00 [WARNING] root: Loading model for de -> en
+2025-04-09 19:08:01 [WARNING] root: Model for de -> en loaded successfully
+2025-04-09 19:08:07 [INFO] sqlalchemy.engine.Engine: select pg_catalog.version()
+2025-04-09 19:08:07 [INFO] sqlalchemy.engine.Engine: [raw sql] ()
+2025-04-09 19:08:07 [INFO] sqlalchemy.engine.Engine: select current_schema()
+2025-04-09 19:08:07 [INFO] sqlalchemy.engine.Engine: [raw sql] ()
+2025-04-09 19:08:07 [INFO] sqlalchemy.engine.Engine: show standard_conforming_strings
+2025-04-09 19:08:07 [INFO] sqlalchemy.engine.Engine: [raw sql] ()
+2025-04-09 19:08:07 [INFO] sqlalchemy.engine.Engine: BEGIN (implicit)
+2025-04-09 19:08:07 [INFO] sqlalchemy.engine.Engine: SELECT languages.language, languages.iso 
+FROM languages
+2025-04-09 19:08:07 [INFO] sqlalchemy.engine.Engine: [generated in 0.00025s] ()
+2025-04-09 19:08:07 [WARNING] root: Loading model for en -> de
+2025-04-09 19:08:08 [WARNING] root: Model for en -> de loaded successfully
+2025-04-09 19:08:08 [WARNING] root: Loading model for de -> en
+2025-04-09 19:08:09 [WARNING] root: Model for de -> en loaded successfully
+2025-04-09 19:08:14 [INFO] sqlalchemy.engine.Engine: select pg_catalog.version()
+2025-04-09 19:08:14 [INFO] sqlalchemy.engine.Engine: [raw sql] ()
+2025-04-09 19:08:14 [INFO] sqlalchemy.engine.Engine: select current_schema()
+2025-04-09 19:08:14 [INFO] sqlalchemy.engine.Engine: [raw sql] ()
+2025-04-09 19:08:14 [INFO] sqlalchemy.engine.Engine: show standard_conforming_strings
+2025-04-09 19:08:14 [INFO] sqlalchemy.engine.Engine: [raw sql] ()
+2025-04-09 19:08:14 [INFO] sqlalchemy.engine.Engine: BEGIN (implicit)
+2025-04-09 19:08:14 [INFO] sqlalchemy.engine.Engine: SELECT languages.language, languages.iso 
+FROM languages
+2025-04-09 19:08:14 [INFO] sqlalchemy.engine.Engine: [generated in 0.00036s] ()
+2025-04-09 19:08:14 [WARNING] root: Loading model for en -> de
+2025-04-09 19:08:15 [WARNING] root: Model for en -> de loaded successfully
+2025-04-09 19:08:15 [WARNING] root: Loading model for de -> en
+2025-04-09 19:08:16 [WARNING] root: Model for de -> en loaded successfully
+2025-04-09 19:08:21 [INFO] sqlalchemy.engine.Engine: select pg_catalog.version()
+2025-04-09 19:08:21 [INFO] sqlalchemy.engine.Engine: [raw sql] ()
+2025-04-09 19:08:21 [INFO] sqlalchemy.engine.Engine: select current_schema()
+2025-04-09 19:08:21 [INFO] sqlalchemy.engine.Engine: [raw sql] ()
+2025-04-09 19:08:21 [INFO] sqlalchemy.engine.Engine: show standard_conforming_strings
+2025-04-09 19:08:21 [INFO] sqlalchemy.engine.Engine: [raw sql] ()
+2025-04-09 19:08:21 [INFO] sqlalchemy.engine.Engine: BEGIN (implicit)
+2025-04-09 19:08:21 [INFO] sqlalchemy.engine.Engine: SELECT languages.language, languages.iso 
+FROM languages
+2025-04-09 19:08:21 [INFO] sqlalchemy.engine.Engine: [generated in 0.00018s] ()
+2025-04-09 19:08:21 [WARNING] root: Loading model for en -> de
+2025-04-09 19:08:22 [WARNING] root: Model for en -> de loaded successfully
+2025-04-09 19:08:22 [WARNING] root: Loading model for de -> en
+2025-04-09 19:08:23 [WARNING] root: Model for de -> en loaded successfully
+2025-04-09 19:08:29 [INFO] sqlalchemy.engine.Engine: select pg_catalog.version()
+2025-04-09 19:08:29 [INFO] sqlalchemy.engine.Engine: [raw sql] ()
+2025-04-09 19:08:29 [INFO] sqlalchemy.engine.Engine: select current_schema()
+2025-04-09 19:08:29 [INFO] sqlalchemy.engine.Engine: [raw sql] ()
+2025-04-09 19:08:29 [INFO] sqlalchemy.engine.Engine: show standard_conforming_strings
+2025-04-09 19:08:29 [INFO] sqlalchemy.engine.Engine: [raw sql] ()
+2025-04-09 19:08:29 [INFO] sqlalchemy.engine.Engine: BEGIN (implicit)
+2025-04-09 19:08:29 [INFO] sqlalchemy.engine.Engine: SELECT languages.language, languages.iso 
+FROM languages
+2025-04-09 19:08:29 [INFO] sqlalchemy.engine.Engine: [generated in 0.00018s] ()
+2025-04-09 19:08:29 [WARNING] root: Loading model for en -> de
+2025-04-09 19:08:30 [WARNING] root: Model for en -> de loaded successfully
+2025-04-09 19:08:30 [WARNING] root: Loading model for de -> en
+2025-04-09 19:08:31 [WARNING] root: Model for de -> en loaded successfully
+2025-04-09 19:10:06 [INFO] sqlalchemy.engine.Engine: ROLLBACK
+2025-04-09 19:10:11 [INFO] sqlalchemy.engine.Engine: select pg_catalog.version()
+2025-04-09 19:10:11 [INFO] sqlalchemy.engine.Engine: [raw sql] ()
+2025-04-09 19:10:11 [INFO] sqlalchemy.engine.Engine: select current_schema()
+2025-04-09 19:10:11 [INFO] sqlalchemy.engine.Engine: [raw sql] ()
+2025-04-09 19:10:11 [INFO] sqlalchemy.engine.Engine: show standard_conforming_strings
+2025-04-09 19:10:11 [INFO] sqlalchemy.engine.Engine: [raw sql] ()
+2025-04-09 19:10:11 [INFO] sqlalchemy.engine.Engine: BEGIN (implicit)
+2025-04-09 19:10:11 [INFO] sqlalchemy.engine.Engine: SELECT languages.language, languages.iso 
+FROM languages
+2025-04-09 19:10:11 [INFO] sqlalchemy.engine.Engine: [generated in 0.00018s] ()
+2025-04-09 19:10:11 [WARNING] root: Loading model for en -> de
+2025-04-09 19:10:12 [WARNING] root: Model for en -> de loaded successfully
+2025-04-09 19:10:12 [WARNING] root: Loading model for de -> en
+2025-04-09 19:10:13 [WARNING] root: Model for de -> en loaded successfully
+2025-04-09 19:10:20 [INFO] sqlalchemy.engine.Engine: ROLLBACK
+2025-04-09 19:10:26 [INFO] sqlalchemy.engine.Engine: select pg_catalog.version()
+2025-04-09 19:10:26 [INFO] sqlalchemy.engine.Engine: [raw sql] ()
+2025-04-09 19:10:26 [INFO] sqlalchemy.engine.Engine: select current_schema()
+2025-04-09 19:10:26 [INFO] sqlalchemy.engine.Engine: [raw sql] ()
+2025-04-09 19:10:26 [INFO] sqlalchemy.engine.Engine: show standard_conforming_strings
+2025-04-09 19:10:26 [INFO] sqlalchemy.engine.Engine: [raw sql] ()
+2025-04-09 19:10:26 [INFO] sqlalchemy.engine.Engine: BEGIN (implicit)
+2025-04-09 19:10:26 [INFO] sqlalchemy.engine.Engine: SELECT languages.language, languages.iso 
+FROM languages
+2025-04-09 19:10:26 [INFO] sqlalchemy.engine.Engine: [generated in 0.00024s] ()
+2025-04-09 19:10:26 [WARNING] root: Loading model for en -> de
+2025-04-09 19:10:27 [WARNING] root: Model for en -> de loaded successfully
+2025-04-09 19:10:27 [WARNING] root: Loading model for de -> en
+2025-04-09 19:10:28 [WARNING] root: Model for de -> en loaded successfully
+2025-04-09 19:10:33 [INFO] sqlalchemy.engine.Engine: select pg_catalog.version()
+2025-04-09 19:10:33 [INFO] sqlalchemy.engine.Engine: [raw sql] ()
+2025-04-09 19:10:33 [INFO] sqlalchemy.engine.Engine: select current_schema()
+2025-04-09 19:10:33 [INFO] sqlalchemy.engine.Engine: [raw sql] ()
+2025-04-09 19:10:33 [INFO] sqlalchemy.engine.Engine: show standard_conforming_strings
+2025-04-09 19:10:33 [INFO] sqlalchemy.engine.Engine: [raw sql] ()
+2025-04-09 19:10:33 [INFO] sqlalchemy.engine.Engine: BEGIN (implicit)
+2025-04-09 19:10:33 [INFO] sqlalchemy.engine.Engine: SELECT languages.language, languages.iso 
+FROM languages
+2025-04-09 19:10:33 [INFO] sqlalchemy.engine.Engine: [generated in 0.00033s] ()
+2025-04-09 19:10:33 [WARNING] root: Loading model for en -> de
+2025-04-09 19:10:34 [WARNING] root: Model for en -> de loaded successfully
+2025-04-09 19:10:34 [WARNING] root: Loading model for de -> en
+2025-04-09 19:10:37 [WARNING] root: Model for de -> en loaded successfully
+2025-04-09 19:10:42 [INFO] sqlalchemy.engine.Engine: select pg_catalog.version()
+2025-04-09 19:10:42 [INFO] sqlalchemy.engine.Engine: [raw sql] ()
+2025-04-09 19:10:42 [INFO] sqlalchemy.engine.Engine: select current_schema()
+2025-04-09 19:10:42 [INFO] sqlalchemy.engine.Engine: [raw sql] ()
+2025-04-09 19:10:42 [INFO] sqlalchemy.engine.Engine: show standard_conforming_strings
+2025-04-09 19:10:42 [INFO] sqlalchemy.engine.Engine: [raw sql] ()
+2025-04-09 19:10:42 [INFO] sqlalchemy.engine.Engine: BEGIN (implicit)
+2025-04-09 19:10:42 [INFO] sqlalchemy.engine.Engine: SELECT languages.language, languages.iso 
+FROM languages
+2025-04-09 19:10:42 [INFO] sqlalchemy.engine.Engine: [generated in 0.00019s] ()
+2025-04-09 19:10:42 [WARNING] root: Loading model for en -> de
+2025-04-09 19:10:45 [WARNING] root: Model for en -> de loaded successfully
+2025-04-09 19:10:45 [WARNING] root: Loading model for de -> en
+2025-04-09 19:10:46 [WARNING] root: Model for de -> en loaded successfully
+2025-04-09 19:10:51 [INFO] sqlalchemy.engine.Engine: select pg_catalog.version()
+2025-04-09 19:10:51 [INFO] sqlalchemy.engine.Engine: [raw sql] ()
+2025-04-09 19:10:51 [INFO] sqlalchemy.engine.Engine: select current_schema()
+2025-04-09 19:10:51 [INFO] sqlalchemy.engine.Engine: [raw sql] ()
+2025-04-09 19:10:51 [INFO] sqlalchemy.engine.Engine: show standard_conforming_strings
+2025-04-09 19:10:51 [INFO] sqlalchemy.engine.Engine: [raw sql] ()
+2025-04-09 19:10:51 [INFO] sqlalchemy.engine.Engine: BEGIN (implicit)
+2025-04-09 19:10:51 [INFO] sqlalchemy.engine.Engine: SELECT languages.language, languages.iso 
+FROM languages
+2025-04-09 19:10:51 [INFO] sqlalchemy.engine.Engine: [generated in 0.00023s] ()
+2025-04-09 19:10:51 [WARNING] root: Loading model for en -> de
+2025-04-09 19:10:52 [WARNING] root: Model for en -> de loaded successfully
+2025-04-09 19:10:52 [WARNING] root: Loading model for de -> en
+2025-04-09 19:10:53 [WARNING] root: Model for de -> en loaded successfully
+2025-04-09 19:10:58 [INFO] sqlalchemy.engine.Engine: select pg_catalog.version()
+2025-04-09 19:10:58 [INFO] sqlalchemy.engine.Engine: [raw sql] ()
+2025-04-09 19:10:58 [INFO] sqlalchemy.engine.Engine: select current_schema()
+2025-04-09 19:10:58 [INFO] sqlalchemy.engine.Engine: [raw sql] ()
+2025-04-09 19:10:58 [INFO] sqlalchemy.engine.Engine: show standard_conforming_strings
+2025-04-09 19:10:58 [INFO] sqlalchemy.engine.Engine: [raw sql] ()
+2025-04-09 19:10:58 [INFO] sqlalchemy.engine.Engine: BEGIN (implicit)
+2025-04-09 19:10:58 [INFO] sqlalchemy.engine.Engine: SELECT languages.language, languages.iso 
+FROM languages
+2025-04-09 19:10:58 [INFO] sqlalchemy.engine.Engine: [generated in 0.00022s] ()
+2025-04-09 19:10:58 [WARNING] root: Loading model for en -> de
+2025-04-09 19:10:59 [WARNING] root: Model for en -> de loaded successfully
+2025-04-09 19:10:59 [WARNING] root: Loading model for de -> en
+2025-04-09 19:11:00 [WARNING] root: Model for de -> en loaded successfully
+2025-04-09 19:11:02 [INFO] sqlalchemy.engine.Engine: ROLLBACK
+2025-04-09 19:11:07 [INFO] sqlalchemy.engine.Engine: select pg_catalog.version()
+2025-04-09 19:11:07 [INFO] sqlalchemy.engine.Engine: [raw sql] ()
+2025-04-09 19:11:07 [INFO] sqlalchemy.engine.Engine: select current_schema()
+2025-04-09 19:11:07 [INFO] sqlalchemy.engine.Engine: [raw sql] ()
+2025-04-09 19:11:07 [INFO] sqlalchemy.engine.Engine: show standard_conforming_strings
+2025-04-09 19:11:07 [INFO] sqlalchemy.engine.Engine: [raw sql] ()
+2025-04-09 19:11:07 [INFO] sqlalchemy.engine.Engine: BEGIN (implicit)
+2025-04-09 19:11:07 [INFO] sqlalchemy.engine.Engine: SELECT languages.language, languages.iso 
+FROM languages
+2025-04-09 19:11:07 [INFO] sqlalchemy.engine.Engine: [generated in 0.00017s] ()
+2025-04-09 19:11:07 [WARNING] root: Loading model for en -> de
+2025-04-09 19:11:08 [WARNING] root: Model for en -> de loaded successfully
+2025-04-09 19:11:08 [WARNING] root: Loading model for de -> en
+2025-04-09 19:11:09 [WARNING] root: Model for de -> en loaded successfully
+2025-04-09 19:11:14 [INFO] sqlalchemy.engine.Engine: select pg_catalog.version()
+2025-04-09 19:11:14 [INFO] sqlalchemy.engine.Engine: [raw sql] ()
+2025-04-09 19:11:14 [INFO] sqlalchemy.engine.Engine: select current_schema()
+2025-04-09 19:11:14 [INFO] sqlalchemy.engine.Engine: [raw sql] ()
+2025-04-09 19:11:14 [INFO] sqlalchemy.engine.Engine: show standard_conforming_strings
+2025-04-09 19:11:14 [INFO] sqlalchemy.engine.Engine: [raw sql] ()
+2025-04-09 19:11:14 [INFO] sqlalchemy.engine.Engine: BEGIN (implicit)
+2025-04-09 19:11:14 [INFO] sqlalchemy.engine.Engine: SELECT languages.language, languages.iso 
+FROM languages
+2025-04-09 19:11:14 [INFO] sqlalchemy.engine.Engine: [generated in 0.00026s] ()
+2025-04-09 19:11:14 [WARNING] root: Loading model for en -> de
+2025-04-09 19:11:15 [WARNING] root: Model for en -> de loaded successfully
+2025-04-09 19:11:15 [WARNING] root: Loading model for de -> en
+2025-04-09 19:11:16 [WARNING] root: Model for de -> en loaded successfully
+2025-04-09 19:11:21 [INFO] sqlalchemy.engine.Engine: select pg_catalog.version()
+2025-04-09 19:11:21 [INFO] sqlalchemy.engine.Engine: [raw sql] ()
+2025-04-09 19:11:21 [INFO] sqlalchemy.engine.Engine: select current_schema()
+2025-04-09 19:11:21 [INFO] sqlalchemy.engine.Engine: [raw sql] ()
+2025-04-09 19:11:21 [INFO] sqlalchemy.engine.Engine: show standard_conforming_strings
+2025-04-09 19:11:21 [INFO] sqlalchemy.engine.Engine: [raw sql] ()
+2025-04-09 19:11:21 [INFO] sqlalchemy.engine.Engine: BEGIN (implicit)
+2025-04-09 19:11:21 [INFO] sqlalchemy.engine.Engine: SELECT languages.language, languages.iso 
+FROM languages
+2025-04-09 19:11:21 [INFO] sqlalchemy.engine.Engine: [generated in 0.00028s] ()
+2025-04-09 19:11:21 [WARNING] root: Loading model for en -> de
+2025-04-09 19:11:22 [WARNING] root: Model for en -> de loaded successfully
+2025-04-09 19:11:22 [WARNING] root: Loading model for de -> en
+2025-04-09 19:11:23 [WARNING] root: Model for de -> en loaded successfully
+2025-04-09 19:11:28 [INFO] sqlalchemy.engine.Engine: select pg_catalog.version()
+2025-04-09 19:11:28 [INFO] sqlalchemy.engine.Engine: [raw sql] ()
+2025-04-09 19:11:28 [INFO] sqlalchemy.engine.Engine: select current_schema()
+2025-04-09 19:11:28 [INFO] sqlalchemy.engine.Engine: [raw sql] ()
+2025-04-09 19:11:28 [INFO] sqlalchemy.engine.Engine: show standard_conforming_strings
+2025-04-09 19:11:28 [INFO] sqlalchemy.engine.Engine: [raw sql] ()
+2025-04-09 19:11:28 [INFO] sqlalchemy.engine.Engine: BEGIN (implicit)
+2025-04-09 19:11:28 [INFO] sqlalchemy.engine.Engine: SELECT languages.language, languages.iso 
+FROM languages
+2025-04-09 19:11:28 [INFO] sqlalchemy.engine.Engine: [generated in 0.00023s] ()
+2025-04-09 19:11:28 [WARNING] root: Loading model for en -> de
+2025-04-09 19:11:29 [WARNING] root: Model for en -> de loaded successfully
+2025-04-09 19:11:29 [WARNING] root: Loading model for de -> en
+2025-04-09 19:11:30 [WARNING] root: Model for de -> en loaded successfully
+2025-04-09 19:11:36 [INFO] sqlalchemy.engine.Engine: select pg_catalog.version()
+2025-04-09 19:11:36 [INFO] sqlalchemy.engine.Engine: [raw sql] ()
+2025-04-09 19:11:36 [INFO] sqlalchemy.engine.Engine: select current_schema()
+2025-04-09 19:11:36 [INFO] sqlalchemy.engine.Engine: [raw sql] ()
+2025-04-09 19:11:36 [INFO] sqlalchemy.engine.Engine: show standard_conforming_strings
+2025-04-09 19:11:36 [INFO] sqlalchemy.engine.Engine: [raw sql] ()
+2025-04-09 19:11:36 [INFO] sqlalchemy.engine.Engine: BEGIN (implicit)
+2025-04-09 19:11:36 [INFO] sqlalchemy.engine.Engine: SELECT languages.language, languages.iso 
+FROM languages
+2025-04-09 19:11:36 [INFO] sqlalchemy.engine.Engine: [generated in 0.00018s] ()
+2025-04-09 19:11:36 [WARNING] root: Loading model for en -> de
+2025-04-09 19:11:38 [WARNING] root: Model for en -> de loaded successfully
+2025-04-09 19:11:38 [WARNING] root: Loading model for de -> en
+2025-04-09 19:11:39 [WARNING] root: Model for de -> en loaded successfully
+2025-04-09 19:11:44 [INFO] sqlalchemy.engine.Engine: select pg_catalog.version()
+2025-04-09 19:11:44 [INFO] sqlalchemy.engine.Engine: [raw sql] ()
+2025-04-09 19:11:44 [INFO] sqlalchemy.engine.Engine: select current_schema()
+2025-04-09 19:11:44 [INFO] sqlalchemy.engine.Engine: [raw sql] ()
+2025-04-09 19:11:44 [INFO] sqlalchemy.engine.Engine: show standard_conforming_strings
+2025-04-09 19:11:44 [INFO] sqlalchemy.engine.Engine: [raw sql] ()
+2025-04-09 19:11:44 [INFO] sqlalchemy.engine.Engine: BEGIN (implicit)
+2025-04-09 19:11:44 [INFO] sqlalchemy.engine.Engine: SELECT languages.language, languages.iso 
+FROM languages
+2025-04-09 19:11:44 [INFO] sqlalchemy.engine.Engine: [generated in 0.00023s] ()
+2025-04-09 19:11:44 [WARNING] root: Loading model for en -> de
+2025-04-09 19:11:45 [WARNING] root: Model for en -> de loaded successfully
+2025-04-09 19:11:45 [WARNING] root: Loading model for de -> en
+2025-04-09 19:11:46 [WARNING] root: Model for de -> en loaded successfully
+2025-04-09 19:11:52 [INFO] sqlalchemy.engine.Engine: select pg_catalog.version()
+2025-04-09 19:11:52 [INFO] sqlalchemy.engine.Engine: [raw sql] ()
+2025-04-09 19:11:52 [INFO] sqlalchemy.engine.Engine: select current_schema()
+2025-04-09 19:11:52 [INFO] sqlalchemy.engine.Engine: [raw sql] ()
+2025-04-09 19:11:52 [INFO] sqlalchemy.engine.Engine: show standard_conforming_strings
+2025-04-09 19:11:52 [INFO] sqlalchemy.engine.Engine: [raw sql] ()
+2025-04-09 19:11:52 [INFO] sqlalchemy.engine.Engine: BEGIN (implicit)
+2025-04-09 19:11:52 [INFO] sqlalchemy.engine.Engine: SELECT languages.language, languages.iso 
+FROM languages
+2025-04-09 19:11:52 [INFO] sqlalchemy.engine.Engine: [generated in 0.00028s] ()
+2025-04-09 19:11:52 [WARNING] root: Loading model for en -> de
+2025-04-09 19:11:53 [WARNING] root: Model for en -> de loaded successfully
+2025-04-09 19:11:53 [WARNING] root: Loading model for de -> en
+2025-04-09 19:11:53 [WARNING] root: Model for de -> en loaded successfully
+2025-04-09 19:11:59 [INFO] sqlalchemy.engine.Engine: select pg_catalog.version()
+2025-04-09 19:11:59 [INFO] sqlalchemy.engine.Engine: [raw sql] ()
+2025-04-09 19:11:59 [INFO] sqlalchemy.engine.Engine: select current_schema()
+2025-04-09 19:11:59 [INFO] sqlalchemy.engine.Engine: [raw sql] ()
+2025-04-09 19:11:59 [INFO] sqlalchemy.engine.Engine: show standard_conforming_strings
+2025-04-09 19:11:59 [INFO] sqlalchemy.engine.Engine: [raw sql] ()
+2025-04-09 19:11:59 [INFO] sqlalchemy.engine.Engine: BEGIN (implicit)
+2025-04-09 19:11:59 [INFO] sqlalchemy.engine.Engine: SELECT languages.language, languages.iso 
+FROM languages
+2025-04-09 19:11:59 [INFO] sqlalchemy.engine.Engine: [generated in 0.00018s] ()
+2025-04-09 19:11:59 [WARNING] root: Loading model for en -> de
+2025-04-09 19:12:00 [WARNING] root: Model for en -> de loaded successfully
+2025-04-09 19:12:00 [WARNING] root: Loading model for de -> en
+2025-04-09 19:12:01 [WARNING] root: Model for de -> en loaded successfully
+2025-04-09 19:12:06 [INFO] sqlalchemy.engine.Engine: select pg_catalog.version()
+2025-04-09 19:12:06 [INFO] sqlalchemy.engine.Engine: [raw sql] ()
+2025-04-09 19:12:06 [INFO] sqlalchemy.engine.Engine: select current_schema()
+2025-04-09 19:12:06 [INFO] sqlalchemy.engine.Engine: [raw sql] ()
+2025-04-09 19:12:06 [INFO] sqlalchemy.engine.Engine: show standard_conforming_strings
+2025-04-09 19:12:06 [INFO] sqlalchemy.engine.Engine: [raw sql] ()
+2025-04-09 19:12:06 [INFO] sqlalchemy.engine.Engine: BEGIN (implicit)
+2025-04-09 19:12:06 [INFO] sqlalchemy.engine.Engine: SELECT languages.language, languages.iso 
+FROM languages
+2025-04-09 19:12:06 [INFO] sqlalchemy.engine.Engine: [generated in 0.00038s] ()
+2025-04-09 19:12:06 [WARNING] root: Loading model for en -> de
+2025-04-09 19:12:07 [WARNING] root: Model for en -> de loaded successfully
+2025-04-09 19:12:07 [WARNING] root: Loading model for de -> en
+2025-04-09 19:12:10 [WARNING] root: Model for de -> en loaded successfully
+2025-04-09 19:16:25 [INFO] sqlalchemy.engine.Engine: select pg_catalog.version()
+2025-04-09 19:16:25 [INFO] sqlalchemy.engine.Engine: [raw sql] ()
+2025-04-09 19:16:25 [INFO] sqlalchemy.engine.Engine: select current_schema()
+2025-04-09 19:16:25 [INFO] sqlalchemy.engine.Engine: [raw sql] ()
+2025-04-09 19:16:25 [INFO] sqlalchemy.engine.Engine: show standard_conforming_strings
+2025-04-09 19:16:25 [INFO] sqlalchemy.engine.Engine: [raw sql] ()
+2025-04-09 19:16:25 [INFO] sqlalchemy.engine.Engine: BEGIN (implicit)
+2025-04-09 19:16:25 [INFO] sqlalchemy.engine.Engine: SELECT languages.language, languages.iso 
+FROM languages
+2025-04-09 19:16:25 [INFO] sqlalchemy.engine.Engine: [generated in 0.00023s] ()
+2025-04-09 19:16:25 [WARNING] root: Loading model for en -> de
+2025-04-09 19:16:26 [WARNING] root: Model for en -> de loaded successfully
+2025-04-09 19:16:26 [WARNING] root: Loading model for de -> en
+2025-04-09 19:16:28 [WARNING] root: Model for de -> en loaded successfully
+2025-04-09 19:16:34 [INFO] sqlalchemy.engine.Engine: select pg_catalog.version()
+2025-04-09 19:16:34 [INFO] sqlalchemy.engine.Engine: [raw sql] ()
+2025-04-09 19:16:34 [INFO] sqlalchemy.engine.Engine: select current_schema()
+2025-04-09 19:16:34 [INFO] sqlalchemy.engine.Engine: [raw sql] ()
+2025-04-09 19:16:34 [INFO] sqlalchemy.engine.Engine: show standard_conforming_strings
+2025-04-09 19:16:34 [INFO] sqlalchemy.engine.Engine: [raw sql] ()
+2025-04-09 19:16:34 [INFO] sqlalchemy.engine.Engine: BEGIN (implicit)
+2025-04-09 19:16:34 [INFO] sqlalchemy.engine.Engine: SELECT languages.language, languages.iso 
+FROM languages
+2025-04-09 19:16:34 [INFO] sqlalchemy.engine.Engine: [generated in 0.00018s] ()
+2025-04-09 19:16:34 [WARNING] root: Loading model for en -> de
+2025-04-09 19:16:37 [WARNING] root: Model for en -> de loaded successfully
+2025-04-09 19:16:37 [WARNING] root: Loading model for de -> en
+2025-04-09 19:16:37 [WARNING] root: Model for de -> en loaded successfully
+2025-04-09 19:16:51 [INFO] sqlalchemy.engine.Engine: BEGIN (implicit)
+2025-04-09 19:16:51 [INFO] sqlalchemy.engine.Engine: SELECT languages.language, languages.iso 
+FROM languages
+2025-04-09 19:16:51 [INFO] sqlalchemy.engine.Engine: [cached since 17.33s ago] ()
+2025-04-09 19:16:52 [INFO] sqlalchemy.engine.Engine: ROLLBACK
+2025-04-09 19:17:05 [INFO] sqlalchemy.engine.Engine: ROLLBACK
+2025-04-09 19:17:12 [INFO] sqlalchemy.engine.Engine: select pg_catalog.version()
+2025-04-09 19:17:12 [INFO] sqlalchemy.engine.Engine: [raw sql] ()
+2025-04-09 19:17:12 [INFO] sqlalchemy.engine.Engine: select current_schema()
+2025-04-09 19:17:12 [INFO] sqlalchemy.engine.Engine: [raw sql] ()
+2025-04-09 19:17:12 [INFO] sqlalchemy.engine.Engine: show standard_conforming_strings
+2025-04-09 19:17:12 [INFO] sqlalchemy.engine.Engine: [raw sql] ()
+2025-04-09 19:17:12 [INFO] sqlalchemy.engine.Engine: BEGIN (implicit)
+2025-04-09 19:17:12 [INFO] sqlalchemy.engine.Engine: SELECT languages.language, languages.iso 
+FROM languages
+2025-04-09 19:17:12 [INFO] sqlalchemy.engine.Engine: [generated in 0.00021s] ()
+2025-04-09 19:17:12 [WARNING] root: Loading model for en -> de
+2025-04-09 19:17:13 [WARNING] root: Model for en -> de loaded successfully
+2025-04-09 19:17:13 [WARNING] root: Loading model for de -> en
+2025-04-09 19:17:14 [WARNING] root: Model for de -> en loaded successfully
+2025-04-09 19:17:19 [INFO] sqlalchemy.engine.Engine: BEGIN (implicit)
+2025-04-09 19:17:19 [INFO] sqlalchemy.engine.Engine: SELECT languages.language, languages.iso 
+FROM languages
+2025-04-09 19:17:19 [INFO] sqlalchemy.engine.Engine: [cached since 6.857s ago] ()
+2025-04-09 19:17:20 [INFO] sqlalchemy.engine.Engine: ROLLBACK
+2025-04-09 19:18:24 [INFO] sqlalchemy.engine.Engine: ROLLBACK
+2025-04-09 19:18:30 [INFO] sqlalchemy.engine.Engine: select pg_catalog.version()
+2025-04-09 19:18:30 [INFO] sqlalchemy.engine.Engine: [raw sql] ()
+2025-04-09 19:18:30 [INFO] sqlalchemy.engine.Engine: select current_schema()
+2025-04-09 19:18:30 [INFO] sqlalchemy.engine.Engine: [raw sql] ()
+2025-04-09 19:18:30 [INFO] sqlalchemy.engine.Engine: show standard_conforming_strings
+2025-04-09 19:18:30 [INFO] sqlalchemy.engine.Engine: [raw sql] ()
+2025-04-09 19:18:30 [INFO] sqlalchemy.engine.Engine: BEGIN (implicit)
+2025-04-09 19:18:30 [INFO] sqlalchemy.engine.Engine: SELECT languages.language, languages.iso 
+FROM languages
+2025-04-09 19:18:30 [INFO] sqlalchemy.engine.Engine: [generated in 0.00024s] ()
+2025-04-09 19:18:30 [WARNING] root: Loading model for en -> de
+2025-04-09 19:18:31 [WARNING] root: Model for en -> de loaded successfully
+2025-04-09 19:18:31 [WARNING] root: Loading model for de -> en
+2025-04-09 19:18:31 [WARNING] root: Model for de -> en loaded successfully
+2025-04-09 19:18:43 [INFO] sqlalchemy.engine.Engine: select pg_catalog.version()
+2025-04-09 19:18:43 [INFO] sqlalchemy.engine.Engine: [raw sql] ()
+2025-04-09 19:18:43 [INFO] sqlalchemy.engine.Engine: select current_schema()
+2025-04-09 19:18:43 [INFO] sqlalchemy.engine.Engine: [raw sql] ()
+2025-04-09 19:18:43 [INFO] sqlalchemy.engine.Engine: show standard_conforming_strings
+2025-04-09 19:18:43 [INFO] sqlalchemy.engine.Engine: [raw sql] ()
+2025-04-09 19:18:43 [INFO] sqlalchemy.engine.Engine: BEGIN (implicit)
+2025-04-09 19:18:43 [INFO] sqlalchemy.engine.Engine: SELECT languages.language, languages.iso 
+FROM languages
+2025-04-09 19:18:43 [INFO] sqlalchemy.engine.Engine: [generated in 0.00021s] ()
+2025-04-09 19:18:43 [WARNING] root: Loading model for en -> de
+2025-04-09 19:18:44 [WARNING] root: Model for en -> de loaded successfully
+2025-04-09 19:18:44 [WARNING] root: Loading model for de -> en
+2025-04-09 19:18:46 [WARNING] root: Model for de -> en loaded successfully
+2025-04-09 19:18:52 [INFO] sqlalchemy.engine.Engine: select pg_catalog.version()
+2025-04-09 19:18:52 [INFO] sqlalchemy.engine.Engine: [raw sql] ()
+2025-04-09 19:18:52 [INFO] sqlalchemy.engine.Engine: select current_schema()
+2025-04-09 19:18:52 [INFO] sqlalchemy.engine.Engine: [raw sql] ()
+2025-04-09 19:18:52 [INFO] sqlalchemy.engine.Engine: show standard_conforming_strings
+2025-04-09 19:18:52 [INFO] sqlalchemy.engine.Engine: [raw sql] ()
+2025-04-09 19:18:52 [INFO] sqlalchemy.engine.Engine: BEGIN (implicit)
+2025-04-09 19:18:52 [INFO] sqlalchemy.engine.Engine: SELECT languages.language, languages.iso 
+FROM languages
+2025-04-09 19:18:52 [INFO] sqlalchemy.engine.Engine: [generated in 0.00018s] ()
+2025-04-09 19:18:52 [WARNING] root: Loading model for en -> de
+2025-04-09 19:18:53 [WARNING] root: Model for en -> de loaded successfully
+2025-04-09 19:18:53 [WARNING] root: Loading model for de -> en
+2025-04-09 19:18:54 [WARNING] root: Model for de -> en loaded successfully
+2025-04-09 19:19:46 [INFO] sqlalchemy.engine.Engine: ROLLBACK
+2025-04-09 19:19:58 [INFO] sqlalchemy.engine.Engine: select pg_catalog.version()
+2025-04-09 19:19:58 [INFO] sqlalchemy.engine.Engine: [raw sql] ()
+2025-04-09 19:19:58 [INFO] sqlalchemy.engine.Engine: select current_schema()
+2025-04-09 19:19:58 [INFO] sqlalchemy.engine.Engine: [raw sql] ()
+2025-04-09 19:19:58 [INFO] sqlalchemy.engine.Engine: show standard_conforming_strings
+2025-04-09 19:19:58 [INFO] sqlalchemy.engine.Engine: [raw sql] ()
+2025-04-09 19:19:58 [INFO] sqlalchemy.engine.Engine: BEGIN (implicit)
+2025-04-09 19:19:58 [INFO] sqlalchemy.engine.Engine: SELECT languages.language, languages.iso 
+FROM languages
+2025-04-09 19:19:58 [INFO] sqlalchemy.engine.Engine: [generated in 0.00020s] ()
+2025-04-09 19:19:58 [WARNING] root: Loading model for en -> de
+2025-04-09 19:19:59 [WARNING] root: Model for en -> de loaded successfully
+2025-04-09 19:19:59 [WARNING] root: Loading model for de -> en
+2025-04-09 19:20:00 [WARNING] root: Model for de -> en loaded successfully
+2025-04-09 19:20:24 [INFO] sqlalchemy.engine.Engine: select pg_catalog.version()
+2025-04-09 19:20:24 [INFO] sqlalchemy.engine.Engine: [raw sql] ()
+2025-04-09 19:20:24 [INFO] sqlalchemy.engine.Engine: select current_schema()
+2025-04-09 19:20:24 [INFO] sqlalchemy.engine.Engine: [raw sql] ()
+2025-04-09 19:20:24 [INFO] sqlalchemy.engine.Engine: show standard_conforming_strings
+2025-04-09 19:20:24 [INFO] sqlalchemy.engine.Engine: [raw sql] ()
+2025-04-09 19:20:24 [INFO] sqlalchemy.engine.Engine: BEGIN (implicit)
+2025-04-09 19:20:24 [INFO] sqlalchemy.engine.Engine: SELECT languages.language, languages.iso 
+FROM languages
+2025-04-09 19:20:24 [INFO] sqlalchemy.engine.Engine: [generated in 0.00022s] ()
+2025-04-09 19:20:24 [WARNING] root: Loading model for en -> de
+2025-04-09 19:20:25 [WARNING] root: Model for en -> de loaded successfully
+2025-04-09 19:20:25 [WARNING] root: Loading model for de -> en
+2025-04-09 19:20:26 [WARNING] root: Model for de -> en loaded successfully
+2025-04-09 19:20:38 [INFO] sqlalchemy.engine.Engine: select pg_catalog.version()
+2025-04-09 19:20:38 [INFO] sqlalchemy.engine.Engine: [raw sql] ()
+2025-04-09 19:20:38 [INFO] sqlalchemy.engine.Engine: select current_schema()
+2025-04-09 19:20:38 [INFO] sqlalchemy.engine.Engine: [raw sql] ()
+2025-04-09 19:20:38 [INFO] sqlalchemy.engine.Engine: show standard_conforming_strings
+2025-04-09 19:20:38 [INFO] sqlalchemy.engine.Engine: [raw sql] ()
+2025-04-09 19:20:38 [INFO] sqlalchemy.engine.Engine: BEGIN (implicit)
+2025-04-09 19:20:38 [INFO] sqlalchemy.engine.Engine: SELECT languages.language, languages.iso 
+FROM languages
+2025-04-09 19:20:38 [INFO] sqlalchemy.engine.Engine: [generated in 0.00027s] ()
+2025-04-09 19:20:38 [WARNING] root: Loading model for en -> de
+2025-04-09 19:20:39 [WARNING] root: Model for en -> de loaded successfully
+2025-04-09 19:20:39 [WARNING] root: Loading model for de -> en
+2025-04-09 19:20:40 [WARNING] root: Model for de -> en loaded successfully
+2025-04-09 19:20:46 [INFO] sqlalchemy.engine.Engine: select pg_catalog.version()
+2025-04-09 19:20:46 [INFO] sqlalchemy.engine.Engine: [raw sql] ()
+2025-04-09 19:20:46 [INFO] sqlalchemy.engine.Engine: select current_schema()
+2025-04-09 19:20:46 [INFO] sqlalchemy.engine.Engine: [raw sql] ()
+2025-04-09 19:20:46 [INFO] sqlalchemy.engine.Engine: show standard_conforming_strings
+2025-04-09 19:20:46 [INFO] sqlalchemy.engine.Engine: [raw sql] ()
+2025-04-09 19:20:46 [INFO] sqlalchemy.engine.Engine: BEGIN (implicit)
+2025-04-09 19:20:46 [INFO] sqlalchemy.engine.Engine: SELECT languages.language, languages.iso 
+FROM languages
+2025-04-09 19:20:46 [INFO] sqlalchemy.engine.Engine: [generated in 0.00017s] ()
+2025-04-09 19:20:46 [WARNING] root: Loading model for en -> de
+2025-04-09 19:20:47 [WARNING] root: Model for en -> de loaded successfully
+2025-04-09 19:20:47 [WARNING] root: Loading model for de -> en
+2025-04-09 19:20:48 [WARNING] root: Model for de -> en loaded successfully
+2025-04-09 19:20:53 [INFO] sqlalchemy.engine.Engine: select pg_catalog.version()
+2025-04-09 19:20:53 [INFO] sqlalchemy.engine.Engine: [raw sql] ()
+2025-04-09 19:20:53 [INFO] sqlalchemy.engine.Engine: select current_schema()
+2025-04-09 19:20:53 [INFO] sqlalchemy.engine.Engine: [raw sql] ()
+2025-04-09 19:20:53 [INFO] sqlalchemy.engine.Engine: show standard_conforming_strings
+2025-04-09 19:20:53 [INFO] sqlalchemy.engine.Engine: [raw sql] ()
+2025-04-09 19:20:53 [INFO] sqlalchemy.engine.Engine: BEGIN (implicit)
+2025-04-09 19:20:53 [INFO] sqlalchemy.engine.Engine: SELECT languages.language, languages.iso 
+FROM languages
+2025-04-09 19:20:53 [INFO] sqlalchemy.engine.Engine: [generated in 0.00026s] ()
+2025-04-09 19:20:53 [WARNING] root: Loading model for en -> de
+2025-04-09 19:20:54 [WARNING] root: Model for en -> de loaded successfully
+2025-04-09 19:20:54 [WARNING] root: Loading model for de -> en
+2025-04-09 19:20:55 [WARNING] root: Model for de -> en loaded successfully
+2025-04-09 19:21:01 [INFO] sqlalchemy.engine.Engine: select pg_catalog.version()
+2025-04-09 19:21:01 [INFO] sqlalchemy.engine.Engine: [raw sql] ()
+2025-04-09 19:21:01 [INFO] sqlalchemy.engine.Engine: select current_schema()
+2025-04-09 19:21:01 [INFO] sqlalchemy.engine.Engine: [raw sql] ()
+2025-04-09 19:21:01 [INFO] sqlalchemy.engine.Engine: show standard_conforming_strings
+2025-04-09 19:21:01 [INFO] sqlalchemy.engine.Engine: [raw sql] ()
+2025-04-09 19:21:01 [INFO] sqlalchemy.engine.Engine: BEGIN (implicit)
+2025-04-09 19:21:01 [INFO] sqlalchemy.engine.Engine: SELECT languages.language, languages.iso 
+FROM languages
+2025-04-09 19:21:01 [INFO] sqlalchemy.engine.Engine: [generated in 0.00020s] ()
+2025-04-09 19:21:01 [WARNING] root: Loading model for en -> de
+2025-04-09 19:21:02 [WARNING] root: Model for en -> de loaded successfully
+2025-04-09 19:21:02 [WARNING] root: Loading model for de -> en
+2025-04-09 19:21:02 [WARNING] root: Model for de -> en loaded successfully
+2025-04-09 19:21:08 [INFO] sqlalchemy.engine.Engine: select pg_catalog.version()
+2025-04-09 19:21:08 [INFO] sqlalchemy.engine.Engine: [raw sql] ()
+2025-04-09 19:21:08 [INFO] sqlalchemy.engine.Engine: select current_schema()
+2025-04-09 19:21:08 [INFO] sqlalchemy.engine.Engine: [raw sql] ()
+2025-04-09 19:21:08 [INFO] sqlalchemy.engine.Engine: show standard_conforming_strings
+2025-04-09 19:21:08 [INFO] sqlalchemy.engine.Engine: [raw sql] ()
+2025-04-09 19:21:08 [INFO] sqlalchemy.engine.Engine: BEGIN (implicit)
+2025-04-09 19:21:08 [INFO] sqlalchemy.engine.Engine: SELECT languages.language, languages.iso 
+FROM languages
+2025-04-09 19:21:08 [INFO] sqlalchemy.engine.Engine: [generated in 0.00018s] ()
+2025-04-09 19:21:08 [WARNING] root: Loading model for en -> de
+2025-04-09 19:21:09 [WARNING] root: Model for en -> de loaded successfully
+2025-04-09 19:21:09 [WARNING] root: Loading model for de -> en
+2025-04-09 19:21:10 [WARNING] root: Model for de -> en loaded successfully
+2025-04-09 19:25:48 [INFO] sqlalchemy.engine.Engine: select pg_catalog.version()
+2025-04-09 19:25:48 [INFO] sqlalchemy.engine.Engine: [raw sql] ()
+2025-04-09 19:25:48 [INFO] sqlalchemy.engine.Engine: select current_schema()
+2025-04-09 19:25:48 [INFO] sqlalchemy.engine.Engine: [raw sql] ()
+2025-04-09 19:25:48 [INFO] sqlalchemy.engine.Engine: show standard_conforming_strings
+2025-04-09 19:25:48 [INFO] sqlalchemy.engine.Engine: [raw sql] ()
+2025-04-09 19:25:48 [INFO] sqlalchemy.engine.Engine: BEGIN (implicit)
+2025-04-09 19:25:48 [INFO] sqlalchemy.engine.Engine: SELECT languages.language, languages.iso 
+FROM languages
+2025-04-09 19:25:48 [INFO] sqlalchemy.engine.Engine: [generated in 0.00019s] ()
+2025-04-09 19:25:48 [WARNING] root: Loading model for en -> de
+2025-04-09 19:25:50 [WARNING] root: Model for en -> de loaded successfully
+2025-04-09 19:25:50 [WARNING] root: Loading model for de -> en
+2025-04-09 19:25:51 [WARNING] root: Model for de -> en loaded successfully
+2025-04-09 19:25:58 [INFO] sqlalchemy.engine.Engine: select pg_catalog.version()
+2025-04-09 19:25:58 [INFO] sqlalchemy.engine.Engine: [raw sql] ()
+2025-04-09 19:25:58 [INFO] sqlalchemy.engine.Engine: select current_schema()
+2025-04-09 19:25:58 [INFO] sqlalchemy.engine.Engine: [raw sql] ()
+2025-04-09 19:25:58 [INFO] sqlalchemy.engine.Engine: show standard_conforming_strings
+2025-04-09 19:25:58 [INFO] sqlalchemy.engine.Engine: [raw sql] ()
+2025-04-09 19:25:58 [INFO] sqlalchemy.engine.Engine: BEGIN (implicit)
+2025-04-09 19:25:58 [INFO] sqlalchemy.engine.Engine: SELECT languages.language, languages.iso 
+FROM languages
+2025-04-09 19:25:58 [INFO] sqlalchemy.engine.Engine: [generated in 0.00020s] ()
+2025-04-09 19:25:58 [WARNING] root: Loading model for en -> de
+2025-04-09 19:26:00 [WARNING] root: Model for en -> de loaded successfully
+2025-04-09 19:26:00 [WARNING] root: Loading model for de -> en
+2025-04-09 19:26:00 [WARNING] root: Model for de -> en loaded successfully
+2025-04-09 19:26:10 [INFO] sqlalchemy.engine.Engine: ROLLBACK
+2025-04-09 19:26:19 [WARNING] root: Loading model for en -> de
+2025-04-09 19:26:24 [WARNING] root: Model for en -> de loaded successfully
+2025-04-09 19:26:24 [WARNING] root: Loading model for de -> en
+2025-04-09 19:26:25 [WARNING] root: Model for de -> en loaded successfully
+2025-04-09 19:27:17 [WARNING] root: Loading model for en -> de
+2025-04-09 19:27:19 [WARNING] root: Model for en -> de loaded successfully
+2025-04-09 19:27:19 [WARNING] root: Loading model for de -> en
+2025-04-09 19:27:19 [WARNING] root: Model for de -> en loaded successfully

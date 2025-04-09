@@ -1,14 +1,11 @@
 from sqlalchemy.ext.asyncio import create_async_engine, AsyncSession
 from sqlalchemy.orm import sessionmaker
-from contextlib import asynccontextmanager
+from config import db_settings, fastapi_settings
 
-# Настройка подключения к базе данных
-SQLALCHEMY_DATABASE_URL = "postgresql+asyncpg://postgres:postgres@translator-db:5432/postgres"
-engine = create_async_engine(SQLALCHEMY_DATABASE_URL, echo=True)
+engine = create_async_engine(db_settings.url, echo=fastapi_settings.engine_echo)
 async_session = sessionmaker(engine, class_=AsyncSession, expire_on_commit=False)
 
 
-# Зависимость для получения сессии БД
 async def get_db():
     async with async_session() as session:
         yield session

@@ -1,26 +1,28 @@
-from fastapi import FastAPI
-from routes import router as translator_router
-from contextlib import asynccontextmanager
-from services import TranslationService
 import logging
+from contextlib import asynccontextmanager
+
+from fastapi import FastAPI
+
+from routes import router as translator_router
+from services import TranslationService
 from logging_config import setup_logging
-from models import TranslatorDAO
+from repository import TranslatorRepository
 from db import get_db
 
-setup_logging(log_level=logging.INFO, log_file="/app/app.log")
+setup_logging(log_level=logging.WARNING, log_file="/app/app.log")
+
 
 @asynccontextmanager
 async def lifespan(app: FastAPI):
-    # Load the ML model
     db_gen = get_db()
-    # Извлекаем сессию из генератора
     db = await anext(db_gen)
     try:
-        await TranslationService.preload_models(TranslatorDAO(), db)
+        repository = TranslatorRepository(db)
+        await TranslationService(repository).preload_models()
         yield
     finally:
-        # Закрываем сессию
         await db.close()
+
 
 app = FastAPI(lifespan=lifespan)
 app.include_router(translator_router)

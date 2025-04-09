@@ -3,10 +3,6 @@ services:
     image: postgres
     container_name: keycloak-postgres
     restart: on-failure
-    environment:
-      POSTGRES_USER: postgres
-      POSTGRES_PASSWORD: postgres
-      POSTGRES_DB: postgres
     healthcheck:
       test: pg_isready -d postgres
       interval: 10s
@@ -24,9 +20,6 @@ services:
     image: mongo
     container_name: mongodb
     restart: always
-    environment:
-      MONGO_INITDB_ROOT_USERNAME: root
-      MONGO_INITDB_ROOT_PASSWORD: root
     healthcheck:
       test: echo 'db.runCommand("ping").ok' | mongosh mongodb://root:root@localhost:27017 --quiet || exit 1
       interval: 10s
@@ -40,8 +33,6 @@ services:
     restart: always
     ports:
       - "3011:3000"
-    environment:
-      - MONGOCLIENT_DEFAULT_CONNECTION_URL=mongodb://root:root@mongodb:27017/admin
     depends_on:
       mongodb:
         condition: service_healthy
@@ -51,14 +42,6 @@ services:
     container_name: keycloak
     command:
       - start --auto-build --db postgres --hostname-strict-https false --hostname-strict false --proxy edge --http-enabled true --import-realm --spi-user-profile-legacy-user-profile-read-only-attributes *_RES_ACCESS_MODE
-    environment:
-      KC_DB_URL: jdbc:postgresql://keycloak-postgres:5432/postgres
-      KC_DB_USERNAME: postgres
-      KC_DB_PASSWORD: postgres
-      KC_DB_SCHEMA: public
-      KC_FEATURES: preview
-      KEYCLOAK_ADMIN: admin
-      KEYCLOAK_ADMIN_PASSWORD: admin
     ports:
       - 8282:8080
     depends_on:
@@ -85,10 +68,6 @@ services:
     image: postgres
     container_name: translator-db
     restart: on-failure
-    environment:
-      POSTGRES_USER: postgres
-      POSTGRES_PASSWORD: postgres
-      POSTGRES_DB: postgres
     healthcheck:
       test: pg_isready -d postgres
       interval: 10s
@@ -104,9 +83,6 @@ services:
     image: dpage/pgadmin4
     container_name: pgadmin
     restart: on-failure
-    environment:
-      PGADMIN_DEFAULT_EMAIL: admin@admin.com
-      PGADMIN_DEFAULT_PASSWORD: admin 
     ports:
       - "9000:80"
     networks:
