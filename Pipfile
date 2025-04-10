@@ -17,6 +17,9 @@ alembic = "*"
 psycopg2-binary = "*"
 asyncpg = "*"
 python-dotenv = "*"
+python-docx = "*"
+aiofiles = "*"
+pymupdf = "*"
 
 [dev-packages]
 

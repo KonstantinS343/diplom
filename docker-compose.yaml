@@ -99,6 +99,8 @@ services:
       - "1000:1000"
     networks:
       - backend
+    volumes:
+      - ./autocomplete:/app
 
 networks:
   backend:
