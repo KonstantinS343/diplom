@@ -5,3 +5,5 @@ venv/
 **/.env
 
 .ruff_cache
+
+*.log

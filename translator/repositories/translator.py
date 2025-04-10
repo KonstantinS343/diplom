@@ -3,7 +3,7 @@ from sqlalchemy.ext.asyncio import AsyncSession
 from fastapi import Depends
 
 from db import get_db
-from models import Language
+from models.translator import Language
 
 
 class TranslatorRepository:

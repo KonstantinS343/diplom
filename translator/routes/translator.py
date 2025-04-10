@@ -1,6 +1,6 @@
-from schemas import TranslationRequest
+from schemas.translator import TranslationRequest
 from fastapi import APIRouter, Depends
-from services import TranslationService
+from services.translator import TranslationService
 
 router = APIRouter(tags=["translate"], prefix="/translate")
 

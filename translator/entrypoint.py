@@ -3,10 +3,10 @@ from contextlib import asynccontextmanager
 
 from fastapi import FastAPI
 
-from routes import router as translator_router
-from services import TranslationService
+from routes.translator import router as translator_router
+from services.translator import TranslationService
 from logging_config import setup_logging
-from repository import TranslatorRepository
+from repositories.translator import TranslatorRepository
 from db import get_db
 
 setup_logging(log_level=logging.WARNING, log_file="/app/app.log")

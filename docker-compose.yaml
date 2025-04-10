@@ -100,14 +100,6 @@ services:
     networks:
       - backend
 
-  docs_translator:
-    container_name: docs_translator_service
-    build: ./docs_translator
-    ports:
-      - "2001:2000"
-    networks:
-      - backend
-
 networks:
   backend:
 

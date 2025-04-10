@@ -4,7 +4,7 @@ from typing import Mapping, Sequence
 from transformers import AutoTokenizer, AutoModelForSeq2SeqLM
 from fastapi import HTTPException, Depends
 
-from repository import TranslatorRepository
+from repositories.translator import TranslatorRepository
 
 
 class TranslationService:
