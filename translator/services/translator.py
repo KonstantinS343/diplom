@@ -1,7 +1,8 @@
 import logging
 from typing import Mapping, Sequence
 import nltk
-nltk.download('punkt_tab')
+
+nltk.download("punkt_tab")
 
 from transformers import MarianTokenizer, MarianMTModel
 from fastapi import HTTPException, Depends
@@ -58,10 +59,12 @@ class TranslationService:
                 logging.warning(
                     f"Failed to load model for {source_lang} -> {target_lang}: {e.detail}"
                 )
-                
-    async def _chunk_separator(self, text: str, tokenizer: MarianTokenizer, max_tokens: int) -> Sequence[str]:
+
+    async def _chunk_separator(
+        self, text: str, tokenizer: MarianTokenizer, max_tokens: int
+    ) -> Sequence[str]:
         sentences = nltk.sent_tokenize(text)
-        
+
         chunks = []
         current_chunk = []
         current_token_count = 0
@@ -79,13 +82,15 @@ class TranslationService:
 
                 current_chunk = [sentence]
                 current_token_count = token_count
-                
+
         if current_chunk:
             chunks.append(" ".join(current_chunk))
-            
+
         return chunks
 
-    async def translate(self, source_lang: str, target_lang: str, text: str, max_tokens: int = 32) -> str:
+    async def translate(
+        self, source_lang: str, target_lang: str, text: str, max_tokens: int = 32
+    ) -> str:
         """
         Переводит текст с одного языка на другой
 
@@ -108,23 +113,16 @@ class TranslationService:
             )
 
         tokenizer, model = await self._load_translation_tools(source_lang, target_lang)
-        
+
         chunks = await self._chunk_separator(text, tokenizer, max_tokens)
         translated_chunks = []
 
         for chunk in chunks:
             input_ids = tokenizer(
-                chunk,
-                return_tensors="pt",
-                padding=True,
-                truncation=True,
-                max_length=max_tokens
+                chunk, return_tensors="pt", padding=True, truncation=True, max_length=max_tokens
             )
 
-            output_ids = model.generate(
-                **input_ids,
-                max_length=max_tokens
-            )
+            output_ids = model.generate(**input_ids, max_length=max_tokens)
 
             translated_chunk = tokenizer.decode(output_ids[0], skip_special_tokens=True)
             translated_chunks.append(translated_chunk)

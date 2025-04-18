@@ -6,14 +6,13 @@ from fastapi import FastAPI
 from routes import router as autocomplete_router
 from services import AutocomplateService
 from logging_config import setup_logging
-from db import get_db
 
-setup_logging(log_level=logging.WARNING, log_file="/app/app.log")
+setup_logging(log_level=logging.WARNING)
 
 
 @asynccontextmanager
 async def lifespan(app: FastAPI):
-    await AutocomplateService().preload_model()
+    await AutocomplateService.preload_model()
     yield
 
 

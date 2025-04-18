@@ -1,9 +1,11 @@
+from fastapi import APIRouter, Depends
+
 from schemas import AutocompleteRequest
-from fastapi import APIRouter
+from services import AutocomplateService
 
 router = APIRouter(tags=["autocomplete"], prefix="/autocomplete")
 
 
 @router.post("/")
-async def autocomplete(request: AutocompleteRequest):
-    return {"suggestions": "test"}
+async def autocomplete(request: AutocompleteRequest, service: AutocomplateService = Depends()):
+    return await service.predict(request.text, request.position)

@@ -79,6 +79,21 @@ services:
     networks:
       - backend
 
+  translation-quality:
+    container_name: translation-quality
+    build: ./translation_quality
+    ports:
+      - "3001:3001"
+    networks:
+      - backend
+    volumes:
+      - ./translation_quality:/app
+    depends_on:
+      translator-db:
+        condition: service_healthy
+      translator:
+        condition: service_started
+
   pgadmin:
     image: dpage/pgadmin4
     container_name: pgadmin

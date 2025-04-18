@@ -21,6 +21,7 @@ python-docx = "*"
 aiofiles = "*"
 pymupdf = "*"
 nltk = "*"
+aiohttp = "*"
 
 [dev-packages]
 
