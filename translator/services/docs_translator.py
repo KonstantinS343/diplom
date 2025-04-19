@@ -3,17 +3,18 @@ import uuid
 import shutil
 import zipfile
 from io import BytesIO
-from xml.etree import ElementTree as ET
+from lxml import etree as LET
 
 import aiofiles
 import asyncio
-from fastapi import UploadFile
+from fastapi import UploadFile, HTTPException
 
 from services.base import BaseDocumentTranslator
 
 NAMESPACES = {
     "docx": {"w": "http://schemas.openxmlformats.org/wordprocessingml/2006/main"},
     "pptx": {"a": "http://schemas.openxmlformats.org/drawingml/2006/main"},
+    "xlsx": {"a": "http://schemas.openxmlformats.org/spreadsheetml/2006/main"},
 }
 
 
@@ -49,16 +50,21 @@ class OpenXmlTranslationService(BaseDocumentTranslator):
             return "docx"
         elif ext == ".pptx":
             return "pptx"
+        elif ext == ".xlsx":
+            return "xlsx"
         else:
-            raise ValueError(f"Unsupported file type: {ext}")
+            raise HTTPException(
+                status_code=400,
+                detail=f"File type '{ext}' is not supported. Supported types: .docx, .pptx, .xlsx",
+            )
 
     def _get_translation_targets(self, root_dir: str, file_type: str) -> list[str]:
         if file_type == "docx":
             target_dir = os.path.join(root_dir, "word")
-            tag = "w:t"
         elif file_type == "pptx":
             target_dir = os.path.join(root_dir, "ppt", "slides")
-            tag = "a:t"
+        elif file_type == "xlsx":
+            target_dir = os.path.join(root_dir, "xl")
         else:
             return []
 
@@ -90,20 +96,46 @@ class OpenXmlTranslationService(BaseDocumentTranslator):
         self, xml_path: str, file_type: str, source_lang: str, target_lang: str
     ):
         ns = NAMESPACES[file_type]
-        tag = list(ns.keys())[0] + ":t"
+        ns_uri = ns[list(ns.keys())[0]]
+        
+        tag_t = f"{{{ns_uri}}}t"
+        tag_r = f"{{{ns_uri}}}r"
+        vert_align_tag = f".//{{{ns_uri}}}rPr/{{{ns_uri}}}vertAlign"
 
         try:
             async with aiofiles.open(xml_path, mode="r", encoding="utf-8") as f:
                 content = await f.read()
-            tree = ET.ElementTree(ET.fromstring(content))
-            root = tree.getroot()
-            for t in root.findall(f".//{tag}", ns):
-                if t.text and t.text.strip():
-                    t.text = await self.translation_service.translate(
-                        source_lang, target_lang, t.text
-                    )
-            output = ET.tostring(root, encoding="utf-8", xml_declaration=True)
+                
+            parser = LET.XMLParser(remove_blank_text=False)
+            root = LET.fromstring(content.encode('utf-8'), parser)
+            
+            if file_type == "xlsx":
+                for si in root.findall(f".//{list(ns.keys())[0]}:si", ns):
+                    texts = si.findall(f".//{list(ns.keys())[0]}:t", ns)
+                    full_text = "".join([t.text or "" for t in texts]).strip()
+                    if full_text:
+                        translated = await self.translation_service.translate(source_lang, target_lang, full_text)
+                        if texts:
+                            texts[0].text = translated
+                            for t in texts[1:]:
+                                t.text = None
+            else:
+                
+                for t_elem in root.findall(f".//{tag_t}"):
+                    r_elem = t_elem.getparent()
+                    if r_elem is None or r_elem.tag != tag_r:
+                        continue
+
+                    vert_align = r_elem.find(vert_align_tag, ns)
+                    if vert_align is not None:
+                        continue
+
+                    if t_elem.text and t_elem.text.strip():
+                        t_elem.text = await self.translation_service.translate(
+                            source_lang, target_lang, t_elem.text
+                        )
+            output = LET.tostring(root, encoding="utf-8", xml_declaration=True, pretty_print=False)
             async with aiofiles.open(xml_path, mode="wb") as f:
                 await f.write(output)
-        except ET.ParseError:
+        except LET.XMLSyntaxError:
             pass
