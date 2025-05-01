@@ -15,6 +15,10 @@ services:
       resources:
         limits:
           memory: 256M
+    env_file:
+      - .env
+    networks:
+      - backend
 
   mongodb:
     image: mongo
@@ -26,6 +30,10 @@ services:
       timeout: 5s
       retries: 5
       start_period: 30s
+    env_file:
+      - .env
+    networks:
+      - backend
 
   mongodb_gui:
     image: mongoclient/mongoclient
@@ -33,6 +41,10 @@ services:
     restart: always
     ports:
       - "3011:3000"
+    networks:
+      - backend
+    env_file:
+      - .env
     depends_on:
       mongodb:
         condition: service_healthy
@@ -53,6 +65,10 @@ services:
       interval: 30s
       retries: 3
       timeout: 5s
+    env_file:
+      - .env
+    networks:
+      - backend
 
   translator:
     container_name: translator_service
@@ -74,6 +90,8 @@ services:
       timeout: 5s
       retries: 3
       start_period: 5s
+    env_file:
+      - .env
     ports:
       - 5434:5432
     networks:
@@ -102,6 +120,8 @@ services:
       - "9000:80"
     networks:
       - backend
+    env_file:
+      - .env
     depends_on:
       - translator-db
     volumes:
@@ -116,6 +136,16 @@ services:
       - backend
     volumes:
       - ./autocomplete:/app
+
+  training:
+    container_name: training_service
+    build: ./training
+    ports:
+      - "3002:3002"
+    networks:
+      - backend
+    volumes:
+      - ./training:/app
 
 networks:
   backend:

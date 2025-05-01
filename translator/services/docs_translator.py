@@ -97,7 +97,7 @@ class OpenXmlTranslationService(BaseDocumentTranslator):
     ):
         ns = NAMESPACES[file_type]
         ns_uri = ns[list(ns.keys())[0]]
-        
+
         tag_t = f"{{{ns_uri}}}t"
         tag_r = f"{{{ns_uri}}}r"
         vert_align_tag = f".//{{{ns_uri}}}rPr/{{{ns_uri}}}vertAlign"
@@ -105,22 +105,23 @@ class OpenXmlTranslationService(BaseDocumentTranslator):
         try:
             async with aiofiles.open(xml_path, mode="r", encoding="utf-8") as f:
                 content = await f.read()
-                
+
             parser = LET.XMLParser(remove_blank_text=False)
-            root = LET.fromstring(content.encode('utf-8'), parser)
-            
+            root = LET.fromstring(content.encode("utf-8"), parser)
+
             if file_type == "xlsx":
                 for si in root.findall(f".//{list(ns.keys())[0]}:si", ns):
                     texts = si.findall(f".//{list(ns.keys())[0]}:t", ns)
                     full_text = "".join([t.text or "" for t in texts]).strip()
                     if full_text:
-                        translated = await self.translation_service.translate(source_lang, target_lang, full_text)
+                        translated = await self.translation_service.translate(
+                            source_lang, target_lang, full_text
+                        )
                         if texts:
                             texts[0].text = translated
                             for t in texts[1:]:
                                 t.text = None
             else:
-                
                 for t_elem in root.findall(f".//{tag_t}"):
                     r_elem = t_elem.getparent()
                     if r_elem is None or r_elem.tag != tag_r:

@@ -24,8 +24,8 @@
   [https://education.yandex.ru/handbook/ml/article/metod-obratnogo-rasprostraneniya-oshibki](https://education.yandex.ru/handbook/ml/article/metod-obratnogo-rasprostraneniya-oshibki)  
   Дата доступа: 15.03.2025
 
-- **Understanding the T5 Model: A Comprehensive Guide**  
-  [https://medium.com/@gagangupta_82781/understanding-the-t5-model-a-comprehensive-guide-b4d5c02c234b](https://medium.com/@gagangupta_82781/understanding-the-t5-model-a-comprehensive-guide-b4d5c02c234b)  
+- **Marian: Fast Neural Machine Translation in C++**  
+  [https://arxiv.org/pdf/1804.00344](https://arxiv.org/pdf/1804.00344)  
   Дата доступа: 20.03.2025
 
 - **BERT Explained: State of the art language model for NLP**  
@@ -40,18 +40,22 @@
   [https://arxiv.org/pdf/2109.03564](https://arxiv.org/pdf/2109.03564)  
   Дата доступа: 20.03.2025
 
-- **European Parliament Proceedings Parallel Corpus 1996-2011**  
-  [https://www.statmt.org/europarl](https://www.statmt.org/europarl)  
-  Дата доступа: 20.03.2025
-
-- **Translation**  
-  [https://huggingface.co/docs/transformers/en/tasks/translation](https://huggingface.co/docs/transformers/en/tasks/translation)  
-  Дата доступа: 20.03.2025
-
-- **ELI5-Category**  
-  [https://huggingface.co/datasets/rexarski/eli5_category](https://huggingface.co/datasets/rexarski/eli5_category)  
-  Дата доступа: 20.03.2025
-
 - **Masked language modeling**  
   [https://huggingface.co/docs/transformers/en/tasks/masked_language_modeling](https://huggingface.co/docs/transformers/en/tasks/masked_language_modeling)  
   Дата доступа: 20.03.2025
+
+- **Roadmap to Backend Programming Master: Architectural Patterns**
+  [https://medium.com/@hanxuyang0826/roadmap-to-backend-programming-master-architectural-patterns-c763c9194414] (https://medium.com/@hanxuyang0826/roadmap-to-backend-programming-master-architectural-patterns-c763c9194414)
+  Дата доступа: 10.04.2025
+
+- **When to Choose Which Architecture for System Design**
+  [https://www.geeksforgeeks.org/when-to-choose-which-architecture-for-system-design/?utm_source=chatgpt.com] (https://www.geeksforgeeks.org/when-to-choose-which-architecture-for-system-design/?utm_source=chatgpt.com)
+  Дата доступа: 10.04.2025
+
+- **Краудсорсинг**
+  [https://ru.wikipedia.org/wiki/%D0%9A%D1%80%D0%B0%D1%83%D0%B4%D1%81%D0%BE%D1%80%D1%81%D0%B8%D0%BD%D0%B3] (https://ru.wikipedia.org/wiki/%D0%9A%D1%80%D0%B0%D1%83%D0%B4%D1%81%D0%BE%D1%80%D1%81%D0%B8%D0%BD%D0%B3)
+  Дата доступа: 10.04.2025
+
+- **Understanding SQL vs NoSQL Databases**
+  [https://www.mongodb.com/resources/basics/databases/nosql-explained/nosql-vs-sql] (https://www.mongodb.com/resources/basics/databases/nosql-explained/nosql-vs-sql)
+  Дата доступа: 10.04.2025
