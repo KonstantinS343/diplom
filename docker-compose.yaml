@@ -147,6 +147,16 @@ services:
     volumes:
       - ./training:/app
 
+  user-service:
+    container_name: user_service
+    build: ./user
+    ports:
+      - "1001:1001"
+    networks:
+      - backend
+    volumes:
+      - ./user:/app
+
 networks:
   backend:
 
