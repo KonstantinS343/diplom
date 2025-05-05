@@ -6,14 +6,14 @@ from urllib.parse import quote
 from services import TranslationService, BaseDocumentTranslator, OpenXmlTranslationService
 
 
-router = APIRouter(tags=["docs"], prefix="/docs")
+router = APIRouter(tags=["docs"], prefix="/v1/api/translate")
 
 
 def get_openxml_service(service: TranslationService = Depends()) -> BaseDocumentTranslator:
     return OpenXmlTranslationService(service)
 
 
-@router.post("/translate/")
+@router.post("/docs")
 async def translate(
     source_lang: str = Form(...),
     target_lang: str = Form(...),

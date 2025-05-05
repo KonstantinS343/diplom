@@ -2,7 +2,7 @@ from schemas.translator import TranslationRequest
 from fastapi import APIRouter, Depends
 from services.translator import TranslationService
 
-router = APIRouter(tags=["translate"], prefix="/translate")
+router = APIRouter(tags=["translate"], prefix="/v1/api/translate")
 
 
 @router.post("/")
@@ -12,4 +12,4 @@ async def translate(request: TranslationRequest, service: TranslationService = D
 
 @router.get("/langs")
 async def get_langs(service: TranslationService = Depends()):
-    return await service.respository.get_languages()
+    return await service.respository.get_languages_full()

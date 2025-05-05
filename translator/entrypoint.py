@@ -2,6 +2,7 @@ import logging
 from contextlib import asynccontextmanager
 
 from fastapi import FastAPI
+from fastapi.middleware.cors import CORSMiddleware
 
 from routes.translator import router as translator_router
 from routes.docs_translator import router as docs_translator_router
@@ -21,6 +22,28 @@ async def lifespan(app: FastAPI):
         yield
 
 
-app = FastAPI(lifespan=lifespan)
+app = FastAPI(
+    title="Translation Service",
+    description="API for text translation and language processing",
+    version="1.0.0",
+    lifespan=lifespan
+)
+
+# Настройка CORS
+origins = [
+    "http://localhost:5173",  # Vite dev server
+    "http://localhost:3000",  # Production frontend
+    "http://127.0.0.1:5173",
+    "http://127.0.0.1:3000",
+]
+
+app.add_middleware(
+    CORSMiddleware,
+    allow_origins=origins,
+    allow_credentials=True,
+    allow_methods=["*"],  # Разрешаем все методы
+    allow_headers=["*"],  # Разрешаем все заголовки
+)
+
 app.include_router(translator_router)
 app.include_router(docs_translator_router)

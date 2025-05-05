@@ -12,9 +12,10 @@ class TranslatorRepository:
     def __init__(self, db: AsyncSession = Depends(get_db)) -> None:
         self.db = db
 
-    async def add_language(self, lang_name: str, lang_iso: str):
+    async def add_language(self, lang_name: str, lang_iso: str, lang_name_ru: str):
         language = Language(
             language=lang_name,
+            language_name=lang_name_ru,
             iso=lang_iso,
         )
         self.db.add(language)

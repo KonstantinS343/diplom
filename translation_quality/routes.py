@@ -5,7 +5,7 @@ from schemas import TranslationQualityRequest
 from config import translator_settings
 
 
-router = APIRouter(tags=["translation_quality"], prefix="/translation")
+router = APIRouter(tags=["translation_quality"], prefix="/v1/api/translation")
 
 
 @router.post("/quality")

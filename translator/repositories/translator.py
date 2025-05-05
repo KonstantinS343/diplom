@@ -31,3 +31,17 @@ class TranslatorRepository:
             languages_mapping[language_item.iso] = language_item.language
 
         return languages_mapping
+    
+    async def get_languages_full(self):
+        query = select(Language)
+        results = await self.db.execute(query)
+
+        languages_mapping = {}
+
+        for language_item in results.scalars().all():
+            languages_mapping[language_item.iso] = {
+                "language": language_item.language,
+                "language_name_user": language_item.language_name,
+            }
+
+        return languages_mapping
