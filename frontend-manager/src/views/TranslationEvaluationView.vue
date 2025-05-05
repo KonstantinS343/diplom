@@ -87,20 +87,37 @@
 
       <v-expand-transition>
         <v-row v-if="evaluationResult" class="mt-4">
-          <v-col cols="12">
+          <v-col cols="12" md="6">
+            <v-card flat class="source-translation-card">
+              <div class="evaluation-header">
+                <v-icon icon="mdi-translate" color="grey-darken-2" class="mr-2"></v-icon>
+                <span class="evaluation-title">Правильный перевод</span>
+              </div>
+              <div class="evaluation-content">
+                <v-textarea
+                  v-model="modelTranslation"
+                  auto-grow
+                  rows="10"
+                  variant="plain"
+                  class="translation-textarea"
+                  hide-details
+                  readonly
+                ></v-textarea>
+              </div>
+            </v-card>
+          </v-col>
+
+          <v-col cols="12" md="6">
             <v-card flat class="source-translation-card">
               <div class="evaluation-header">
                 <v-icon icon="mdi-chart-bar" color="grey-darken-2" class="mr-2"></v-icon>
                 <span class="evaluation-title">Результат оценки</span>
               </div>
-              <v-textarea
-                v-model="evaluationResult"
-                auto-grow
-                rows="10"
-                variant="plain"
-                class="translation-textarea"
-                hide-details
-              ></v-textarea>
+              <div class="evaluation-content">
+                <div class="marked-text-wrapper">
+                  <marked-text :text="evaluationResult" />
+                </div>
+              </div>
             </v-card>
           </v-col>
         </v-row>
@@ -110,62 +127,94 @@
 </template>
 
 <script setup>
-import { ref } from 'vue';
+import { ref, onMounted, watch } from 'vue';
 import { useSnackbar } from '@/composables/useSnackbar';
+import { translationService } from '@/services/translationService';
+import { evaluationService } from '@/services/evaluationService';
+import MarkedText from '@/components/MarkedText.vue';
 
-const { showSnackbar } = useSnackbar();
+const { showSuccess, showError } = useSnackbar();
 
-const languages = [
-  'Русский',
-  'Английский',
-  'Немецкий',
-  'Французский',
-  'Испанский',
-  'Итальянский',
-  'Китайский',
-  'Японский'
-];
-
-const sourceLanguage = ref('Русский');
-const targetLanguage = ref('Английский');
+const sourceLanguage = ref('ru');
+const targetLanguage = ref('en');
 const sourceText = ref('');
 const translatedText = ref('');
 const evaluationResult = ref('');
+const modelTranslation = ref('');
 const isEvaluating = ref(false);
+const languages = ref([]);
 
 const swapLanguages = () => {
-  const temp = sourceLanguage.value;
+  let temp = sourceLanguage.value;
   sourceLanguage.value = targetLanguage.value;
   targetLanguage.value = temp;
+
+  temp = translatedText.value;
+  translatedText.value = sourceText.value;
+  sourceText.value = temp;
 };
 
 const evaluateTranslation = async () => {
   if (!sourceText.value || !translatedText.value) {
-    showSnackbar('Пожалуйста, заполните оба поля', 'error');
+    showError('Пожалуйста, заполните оба поля');
     return;
   }
 
   isEvaluating.value = true;
   try {
-    // Здесь будет API запрос для оценки перевода
-    // Временный пример ответа
-    await new Promise(resolve => setTimeout(resolve, 1000));
-    evaluationResult.value = `Оценка качества перевода:\n\n` +
-      `1. Точность перевода: 85%\n` +
-      `2. Сохранение смысла: 90%\n` +
-      `3. Грамматическая корректность: 95%\n` +
-      `4. Стилистическая адекватность: 88%\n\n` +
-      `Общая оценка: 89.5%\n\n` +
-      `Рекомендации по улучшению:\n` +
-      `- Обратить внимание на терминологию в технических частях\n` +
-      `- Улучшить согласованность временных форм\n` +
-      `- Проверить соответствие регистра букв`;
+    const response = await evaluationService.evaluateTranslation(
+      sourceText.value,
+      translatedText.value,
+      sourceLanguage.value,
+      targetLanguage.value
+    );
+
+    evaluationResult.value = response.data.highlighted_text;
+    modelTranslation.value = response.data.model_text;
+    showSuccess('Оценка перевода успешно выполнена');
   } catch (error) {
-    showSnackbar('Произошла ошибка при оценке перевода', 'error');
+    console.error('Ошибка оценки перевода:', error);
+    showError('Произошла ошибка при оценке перевода');
   } finally {
     isEvaluating.value = false;
   }
 };
+
+onMounted(() => {
+  loadLanguages();
+});
+
+// Загрузка списка поддерживаемых языков
+const loadLanguages = async () => {
+  try {
+    const response = await translationService.getSupportedLanguages();
+    
+    languages.value = Object.entries(response.data).map(([code, info]) => ({
+      title: info.language_name_user,
+      value: code
+    }));
+  } catch (error) {
+    showError('Не удалось загрузить список языков');
+  }
+};
+
+watch(sourceLanguage, (newSourceLang, oldSourceLang) => {
+  if (newSourceLang === targetLanguage.value) {
+    targetLanguage.value = oldSourceLang;
+    const temp = translatedText.value;
+    translatedText.value = sourceText.value;
+    sourceText.value = temp;
+  }
+});
+
+watch(targetLanguage, (newTargetLang, oldTargetLang) => {
+  if (newTargetLang === sourceLanguage.value) {
+    sourceLanguage.value = oldTargetLang;
+    const temp = translatedText.value;
+    translatedText.value = sourceText.value;
+    sourceText.value = temp;
+  }
+});
 </script>
 
 <style scoped>
@@ -216,9 +265,8 @@ const evaluateTranslation = async () => {
   transform: scale(1);
 }
 
-
-.source-translation-card:focus-within,
-.target-translation-card:focus-within {
+.source-translation-card:hover,
+.target-translation-card:hover {
   box-shadow: 0 12px 24px rgba(0, 0, 0, 0.2);
   transform: scale(1.01);
 }
@@ -293,12 +341,6 @@ const evaluateTranslation = async () => {
   color: #424242;
 }
 
-/* Исправление бага с увеличением */
-.source-translation-card:not(:hover):not(:focus-within),
-.target-translation-card:not(:hover):not(:focus-within) {
-  transform: scale(1);
-}
-
 .evaluation-header {
   padding: 16px 16px 8px;
   display: flex;
@@ -324,5 +366,23 @@ const evaluateTranslation = async () => {
 
 .page-header p {
   color: rgba(0, 0, 0, 0.6);
+}
+
+.evaluation-content {
+  position: relative;
+  background-color: white;
+  border-radius: 0 0 12px 12px;
+  flex-grow: 1;
+  display: flex;
+  flex-direction: column;
+}
+
+.marked-text-wrapper {
+  flex-grow: 1;
+  overflow-y: auto;
+  padding: 16px;
+  font-size: 1.1rem;
+  line-height: 1.6;
+  color: #424242;
 }
 </style> 

@@ -52,9 +52,17 @@
                 class="translation-textarea"
                 hide-details
                 @input="debouncedTranslate"
+                @keyup="debouncedAutocomplete"
+                @keydown="handleKeyDown"
                 :counter="10000"
                 :rules="[v => v.length <= 10000 || 'Максимум 10,000 символов']"
-              ></v-textarea>
+              >
+                <template v-slot:append>
+                  <span v-if="isAutocompleteVisible" class="autocomplete-text">
+                    {{ autocompleteText }}
+                  </span>
+                </template>
+              </v-textarea>
               <v-card-actions class="pa-4 d-flex justify-end">
                 <v-btn
                   color="grey-darken-2"
@@ -66,7 +74,8 @@
                 <v-btn
                   color="grey-darken-2"
                   variant="text"
-                  prepend-icon="mdi-content-copy"
+                  :prepend-icon="sourceCopySuccess ? 'mdi-check' : 'mdi-content-copy'"
+                  :color="sourceCopySuccess ? 'green-darken-2' : 'green-darken-3'"
                   @click="copySourceText"
                 >
                 </v-btn>
@@ -76,29 +85,32 @@
 
           <v-col cols="12" md="6">
             <v-card flat class="target-translation-card">
-              <v-textarea
-                v-model="translatedText"
-                placeholder="Перевод появится здесь"
-                auto-grow
-                rows="10"
-                variant="plain"
-                class="translation-textarea"
-                hide-details
-                readonly
-                :counter="10000"
-              ></v-textarea>
+              <div class="translation-container">
+                <v-textarea
+                  v-model="translatedText"
+                  placeholder="Перевод появится здесь"
+                  auto-grow
+                  rows="10"
+                  variant="plain"
+                  class="translation-textarea"
+                  hide-details
+                  readonly
+                  :counter="10000"
+                ></v-textarea>
+                <div v-if="translating" class="loading-overlay">
+                  <v-progress-circular
+                    indeterminate
+                    color="grey-darken-2"
+                    size="64"
+                  ></v-progress-circular>
+                </div>
+              </div>
               <v-card-actions class="pa-4 d-flex justify-end">
                 <v-btn
                   color="grey-darken-2"
                   variant="text"
-                  prepend-icon="mdi-delete"
-                  @click="clearTranslatedText"
-                >
-                </v-btn>
-                <v-btn
-                  color="grey-darken-2"
-                  variant="text"
-                  prepend-icon="mdi-content-copy"
+                  :prepend-icon="targetCopySuccess ? 'mdi-check' : 'mdi-content-copy'"
+                  :color="targetCopySuccess ? 'green-darken-2' : 'green-darken-3'"
                   @click="copyTranslatedText"
                 >
                 </v-btn>
@@ -164,7 +176,7 @@
 </template>
 
 <script setup>
-import { ref, onMounted, onUnmounted } from 'vue';
+import { ref, onMounted, onUnmounted, watch } from 'vue';
 import { translationService } from '@/services/translationService';
 import { useSnackbar } from '@/composables/useSnackbar';
 import { useDebounce } from '@/composables/useDebounce';
@@ -178,74 +190,23 @@ const sourceLanguage = ref('ru');
 const targetLanguage = ref('en');
 const translating = ref(false);
 const languages = ref([]);
+const sourceCopySuccess = ref(false);
+const targetCopySuccess = ref(false);
+
+// Добавляем refs для автодополнения
+const autocompleteText = ref('');
+const cursorPosition = ref(0);
+const isAutocompleteVisible = ref(false);
 
 // История переводов
-const translationHistory = ref([
-  {
-    sourceLang: 'Русский',
-    targetLang: 'Английский',
-    sourceText: 'Привет, как дела?',
-    translatedText: 'Hello, how are you?'
-  },
-  {
-    sourceLang: 'Английский',
-    targetLang: 'Русский',
-    sourceText: 'The weather is beautiful today.',
-    translatedText: 'Сегодня прекрасная погода.'
-  },
-  {
-    sourceLang: 'Русский',
-    targetLang: 'Немецкий',
-    sourceText: 'Я люблю программирование.',
-    translatedText: 'Ich liebe Programmierung.'
-  },
-  {
-    sourceLang: 'Французский',
-    targetLang: 'Русский',
-    sourceText: 'Bonjour, comment allez-vous?',
-    translatedText: 'Здравствуйте, как вы поживаете?'
-  },
-  {
-    sourceLang: 'Русский',
-    targetLang: 'Испанский',
-    sourceText: 'Спасибо за помощь!',
-    translatedText: '¡Gracias por la ayuda!'
-  },
-  {
-    sourceLang: 'Немецкий',
-    targetLang: 'Русский',
-    sourceText: 'Guten Tag!',
-    translatedText: 'Добрый день!'
-  },
-  {
-    sourceLang: 'Русский',
-    targetLang: 'Французский',
-    sourceText: 'До свидания!',
-    translatedText: 'Au revoir!'
-  },
-  {
-    sourceLang: 'Испанский',
-    targetLang: 'Русский',
-    sourceText: '¿Cómo estás?',
-    translatedText: 'Как ты?'
-  },
-  {
-    sourceLang: 'Русский',
-    targetLang: 'Итальянский',
-    sourceText: 'Добро пожаловать!',
-    translatedText: 'Benvenuto!'
-  },
-  {
-    sourceLang: 'Итальянский',
-    targetLang: 'Русский',
-    sourceText: 'Grazie mille!',
-    translatedText: 'Большое спасибо!'
-  }
-]);
+const translationHistory = ref([]);
 
 const sliderRef = ref(null);
 const canScrollLeft = ref(false);
 const canScrollRight = ref(true);
+
+// В script setup добавим ref для контроллера
+const abortController = ref(null);
 
 const scrollLeft = () => {
   if (sliderRef.value) {
@@ -280,9 +241,10 @@ const loadTranslation = (item) => {
 const loadLanguages = async () => {
   try {
     const response = await translationService.getSupportedLanguages();
-    languages.value = response.data.map(lang => ({
-      title: lang.name,
-      value: lang.code
+    
+    languages.value = Object.entries(response.data).map(([code, info]) => ({
+      title: info.language_name_user,
+      value: code
     }));
   } catch (error) {
     showError('Не удалось загрузить список языков');
@@ -290,8 +252,97 @@ const loadLanguages = async () => {
   }
 };
 
+// В script setup добавим новые функции для работы с историей
+const MAX_HISTORY_ITEMS = 10;
+
+// Функция для загрузки истории из localStorage
+const loadHistoryFromStorage = () => {
+  const savedHistory = localStorage.getItem('translationHistory');
+  if (savedHistory) {
+    translationHistory.value = JSON.parse(savedHistory);
+  }
+};
+
+// Функция для сохранения истории в localStorage
+const saveHistoryToStorage = (history) => {
+  localStorage.setItem('translationHistory', JSON.stringify(history));
+};
+
+// Функция для добавления перевода в историю
+const addToHistory = (sourceText, translatedText) => {
+  // Проверяем, есть ли уже такой перевод в истории
+  const isDuplicate = translationHistory.value.some(
+    item => item.sourceText === sourceText && item.translatedText === translatedText
+  );
+
+  if (isDuplicate) {
+    return;
+  }
+
+  const sourceLangName = languages.value.find(lang => lang.value === sourceLanguage.value)?.title || sourceLanguage.value;
+  const targetLangName = languages.value.find(lang => lang.value === targetLanguage.value)?.title || targetLanguage.value;
+
+  const newItem = {
+    sourceLang: sourceLangName,
+    targetLang: targetLangName,
+    sourceText,
+    translatedText
+  };
+
+  // Добавляем новый перевод в начало массива
+  translationHistory.value.unshift(newItem);
+  
+  // Ограничиваем историю 10 элементами
+  if (translationHistory.value.length > MAX_HISTORY_ITEMS) {
+    translationHistory.value = translationHistory.value.slice(0, MAX_HISTORY_ITEMS);
+  }
+
+  // Сохраняем обновленную историю
+  saveHistoryToStorage(translationHistory.value);
+};
+
+// Обновим функцию translate
+const translate = async () => {
+  if (!sourceText.value) {
+    translatedText.value = '';
+    return;
+  }
+  
+  // Отменяем предыдущий запрос, если он есть
+  if (abortController.value) {
+    abortController.value.abort();
+  }
+  
+  // Создаем новый контроллер
+  abortController.value = new AbortController();
+  
+  translating.value = true;
+  try {
+    const response = await translationService.translateText(
+      sourceText.value,
+      sourceLanguage.value,
+      targetLanguage.value,
+      abortController.value.signal
+    );
+    translatedText.value = response.data.text;
+    addToHistory(sourceText.value, translatedText.value);
+  } catch (error) {
+    if (error.name === 'AbortError' || error.name === 'CanceledError') {
+      console.log('Запрос на перевод отменен');
+      return;
+    }
+    showError('Ошибка при переводе текста');
+    console.error('Ошибка перевода:', error);
+    translatedText.value = '';
+  } finally {
+    translating.value = false;
+    abortController.value = null;
+  }
+};
+
 onMounted(() => {
   loadLanguages();
+  loadHistoryFromStorage();
   if (sliderRef.value) {
     sliderRef.value.addEventListener('scroll', updateScrollButtons);
     updateScrollButtons();
@@ -305,52 +356,119 @@ onUnmounted(() => {
 });
 
 const clearSourceText = () => {
+  // Отменяем текущий запрос при очистке
+  if (abortController.value) {
+    abortController.value.abort();
+  }
   sourceText.value = '';
-  translatedText.value = '';
-};
-
-const clearTranslatedText = () => {
   translatedText.value = '';
 };
 
 const copySourceText = () => {
   navigator.clipboard.writeText(sourceText.value);
+  sourceCopySuccess.value = true;
+  setTimeout(() => {
+    sourceCopySuccess.value = false;
+  }, 2000);
 };
 
 const copyTranslatedText = () => {
   navigator.clipboard.writeText(translatedText.value);
+  targetCopySuccess.value = true;
+  setTimeout(() => {
+    targetCopySuccess.value = false;
+  }, 2000);
 };
 
 const swapLanguages = () => {
   const temp = sourceLanguage.value;
   sourceLanguage.value = targetLanguage.value;
   targetLanguage.value = temp;
+  sourceText.value = translatedText.value;
   if (sourceText.value) {
     translate();
   }
 };
 
-const translate = async () => {
-  if (!sourceText.value) return;
+// Создаем отложенную функцию перевода
+const debouncedTranslate = debounce(translate, 1000);
+
+// Функция для обработки автодополнения
+const handleAutocomplete = async (event) => {
+  const textarea = event.target;
+  const position = textarea.selectionStart;
+  cursorPosition.value = position;
   
-  translating.value = true;
+  // Проверяем, есть ли пробел перед курсором
+  const textBeforeCursor = sourceText.value.slice(0, position);
+  if (!textBeforeCursor.endsWith(' ')) {
+    isAutocompleteVisible.value = false;
+    return;
+  }
+  
   try {
-    const response = await translationService.translateText(
-      sourceText.value,
-      sourceLanguage.value,
-      targetLanguage.value
-    );
-    translatedText.value = response.data.translated_text;
+    const response = await translationService.autocomplete(sourceText.value, position, sourceLanguage.value);
+    if (response.data) {
+      // Фильтруем результаты, исключая те, что содержат # или .
+      const filteredText = response.data.replace(/[#.]/g, '');
+      if (filteredText) {
+        autocompleteText.value = filteredText;
+        isAutocompleteVisible.value = true;
+      } else {
+        isAutocompleteVisible.value = false;
+      }
+    }
   } catch (error) {
-    showError('Ошибка при переводе текста');
-    console.error('Ошибка перевода:', error);
-  } finally {
-    translating.value = false;
+    console.error('Ошибка автодополнения:', error);
+    isAutocompleteVisible.value = false;
   }
 };
 
-// Создаем отложенную функцию перевода
-const debouncedTranslate = debounce(translate, 500);
+// Создаем отложенную функцию автодополнения
+const debouncedAutocomplete = debounce(handleAutocomplete, 500);
+
+// Функция для обработки нажатия клавиш
+const handleKeyDown = (event) => {
+  if (event.key === 'Tab' && isAutocompleteVisible.value) {
+    event.preventDefault();
+    insertAutocomplete();
+  } else if (event.key !== 'Tab') {
+    isAutocompleteVisible.value = false;
+  }
+};
+
+// Функция для вставки автодополнения
+const insertAutocomplete = () => {
+  if (!isAutocompleteVisible.value) return;
+  
+  const beforeCursor = sourceText.value.slice(0, cursorPosition.value);
+  const afterCursor = sourceText.value.slice(cursorPosition.value);
+  
+  sourceText.value = beforeCursor + autocompleteText.value + afterCursor;
+  isAutocompleteVisible.value = false;
+  autocompleteText.value = '';
+};
+
+watch(sourceLanguage, (newSourceLang, oldSourceLang) => {
+  if (newSourceLang === targetLanguage.value) {
+    targetLanguage.value = oldSourceLang;
+    sourceText.value = translatedText.value;
+  }
+  if (sourceText.value) {
+    translate();
+  }
+});
+
+watch(targetLanguage, (newTargetLang, oldTargetLang) => {
+  if (newTargetLang === sourceLanguage.value) {
+    sourceLanguage.value = oldTargetLang;
+    sourceText.value = translatedText.value;
+  }
+  if (sourceText.value) {
+    translate();
+  }
+});
+
 </script>
 
 <style scoped>
@@ -401,7 +519,14 @@ const debouncedTranslate = debounce(translate, 500);
   line-height: 1.6;
   padding: 16px;
   flex-grow: 1;
-  overflow-y: auto;
+  min-height: 350px !important;
+}
+
+:deep(.translation-textarea .v-field__input) {
+  min-height: 350px !important;
+  padding-top: 16px;
+  padding-bottom: 16px;
+  overflow-y: auto !important;
   color: #424242;
 }
 
@@ -468,10 +593,15 @@ const debouncedTranslate = debounce(translate, 500);
 
 :deep(.v-btn) {
   color: #757575;
+  transition: all 0.3s ease;
 }
 
 :deep(.v-btn:hover) {
   color: #424242;
+}
+
+:deep(.v-btn.success) {
+  transform: scale(1.1);
 }
 
 :deep(.v-icon) {
@@ -554,5 +684,40 @@ const debouncedTranslate = debounce(translate, 500);
 
 .history-card:active {
   transform: translateY(-2px);
+}
+
+.translation-container {
+  position: relative;
+  flex-grow: 1;
+  min-height: 250px;
+}
+
+.loading-overlay {
+  position: absolute;
+  top: 0;
+  left: 0;
+  right: 0;
+  bottom: 0;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  background-color: rgba(255, 255, 255, 0.8);
+  z-index: 1;
+}
+
+.autocomplete-text {
+  color: #9e9e9e;
+  font-style: italic;
+  pointer-events: none;
+  user-select: none;
+}
+
+:deep(.v-field__append) {
+  padding-right: 16px;
+  opacity: 0.7;
+}
+
+:deep(.v-btn__prepend) {
+  margin-right: 0;
 }
 </style> 

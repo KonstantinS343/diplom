@@ -19,6 +19,7 @@ const { snackbar } = useSnackbar();
     </v-main>
 
     <v-snackbar
+      class="snackbar"
       v-model="snackbar.show"
       :color="snackbar.color"
       :timeout="snackbar.timeout"

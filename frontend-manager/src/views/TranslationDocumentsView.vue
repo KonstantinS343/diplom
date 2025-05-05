@@ -150,29 +150,24 @@
 </template>
 
 <script setup>
-import { ref } from 'vue';
+import { ref, onMounted, watch } from 'vue';
+import { translationService } from '@/services/translationService';
 import { useSnackbar } from '@/composables/useSnackbar';
 
-const { showSnackbar } = useSnackbar();
+const { showSuccess, showError } = useSnackbar();
 
-const languages = [
-  'Русский',
-  'Английский',
-  'Немецкий',
-  'Французский',
-  'Испанский',
-  'Итальянский',
-  'Китайский',
-  'Японский'
-];
+const languages = ref([]);
 
-const sourceLanguage = ref('Русский');
-const targetLanguage = ref('Английский');
+const sourceLanguage = ref('ru');
+const targetLanguage = ref('en');
 const uploadedFile = ref(null);
 const translatedFile = ref(null);
 const isDragging = ref(false);
 const isTranslating = ref(false);
 const fileInput = ref(null);
+
+// Добавим константу с разрешенными расширениями
+const ALLOWED_EXTENSIONS = ['.doc', '.docx', '.xlsx', '.pptx'];
 
 const swapLanguages = () => {
   const temp = sourceLanguage.value;
@@ -184,18 +179,35 @@ const triggerFileInput = () => {
   fileInput.value.click();
 };
 
+// Функция для проверки расширения файла
+const validateFileExtension = (file) => {
+  const extension = '.' + file.name.split('.').pop().toLowerCase();
+  return ALLOWED_EXTENSIONS.includes(extension);
+};
+
+// Обновим функцию handleFileSelect
 const handleFileSelect = (event) => {
   const file = event.target.files[0];
   if (file) {
-    uploadedFile.value = file;
+    if (validateFileExtension(file)) {
+      uploadedFile.value = file;
+    } else {
+      showError('Неподдерживаемый формат файла. Разрешены только .doc, .docx, .xlsx, .pptx');
+      event.target.value = ''; // Очищаем input
+    }
   }
 };
 
+// Обновим функцию handleFileDrop
 const handleFileDrop = (event) => {
   isDragging.value = false;
   const file = event.dataTransfer.files[0];
   if (file) {
-    uploadedFile.value = file;
+    if (validateFileExtension(file)) {
+      uploadedFile.value = file;
+    } else {
+      showError('Неподдерживаемый формат файла. Разрешены только .doc, .docx, .xlsx, .pptx');
+    }
   }
 };
 
@@ -212,24 +224,94 @@ const translateDocument = async () => {
 
   isTranslating.value = true;
   try {
-    // Здесь будет API запрос для перевода документа
-    await new Promise(resolve => setTimeout(resolve, 2000)); // Имитация запроса
+    const response = await translationService.translateDocument(
+      uploadedFile.value,
+      sourceLanguage.value,
+      targetLanguage.value
+    );
+
+    // Создаем blob из ответа
+    const blob = new Blob([response.data], { type: response.headers['content-type'] });
+    
+    // Создаем URL для скачивания
+    const url = window.URL.createObjectURL(blob);
+    
+    // Получаем имя файла из заголовка или генерируем новое
+    const contentDisposition = response.headers['content-disposition'];
+    let filename = 'translated_document';
+    if (contentDisposition) {
+      const filenameMatch = contentDisposition.match(/filename[^;=\n]*=((['"]).*?\2|[^;\n]*)/);
+      if (filenameMatch && filenameMatch[1]) {
+        filename = filenameMatch[1].replace(/['"]/g, '');
+      }
+    }
+
+    // Сохраняем информацию о переведенном файле
     translatedFile.value = {
-      name: `translated_${uploadedFile.value.name}`,
-      url: '#' // Здесь будет URL для скачивания
+      name: filename,
+      url: url
     };
-    showSnackbar('Документ успешно переведен', 'success');
+
+    showSuccess('Документ успешно переведен', 'success');
   } catch (error) {
-    showSnackbar('Произошла ошибка при переводе документа', 'error');
+    console.error('Ошибка перевода документа:', error);
+    showError('Произошла ошибка при переводе документа');
   } finally {
     isTranslating.value = false;
   }
 };
 
 const downloadTranslatedFile = () => {
-  // Здесь будет логика скачивания файла
-  showSnackbar('Начато скачивание файла', 'success');
+  if (!translatedFile.value) return;
+
+  // Создаем ссылку для скачивания
+  const link = document.createElement('a');
+  link.href = translatedFile.value.url;
+  link.download = translatedFile.value.name;
+  document.body.appendChild(link);
+  link.click();
+  document.body.removeChild(link);
+
+  // Освобождаем URL
+  window.URL.revokeObjectURL(translatedFile.value.url);
+  uploadedFile.value = null;
+  translatedFile.value = null;
+  
+  showSuccess('Начато скачивание файла', 'success');
 };
+
+onMounted(() => {
+  loadLanguages();
+});
+
+// Загрузка списка поддерживаемых языков
+const loadLanguages = async () => {
+  try {
+    const response = await translationService.getSupportedLanguages();
+    
+    languages.value = Object.entries(response.data).map(([code, info]) => ({
+      title: info.language_name_user,
+      value: code
+    }));
+  } catch (error) {
+    showError('Не удалось загрузить список языков');
+    console.error('Ошибка загрузки языков:', error);
+  }
+};
+
+watch(sourceLanguage, (newSourceLang, oldSourceLang) => {
+  if (newSourceLang === targetLanguage.value) {
+    targetLanguage.value = oldSourceLang;
+    translatedFile.value = null;
+  }
+});
+
+watch(targetLanguage, (newTargetLang, oldTargetLang) => {
+  if (newTargetLang === sourceLanguage.value) {
+    sourceLanguage.value = oldTargetLang;
+    translatedFile.value = null;
+  }
+});
 </script>
 
 <style scoped>
