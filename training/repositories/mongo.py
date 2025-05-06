@@ -10,7 +10,7 @@ from config import mongo_settings
 
 class MongoService:
     def __init__(self) -> None:
-        self.client = AsyncIOMotorClient(f"mongodb://{mongo_settings.host}:{mongo_settings.port}")
+        self.client = AsyncIOMotorClient(f"mongodb://{mongo_settings.user}:{mongo_settings.password}@{mongo_settings.host}:{mongo_settings.port}")
         self.db = self.client[mongo_settings.db]
 
     async def insert(self, collection: str, document: Mapping[str, Any]) -> str:

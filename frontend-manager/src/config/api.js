@@ -29,11 +29,14 @@ const API_CONFIG = {
     }
   },
   learning: {
-    baseURL: 'http://localhost:8003/api/learning',
+    baseURL: 'http://localhost:3002/v1/api/training',
     endpoints: {
-      courses: '/courses',
-      lessons: '/lessons',
-      progress: '/progress'
+      upload: '/upload',
+      dislike: '/dislike',
+      like: '/like',
+      pairs: '/pairs',
+      sections: '/sections',
+      section_create: '/section/create',
     }
   }
 };

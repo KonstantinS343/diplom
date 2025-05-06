@@ -39,30 +39,23 @@ class TranslatorSupportService:
         supported_langs = (await self.translator_repo.get_languages()).keys()
 
         dataset_pairs = await self.respository.get_collections()
-        dataset_pairs = {i.split("-")[0]: i.split("-")[1] for i in dataset_pairs}
+        dataset_pairs = {i.split("-")[0]: i.split("-")[1] for i in dataset_pairs if "-" in i}
 
         language_pairs = {"old": {}, "new": {}}
 
         for source, target in dataset_pairs.items():
             if source in supported_langs and target in supported_langs:
                 language_pairs["old"][source] = target
-                language_pairs["old"][target] = source
             else:
                 language_pairs["new"][source] = target
-                language_pairs["new"][target] = source
 
         return language_pairs
 
     async def create_language_pair(self, source_lang: str, target_lang: str) -> bool:
-        supported_langs = (await self.translator_repo.get_languages()).keys()
-
         if source_lang == target_lang:
             raise HTTPException(
                 status_code=400, detail="Source and target languages cannot be the same"
             )
-
-        if not source_lang in supported_langs or not target_lang in supported_langs:
-            raise HTTPException(status_code=400, detail="Unsupported language pair")
 
         dataset_pairs = await self.respository.get_collections()
 

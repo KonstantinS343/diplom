@@ -1,4 +1,5 @@
 import difflib
+import re
 
 
 class TranslationQualityService:
@@ -10,7 +11,6 @@ class TranslationQualityService:
         """
         Highlight differences between user and model translations.
         """
-
         # Highlight differences
         highlighted_text = await self.add_difference_tokens(user_text, model_text)
 
@@ -25,8 +25,9 @@ class TranslationQualityService:
         """
         Add special tokens to highlight differences between two texts.
         """
-        user_words = user_text.strip().split()
-        model_words = model_text.strip().split()
+        # Разбиваем тексты на слова, сохраняя пробелы и знаки препинания
+        user_words = re.findall(r'\S+|\s+', user_text)
+        model_words = re.findall(r'\S+|\s+', model_text)
 
         differ = difflib.Differ()
         diff = list(differ.compare(user_words, model_words))
@@ -36,21 +37,75 @@ class TranslationQualityService:
 
         while i < len(diff):
             line = diff[i]
+            
+            # Пропускаем строки с '?'
             if line[0] == "?":
                 i += 1
                 continue
 
-            code, word = line[0], line[2:].strip()
-            if code == " ":
-                marked_text.append(word)
-            elif code == "-" and i + 1 < len(diff) and diff[i + 1][0] == "+":
-                new_word = diff[i + 1][2:].strip()
-                marked_text.append(f"<replace new='{new_word}'>{word}</replace>")
-                i += 1
+            code, word = line[0], line[2:]
+            
+            # Собираем последовательности слов для замены
+            if code == "-" and i + 1 < len(diff) and diff[i + 1][0] == "+":
+                # Собираем все удаленные слова
+                deleted_words = []
+                while i < len(diff) and diff[i][0] == "-":
+                    deleted_words.append(diff[i][2:])
+                    i += 1
+                    # Пропускаем строки с '?'
+                    while i < len(diff) and diff[i][0] == "?":
+                        i += 1
+                
+                # Собираем все добавленные слова
+                added_words = []
+                while i < len(diff) and diff[i][0] == "+":
+                    added_words.append(diff[i][2:])
+                    i += 1
+                    # Пропускаем строки с '?'
+                    while i < len(diff) and diff[i][0] == "?":
+                        i += 1
+                
+                # Объединяем слова в строки
+                deleted_text = "".join(deleted_words)
+                added_text = "".join(added_words)
+                
+                if deleted_text.strip() or added_text.strip():
+                    marked_text.append(f"<replace new='{added_text}'>{deleted_text}</replace>")
+                continue
+            
             elif code == "-":
-                marked_text.append(f"<del>{word}</del>")
+                # Собираем все удаленные слова
+                deleted_words = []
+                while i < len(diff) and diff[i][0] == "-":
+                    deleted_words.append(diff[i][2:])
+                    i += 1
+                    # Пропускаем строки с '?'
+                    while i < len(diff) and diff[i][0] == "?":
+                        i += 1
+                
+                deleted_text = "".join(deleted_words)
+                if deleted_text.strip():
+                    marked_text.append(f"<del>{deleted_text}</del>")
+                continue
+            
             elif code == "+":
-                marked_text.append(f"<ins>{word}</ins>")
+                # Собираем все добавленные слова
+                added_words = []
+                while i < len(diff) and diff[i][0] == "+":
+                    added_words.append(diff[i][2:])
+                    i += 1
+                    # Пропускаем строки с '?'
+                    while i < len(diff) and diff[i][0] == "?":
+                        i += 1
+                
+                added_text = "".join(added_words)
+                if added_text.strip():
+                    marked_text.append(f"<ins>{added_text}</ins>")
+                continue
+            
+            elif code == " ":
+                marked_text.append(word)
+            
             i += 1
 
-        return " ".join(marked_text)
+        return "".join(marked_text)

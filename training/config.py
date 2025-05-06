@@ -43,6 +43,8 @@ class MongoConfig(BaseSettings):
     host: str
     port: int
     db: str
+    user: str
+    password: str
 
     model_config = SettingsConfigDict(
         env_file=".env", env_file_encoding="utf-8", extra="ignore", env_prefix="MONGO_"

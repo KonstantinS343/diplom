@@ -44,7 +44,6 @@
           </div>
           <div
             v-for="pair in languagePairs"
-            :key="pair.id"
             class="language-pair-item"
             :class="{ 'selected': selectedPair?.id === pair.id }"
             @click="selectPair(pair)"
@@ -95,7 +94,7 @@
                 <v-icon>mdi-arrow-left</v-icon>
               </v-btn>
               <div class="pair-info">
-                <h2 class="text-h5 mb-1">{{ selectedPair.sourceLanguage }} ↔ {{ selectedPair.targetLanguage }}</h2>
+                <h2 class="text-h5 mb-1">{{ selectedPair.sourceLanguage }} <v-icon icon="mdi-arrow-left-right" class="arrow-icon"></v-icon> {{ selectedPair.targetLanguage }}</h2>
                 <div class="stats">
                   <span class="stat-item">
                     <v-icon size="small" color="grey-darken-2">mdi-cards</v-icon>
@@ -202,16 +201,34 @@
               class="file-input"
               @change="handleFileSelect"
             />
-            <v-icon
-              icon="mdi-cloud-upload"
-              size="64"
-              color="grey-darken-2"
-              class="mb-4"
-            ></v-icon>
-            <div class="upload-text">
-              <div class="text-h6 mb-2">Перетащите JSON файл сюда</div>
-              <div class="text-body-1 text-medium-emphasis">или нажмите для выбора файла</div>
-            </div>
+            <template v-if="!jsonFile">
+              <v-icon
+                icon="mdi-cloud-upload"
+                size="64"
+                color="grey-darken-2"
+                class="mb-4"
+              ></v-icon>
+              <div class="upload-text">
+                <div class="text-h6 mb-2">Перетащите JSON файл сюда</div>
+                <div class="text-body-1 text-medium-emphasis">или нажмите для выбора файла</div>
+              </div>
+            </template>
+            <template v-else>
+              <div class="selected-file">
+                <v-icon
+                  icon="mdi-file-document"
+                  size="48"
+                  color="grey-darken-2"
+                  class="mb-4"
+                ></v-icon>
+                <div class="file-info">
+                  <div class="text-h6 mb-2">{{ jsonFile.name }}</div>
+                  <div class="text-body-2 text-medium-emphasis">
+                    {{ formatFileSize(jsonFile.size) }}
+                  </div>
+                </div>
+              </div>
+            </template>
           </div>
           <div v-if="uploadError" class="error-message mt-4">
             {{ uploadError }}
@@ -249,17 +266,28 @@
             placeholder="Например: Русский"
             class="mb-4"
             :error-messages="newPairErrors.sourceLanguage"
-            @input="validateNewPair"
             color="grey-darken-2"
-          ></v-text-field>
+          >
+            <template v-slot:prepend-inner>
+              <div class="flag-circle-small" v-if="newPair.sourceLanguage">
+                <img :src="getFlagUrl(newPair.sourceLanguage)" :alt="newPair.sourceLanguage">
+              </div>
+            </template>
+          </v-text-field>
+          
           <v-text-field
             v-model="newPair.targetLanguage"
             label="Целевой язык"
             placeholder="Например: Английский"
             :error-messages="newPairErrors.targetLanguage"
-            @input="validateNewPair"
             color="grey-darken-2"
-          ></v-text-field>
+          >
+            <template v-slot:prepend-inner>
+              <div class="flag-circle-small" v-if="newPair.targetLanguage">
+                <img :src="getFlagUrl(newPair.targetLanguage)" :alt="newPair.targetLanguage">
+              </div>
+            </template>
+          </v-text-field>
         </v-card-text>
         <v-card-actions>
           <v-spacer></v-spacer>
@@ -275,7 +303,6 @@
             color="grey-darken-2"
             @click="createNewPair"
             :loading="isCheckingPair"
-            :disabled="!isNewPairValid || isCheckingPair"
           >
             {{ isCheckingPair ? 'Проверка...' : 'Создать' }}
           </v-btn>
@@ -286,10 +313,12 @@
 </template>
 
 <script setup>
-import { ref, computed } from 'vue';
+import { ref, computed, onMounted } from 'vue';
 import { useSnackbar } from '@/composables/useSnackbar';
+import { languages } from '@/constants/languages';
+import { languagePairsService } from '@/services/languagePairsService';
 
-const { showSnackbar } = useSnackbar();
+const { showSuccess, showError } = useSnackbar();
 
 // Состояние
 const showOnlyRated = ref(false);
@@ -311,55 +340,11 @@ const newPairErrors = ref({
   targetLanguage: ''
 });
 const isCheckingPair = ref(false);
-const isNewPairValid = ref(false);
-
-const availableLanguages = [
-  'Русский',
-  'Английский',
-  'Немецкий',
-  'Французский',
-  'Испанский',
-  'Итальянский',
-  'Китайский',
-  'Японский'
-];
 
 // Тестовые данные
-const languagePairs = ref([
-  {
-    id: 1,
-    sourceLanguage: 'Русский',
-    targetLanguage: 'Английский',
-    isNew: true
-  },
-  {
-    id: 2,
-    sourceLanguage: 'Немецкий',
-    targetLanguage: 'Русский',
-    isNew: false
-  },
-  {
-    id: 3,
-    sourceLanguage: 'Французский',
-    targetLanguage: 'Английский',
-    isNew: true
-  }
-]);
+const languagePairs = ref([]);
 
-const learningCards = ref([
-  {
-    id: 1,
-    sourceText: 'Привет, как дела?',
-    targetText: 'Hello, how are you?',
-    rating: null
-  },
-  {
-    id: 2,
-    sourceText: 'Сегодня хорошая погода',
-    targetText: 'The weather is nice today',
-    rating: null
-  }
-]);
+const learningCards = ref([]);
 
 // Вычисляемые свойства
 const paginatedCards = computed(() => {
@@ -377,28 +362,47 @@ const ratedCardsCount = computed(() => {
 });
 
 // Методы
-const selectPair = (pair) => {
+const selectPair = async (pair) => {
   selectedPair.value = pair;
   currentPage.value = 1;
+  await loadCards();
+};
+
+const loadCards = async () => {
+  try {
+    const sourceLang = languages.find(l => l.name === selectedPair.value.sourceLanguage)?.iso;
+    const targetLang = languages.find(l => l.name === selectedPair.value.targetLanguage)?.iso;
+    
+    if (!sourceLang || !targetLang) {
+      throw new Error('Не удалось определить языки');
+    }
+
+    const cards = await languagePairsService.getCards(sourceLang, targetLang);
+    learningCards.value = cards.data.map(card => ({
+      id: card._id,
+      sourceText: card[sourceLang],
+      targetText: card[targetLang],
+      rating: null,
+      likes: card.likes,
+      dislikes: card.dislikes,
+    }));
+  } catch (error) {
+    showError('Ошибка при загрузке карточек');
+    learningCards.value = [];
+  }
+};
+
+const rateCard = async (card, rating) => {
+  console.log('response');
 };
 
 const getFlagUrl = (language) => {
-  const languageToISO = {
-    'Русский': 'ru',
-    'Английский': 'gb',
-    'Немецкий': 'de',
-    'Французский': 'fr',
-    'Испанский': 'es',
-    'Итальянский': 'it',
-    'Китайский': 'cn',
-    'Японский': 'jp'
-  };
-  const iso = languageToISO[language] || 'un';
+  const lang = languages.find(l => l.name === language);
+  const iso = lang?.iso || 'un';
+  if (iso === 'en') {
+    return `https://flagcdn.com/w40/gb.png`;
+  }
   return `https://flagcdn.com/w40/${iso}.png`;
-};
-
-const rateCard = (card, rating) => {
-  card.rating = card.rating === rating ? null : rating;
 };
 
 const openUploadDialog = () => {
@@ -410,6 +414,10 @@ const openUploadDialog = () => {
 const handleFileSelect = (event) => {
   const file = event.target.files[0];
   if (file) {
+    if (file.type !== 'application/json') {
+      uploadError.value = 'Пожалуйста, выберите JSON файл';
+      return;
+    }
     jsonFile.value = file;
     validateJsonFile(file);
   }
@@ -419,6 +427,10 @@ const handleFileDrop = (event) => {
   isDragging.value = false;
   const file = event.dataTransfer.files[0];
   if (file) {
+    if (file.type !== 'application/json') {
+      uploadError.value = 'Пожалуйста, выберите JSON файл';
+      return;
+    }
     jsonFile.value = file;
     validateJsonFile(file);
   }
@@ -433,11 +445,22 @@ const validateJsonFile = (file) => {
   const reader = new FileReader();
   reader.onload = (e) => {
     try {
-      JSON.parse(e.target.result);
+      const data = JSON.parse(e.target.result);
+      if (!Array.isArray(data)) {
+        uploadError.value = 'JSON должен содержать массив объектов';
+        return;
+      }
+      if (data.length === 0) {
+        uploadError.value = 'JSON файл пуст';
+        return;
+      }
       uploadError.value = '';
     } catch (error) {
       uploadError.value = 'Некорректный JSON файл';
     }
+  };
+  reader.onerror = () => {
+    uploadError.value = 'Ошибка при чтении файла';
   };
   reader.readAsText(file);
 };
@@ -447,12 +470,28 @@ const uploadJson = async () => {
 
   isUploading.value = true;
   try {
-    // Здесь будет API запрос для загрузки JSON
-    await new Promise(resolve => setTimeout(resolve, 1000));
-    showSnackbar('Данные успешно загружены', 'success');
+    const sourceLang = languages.find(l => l.name === selectedPair.value.sourceLanguage)?.iso;
+    const targetLang = languages.find(l => l.name === selectedPair.value.targetLanguage)?.iso;
+
+    if (!sourceLang || !targetLang) {
+      throw new Error('Не удалось определить языки');
+    }
+
+    await languagePairsService.uploadDataset(
+      sourceLang,
+      targetLang,
+      jsonFile.value
+    );
+    showSuccess('Данные успешно загружены');
     uploadDialog.value = false;
+    // Обновляем список карточек после загрузки
+    await getLanguageSections();
   } catch (error) {
-    showSnackbar('Ошибка при загрузке данных', 'error');
+    if (error.response?.status === 400) {
+      uploadError.value = error.response.data.detail;
+    } else {
+      showError(error.message || 'Ошибка при загрузке данных');
+    }
   } finally {
     isUploading.value = false;
   }
@@ -466,15 +505,63 @@ const validateNewPair = () => {
   
   if (!newPair.value.sourceLanguage.trim()) {
     newPairErrors.value.sourceLanguage = 'Введите исходный язык';
+  } else if (!languages.some(l => l.name === newPair.value.sourceLanguage)) {
+    newPairErrors.value.sourceLanguage = 'Язык не поддерживается';
   }
+  
   if (!newPair.value.targetLanguage.trim()) {
     newPairErrors.value.targetLanguage = 'Введите целевой язык';
+  } else if (!languages.some(l => l.name === newPair.value.targetLanguage)) {
+    newPairErrors.value.targetLanguage = 'Язык не поддерживается';
   }
+  
   if (newPair.value.sourceLanguage === newPair.value.targetLanguage) {
     newPairErrors.value.targetLanguage = 'Языки не должны совпадать';
   }
   
-  isNewPairValid.value = !newPairErrors.value.sourceLanguage && !newPairErrors.value.targetLanguage;
+  // Проверяем, существует ли уже такая пара
+  const pairExists = languagePairs.value.some(
+    pair => 
+      (pair.sourceLanguage === newPair.value.sourceLanguage && 
+       pair.targetLanguage === newPair.value.targetLanguage) ||
+      (pair.sourceLanguage === newPair.value.targetLanguage && 
+       pair.targetLanguage === newPair.value.sourceLanguage)
+  );
+  
+  if (pairExists) {
+    newPairErrors.value.targetLanguage = 'Такая языковая пара уже существует';
+  }
+  
+  return !newPairErrors.value.sourceLanguage && !newPairErrors.value.targetLanguage;
+};
+
+const createNewPair = async () => {
+  if (!validateNewPair()) {
+    return;
+  }
+  
+  isCheckingPair.value = true;
+  try {
+    const sourceLang = languages.find(l => l.name === newPair.value.sourceLanguage);
+    const targetLang = languages.find(l => l.name === newPair.value.targetLanguage);
+    
+    await languagePairsService.createLanguageSection(
+      sourceLang.iso,
+      targetLang.iso
+    );
+    
+    await getLanguageSections();
+    newPairDialog.value = false;
+    showSuccess('Новая языковая пара создана');
+  } catch (error) {
+    if (error.response?.status === 400) {
+      newPairErrors.value.targetLanguage = error.response.data.detail;
+    } else {
+      showError('Ошибка при создании языковой пары', 'error');
+    }
+  } finally {
+    isCheckingPair.value = false;
+  }
 };
 
 const openNewPairDialog = () => {
@@ -486,33 +573,68 @@ const openNewPairDialog = () => {
     sourceLanguage: '',
     targetLanguage: ''
   };
-  isNewPairValid.value = false;
   newPairDialog.value = true;
 };
 
-const createNewPair = async () => {
-  if (!isNewPairValid.value) return;
-  
-  isCheckingPair.value = true;
+const getLanguageSections = async () => {
   try {
-    // Здесь будет API запрос для проверки и создания новой пары
-    await new Promise(resolve => setTimeout(resolve, 1500)); // Имитация запроса
+    const response = await languagePairsService.getLanguageSections();
+    languagePairs.value = [];
     
-    languagePairs.value.push({
-      id: languagePairs.value.length + 1,
-      sourceLanguage: newPair.value.sourceLanguage,
-      targetLanguage: newPair.value.targetLanguage,
-      isNew: true
+    // Обработка старых пар
+    Object.entries(response.data.old).forEach(([sourceLang, targetLang]) => {
+      const sourceLanguage = languages.find(l => l.iso === sourceLang)?.name;
+      const targetLanguage = languages.find(l => l.iso === targetLang)?.name;
+      
+      if (sourceLanguage && targetLanguage) {
+        languagePairs.value.push({
+          sourceLanguage,
+          targetLanguage,
+          sourceLang: sourceLang,
+          targetLang: targetLang,
+          isNew: false
+        });
+      }
     });
     
-    newPairDialog.value = false;
-    showSnackbar('Новая языковая пара создана', 'success');
+    // Обработка новых пар
+    Object.entries(response.data.new).forEach(([sourceLang, targetLang]) => {
+      const sourceLanguage = languages.find(l => l.iso === sourceLang)?.name;
+      const targetLanguage = languages.find(l => l.iso === targetLang)?.name;
+      
+      if (sourceLanguage && targetLanguage) {
+        languagePairs.value.push({
+          sourceLanguage,
+          targetLanguage,
+          sourceLang: sourceLang,
+          targetLang: targetLang,
+          isNew: true
+        });
+      }
+    });
   } catch (error) {
-    showSnackbar('Ошибка при создании языковой пары', 'error');
-  } finally {
-    isCheckingPair.value = false;
+    showError('Ошибка при загрузке языковых пар', 'error');
   }
 };
+
+const fileInput = ref(null);
+
+const triggerFileInput = () => {
+  fileInput.value.click();
+};
+
+const formatFileSize = (bytes) => {
+  if (bytes === 0) return '0 Bytes';
+  const k = 1024;
+  const sizes = ['Bytes', 'KB', 'MB', 'GB'];
+  const i = Math.floor(Math.log(bytes) / Math.log(k));
+  return parseFloat((bytes / Math.pow(k, i)).toFixed(2)) + ' ' + sizes[i];
+};
+
+// Загрузка языковых пар при монтировании компонента
+onMounted(async () => {
+  await getLanguageSections();
+});
 </script>
 
 <style scoped>
@@ -542,6 +664,8 @@ const createNewPair = async () => {
   display: flex;
   flex-direction: column;
   align-items: center;
+  position: absolute;
+  top: 0;
 }
 
 .language-pairs-list.shifted {
@@ -604,7 +728,6 @@ const createNewPair = async () => {
 }
 
 .language-pair-item.selected {
-  background-color: rgba(0, 0, 0, 0.1);
   border-color: rgba(0, 0, 0, 0.24);
   transform: scale(1.01);
 }
@@ -673,7 +796,7 @@ const createNewPair = async () => {
 .learning-cards-container {
   width: 100%;
   opacity: 0;
-  transform: translateX(50px);
+  transform: translateX(100%);
   transition: all 0.3s ease;
   pointer-events: none;
 }
@@ -841,5 +964,42 @@ const createNewPair = async () => {
   display: flex;
   justify-content: center;
   gap: 16px;
+}
+
+.flag-circle-small {
+  width: 24px;
+  height: 24px;
+  border-radius: 50%;
+  overflow: hidden;
+  background-color: #f5f5f5;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  flex-shrink: 0;
+  margin-right: 8px;
+}
+
+.flag-circle-small img {
+  width: 100%;
+  height: 100%;
+  object-fit: cover;
+}
+
+.v-text-field :deep(.v-field__prepend-inner) {
+  padding-top: 0;
+  padding-bottom: 0;
+  display: flex;
+  align-items: center;
+}
+
+.selected-file {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  padding: 16px;
+}
+
+.file-info {
+  text-align: center;
 }
 </style> 

@@ -4,7 +4,7 @@ from fastapi import APIRouter, Depends, UploadFile, File, Form, HTTPException, Q
 from services.training_support import TranslatorSupportService
 from schemas import DatasetResponse, LanguageRequest
 
-router = APIRouter(tags=["training"], prefix="/training")
+router = APIRouter(tags=["training"], prefix="/v1/api/training")
 
 
 @router.post("/upload")
@@ -51,8 +51,7 @@ async def language_sections(service: TranslatorSupportService = Depends()):
 
 @router.post("/section/create")
 async def create_language_sections(
-    source_lang: str = Query(..., description="Source language"),
-    target_lang: str = Query(..., description="Target language"),
+    request: LanguageRequest,
     service: TranslatorSupportService = Depends(),
 ):
-    return await service.create_language_pair(source_lang, target_lang)
+    return await service.create_language_pair(request.source_lang, request.target_lang)
