@@ -10,11 +10,11 @@
     :app="false"
     :scrim="false"
   >
-    <v-list>
+    <v-list v-if="authStore.isAuthenticated">
       <v-list-item
         prepend-avatar="https://randomuser.me/api/portraits/men/85.jpg"
-        :title="rail ? '' : 'Константин'"
-        :subtitle="rail ? '' : 'konstantin@example.com'"
+        :title="rail ? '' : authStore.user?.username || 'Пользователь'"
+        :subtitle="rail ? '' : authStore.user?.email || ''"
       ></v-list-item>
     </v-list>
 
@@ -38,7 +38,18 @@
     </v-list>
 
     <template v-slot:append>
-      <div class="pa-2">
+      <div class="pa-2" v-if="authStore.isAuthenticated">
+        <v-list-item
+          @click="handleLogout"
+          :value="'Выход'"
+          :title="rail ? '' : 'Выход'"
+          class="menu-item logout-item"
+        >
+          <template v-slot:prepend>
+            <v-icon :icon="'mdi-logout'" class="menu-icon"></v-icon>
+          </template>
+        </v-list-item>
+
         <v-list-item
           :to="'/profile'"
           :value="'Настройки'"
@@ -56,38 +67,62 @@
 </template>
 
 <script setup>
-import { ref } from 'vue';
+import { ref, computed } from 'vue';
+import { useAuthStore } from '@/stores/auth';
+import { useRouter } from 'vue-router';
 
+const router = useRouter();
 const drawer = ref(true);
 const rail = ref(true);
+const authStore = useAuthStore();
 
-const menuItems = [
-  {
-    title: 'Главная',
-    icon: 'mdi-home',
-    path: '/'
-  },
-  {
-    title: 'Перевод документов',
-    icon: 'mdi-file-document',
-    path: '/translation-documents'
-  },
-  {
-    title: 'Оценка перевода',
-    icon: 'mdi-translate',
-    path: '/translation-evaluation'
-  },
-  {
-    title: 'Обучение',
-    icon: 'mdi-book',
-    path: '/learning'
-  },
-  {
-    title: 'О платформе',
-    icon: 'mdi-information',
-    path: '/about'
+const handleLogout = async () => {
+  await authStore.logout();
+  router.push('/login');
+};
+
+const menuItems = computed(() => {
+  const items = [
+    {
+      title: 'Главная',
+      icon: 'mdi-home',
+      path: '/',
+      requiresAuth: false
+    },
+    {
+      title: 'Оценка перевода',
+      icon: 'mdi-translate',
+      path: '/translation-evaluation',
+      requiresAuth: false
+    }
+  ];
+
+  // Добавляем защищенные маршруты только если пользователь авторизован
+  if (authStore.isAuthenticated) {
+    items.push(
+      {
+        title: 'Перевод документов',
+        icon: 'mdi-file-document',
+        path: '/translation-documents',
+        requiresAuth: true
+      },
+      {
+        title: 'Обучение',
+        icon: 'mdi-book',
+        path: '/learning',
+        requiresAuth: true
+      },
+      {
+        title: 'О платформе',
+        icon: 'mdi-information',
+        path: '/about',
+        requiresAuth: false
+      }
+    );
   }
-];
+
+  return items;
+});
 </script>
 
 <style scoped>
@@ -183,5 +218,21 @@ const menuItems = [
 /* Отключаем затемнение фона */
 :deep(.v-navigation-drawer__scrim) {
   opacity: 0 !important;
+}
+
+.logout-item {
+  color: #d32f2f;
+}
+
+.logout-item:hover {
+  background-color: rgba(211, 47, 47, 0.04) !important;
+}
+
+.logout-item .menu-icon {
+  color: #d32f2f;
+}
+
+.logout-item:hover .menu-icon {
+  color: #d32f2f;
 }
 </style>

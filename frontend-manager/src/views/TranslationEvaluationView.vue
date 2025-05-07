@@ -118,13 +118,13 @@
                   <marked-text :text="evaluationResult" />
                 </div>
               </div>
-            </v-card>
-          </v-col>
-        </v-row>
+        </v-card>
+      </v-col>
+    </v-row>
       </v-expand-transition>
     </div>
   </div>
-</template>
+</template> 
 
 <script setup>
 import { ref, onMounted, watch } from 'vue';

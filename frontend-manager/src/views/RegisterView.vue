@@ -31,22 +31,40 @@
               <v-text-field
                 v-model="password"
                 label="Пароль"
-                type="password"
+                :type="showPassword ? 'text' : 'password'"
                 variant="outlined"
                 :rules="[rules.required, rules.min]"
                 class="mb-4"
                 @input="validateForm"
-              ></v-text-field>
+              >
+                <template v-slot:append-inner>
+                  <v-icon
+                    :icon="showPassword ? 'mdi-eye-off' : 'mdi-eye'"
+                    @click="showPassword = !showPassword"
+                    style="cursor: pointer"
+                    class="password-icon"
+                  ></v-icon>
+                </template>
+              </v-text-field>
 
               <v-text-field
                 v-model="confirmPassword"
                 label="Подтвердите пароль"
-                type="password"
+                :type="showConfirmPassword ? 'text' : 'password'"
                 variant="outlined"
                 :rules="[rules.required, rules.passwordMatch]"
                 class="mb-6"
                 @input="validateForm"
-              ></v-text-field>
+              >
+                <template v-slot:append-inner>
+                  <v-icon
+                    :icon="showConfirmPassword ? 'mdi-eye-off' : 'mdi-eye'"
+                    @click="showConfirmPassword = !showConfirmPassword"
+                    style="cursor: pointer"
+                    class="password-icon"
+                  ></v-icon>
+                </template>
+              </v-text-field>
 
               <v-btn
                 block
@@ -97,9 +115,11 @@
 import { ref, computed } from 'vue';
 import { useRouter } from 'vue-router';
 import { useSnackbar } from '@/composables/useSnackbar';
+import { useAuthStore } from '@/stores/auth';
 
 const router = useRouter();
 const { showError } = useSnackbar();
+const authStore = useAuthStore();
 const form = ref(null);
 
 const name = ref('');
@@ -108,15 +128,19 @@ const password = ref('');
 const confirmPassword = ref('');
 const loading = ref(false);
 const isFormValid = ref(false);
+const showValidation = ref(false);
+const showPassword = ref(false);
+const showConfirmPassword = ref(false);
 
 const rules = {
-  required: value => !!value || 'Обязательное поле',
+  required: value => !showValidation.value || !!value || 'Обязательное поле',
   email: value => {
+    if (!showValidation.value) return true;
     const pattern = /^[^\s@]+@[^\s@]+\.[^\s@]+$/;
     return pattern.test(value) || 'Некорректный email';
   },
-  min: value => value.length >= 6 || 'Минимум 6 символов',
-  passwordMatch: value => value === password.value || 'Пароли не совпадают'
+  min: value => !showValidation.value || value.length >= 6 || 'Минимум 6 символов',
+  passwordMatch: value => !showValidation.value || value === password.value || 'Пароли не совпадают'
 };
 
 const validateForm = async () => {
@@ -127,15 +151,17 @@ const validateForm = async () => {
 };
 
 const handleRegister = async () => {
+  showValidation.value = true;
+  await validateForm();
+  
   if (!isFormValid.value) return;
   
   loading.value = true;
   try {
-    // TODO: Implement registration logic
-    await new Promise(resolve => setTimeout(resolve, 1000)); // Simulate API call
+    await authStore.register(name.value, email.value, password.value);
     router.push('/login');
   } catch (error) {
-    showError('Ошибка при регистрации');
+    showError(error.message || 'Ошибка при регистрации');
   } finally {
     loading.value = false;
   }
@@ -178,5 +204,14 @@ const handleRegister = async () => {
   align-items: center;
   gap: 12px;
   color: rgba(0, 0, 0, 0.6);
+}
+
+.password-icon {
+  color: rgba(0, 0, 0, 0.6);
+  transition: color 0.3s ease;
+}
+
+.password-icon:hover {
+  color: rgba(0, 0, 0, 0.87);
 }
 </style> 

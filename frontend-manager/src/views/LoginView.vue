@@ -22,12 +22,21 @@
               <v-text-field
                 v-model="password"
                 label="Пароль"
-                type="password"
+                :type="showPassword ? 'text' : 'password'"
                 variant="outlined"
                 :rules="[rules.required, rules.min]"
                 class="mb-6"
                 @input="validateForm"
-              ></v-text-field>
+              >
+                <template v-slot:append-inner>
+                  <v-icon
+                    :icon="showPassword ? 'mdi-eye-off' : 'mdi-eye'"
+                    @click="showPassword = !showPassword"
+                    style="cursor: pointer"
+                    class="password-icon"
+                  ></v-icon>
+                </template>
+              </v-text-field>
 
               <v-btn
                 block
@@ -79,23 +88,28 @@
 import { ref } from 'vue';
 import { useRouter } from 'vue-router';
 import { useSnackbar } from '@/composables/useSnackbar';
+import { useAuthStore } from '@/stores/auth';
 
 const router = useRouter();
 const { showError } = useSnackbar();
+const authStore = useAuthStore();
 const form = ref(null);
 
 const email = ref('');
 const password = ref('');
 const loading = ref(false);
 const isFormValid = ref(false);
+const showValidation = ref(false);
+const showPassword = ref(false);
 
 const rules = {
-  required: value => !!value || 'Обязательное поле',
+  required: value => !showValidation.value || !!value || 'Обязательное поле',
   email: value => {
+    if (!showValidation.value) return true;
     const pattern = /^[^\s@]+@[^\s@]+\.[^\s@]+$/;
     return pattern.test(value) || 'Некорректный email';
   },
-  min: value => value.length >= 6 || 'Минимум 6 символов'
+  min: value => !showValidation.value || value.length >= 6 || 'Минимум 6 символов'
 };
 
 const validateForm = async () => {
@@ -106,15 +120,17 @@ const validateForm = async () => {
 };
 
 const handleLogin = async () => {
+  showValidation.value = true;
+  await validateForm();
+  
   if (!isFormValid.value) return;
   
   loading.value = true;
   try {
-    // TODO: Implement login logic
-    await new Promise(resolve => setTimeout(resolve, 1000)); // Simulate API call
+    await authStore.login(email.value, password.value);
     router.push('/');
   } catch (error) {
-    showError('Ошибка при входе');
+    showError(error.message || 'Ошибка при входе');
   } finally {
     loading.value = false;
   }
@@ -157,5 +173,14 @@ const handleLogin = async () => {
   align-items: center;
   gap: 12px;
   color: rgba(0, 0, 0, 0.6);
+}
+
+.password-icon {
+  color: rgba(0, 0, 0, 0.6);
+  transition: color 0.3s ease;
+}
+
+.password-icon:hover {
+  color: rgba(0, 0, 0, 0.87);
 }
 </style> 

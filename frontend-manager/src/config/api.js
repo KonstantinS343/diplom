@@ -1,11 +1,12 @@
 const API_CONFIG = {
   auth: {
-    baseURL: 'http://localhost:8000/api/auth',
+    baseURL: 'http://localhost:1001/v1/api/user',
     endpoints: {
       login: '/login',
       register: '/register',
       logout: '/logout',
-      refresh: '/refresh'
+      refresh: '/refresh',
+      me: '/me'
     }
   },
   translation: {

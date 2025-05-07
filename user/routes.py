@@ -2,17 +2,16 @@ from fastapi import APIRouter, Depends
 from typing import Mapping, Any
 
 from services import AuthService
-from schemas import LoginRequest, RegisterRequest
-from config import oauth2_scheme
+from schemas import LoginRequest, RegisterRequest, LogoutRequest
 
 
-router = APIRouter(tags=["user"], prefix="/user")
+router = APIRouter(tags=["user"], prefix="/v1/api/user")
 
 
 @router.post("/login")
 async def login(request: LoginRequest, service: AuthService = Depends()):
     return await service.login(
-        username=request.username,
+        email=request.email,
         password=request.password,
     )
 
@@ -28,8 +27,8 @@ async def register(request: RegisterRequest, service: AuthService = Depends()):
 
 
 @router.post("/logout")
-async def logout(refresh_token: str = Depends(oauth2_scheme), service: AuthService = Depends()):
-    return await service.logout(refresh_token)
+async def logout(request: LogoutRequest, service: AuthService = Depends()):
+    return await service.logout(request.refresh_token)
 
 
 @router.post("/me")

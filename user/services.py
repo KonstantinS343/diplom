@@ -31,17 +31,23 @@ class AuthService:
             )
 
     @classmethod
-    async def login(self, username: str, password: str) -> Mapping[str, Any]:
+    async def login(self, email: str, password: str) -> Mapping[str, Any]:
         try:
             token = keycloak_openid.token(
-                username=username, password=password, grant_type="password"
+                username=email, password=password, grant_type="password"
             )
+            user_info = keycloak_openid.userinfo(token["access_token"])
+
             return {
                 "access_token": token["access_token"],
                 "refresh_token": token["refresh_token"],
                 "expires_in": token["expires_in"],
                 "refresh_expires_in": token["refresh_expires_in"],
                 "token_type": "Bearer",
+                "user": {
+                    "email": user_info.get("email"),
+                    "username": user_info.get("preferred_username"),
+                }
             }
         except Exception as e:
             raise HTTPException(

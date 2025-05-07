@@ -1,9 +1,12 @@
 import { defineStore } from 'pinia';
-import axios from 'axios';
+import { authService } from '@/services/authService';
+import { axiosConfigService } from '@/services/axiosConfigService';
 
 export const useAuthStore = defineStore('auth', {
   state: () => ({
     token: localStorage.getItem('token') || null,
+    refreshToken: localStorage.getItem('refreshToken') || null,
+    expiresIn: localStorage.getItem('expiresIn') || null,
     user: JSON.parse(localStorage.getItem('user')) || null
   }),
 
@@ -15,48 +18,61 @@ export const useAuthStore = defineStore('auth', {
   actions: {
     async login(email, password) {
       try {
-        const response = await axios.post('/api/auth/login', { email, password });
-        const { token, user } = response.data;
+        const { token, refreshToken, expiresIn, user } = await authService.login(email, password);
         
         this.token = token;
+        this.refreshToken = refreshToken;
+        this.expiresIn = expiresIn;
         this.user = user;
         
         localStorage.setItem('token', token);
+        localStorage.setItem('refreshToken', refreshToken);
+        localStorage.setItem('expiresIn', expiresIn);
         localStorage.setItem('user', JSON.stringify(user));
         
-        // Устанавливаем токен для всех последующих запросов
-        axios.defaults.headers.common['Authorization'] = `Bearer ${token}`;
+        // Устанавливаем токен для всех API клиентов
+        axiosConfigService.setAuthToken(token);
         
-        return response.data;
+        return { token, user };
       } catch (error) {
         throw error.response?.data || error;
       }
     },
 
-    async register(email, password) {
+    async register(name, email, password) {
       try {
-        const response = await axios.post('/api/auth/register', { email, password });
-        return response.data;
+        return await authService.register(name, email, password);
       } catch (error) {
         throw error.response?.data || error;
       }
     },
 
-    logout() {
-      this.token = null;
-      this.user = null;
-      localStorage.removeItem('token');
-      localStorage.removeItem('user');
-      delete axios.defaults.headers.common['Authorization'];
+    async logout() {
+      try {
+        await authService.logout(this.refreshToken);
+      } finally {
+        this.token = null;
+        this.refreshToken = null;
+        this.expiresIn = null;
+        this.user = null;
+        localStorage.removeItem('token');
+        localStorage.removeItem('refreshToken');
+        localStorage.removeItem('expiresIn');
+        localStorage.removeItem('user');
+        // Удаляем токен из всех API клиентов
+        axiosConfigService.removeAuthToken();
+      }
     },
 
     async checkAuth() {
       if (!this.token) return false;
 
       try {
-        const response = await axios.get('/api/auth/me');
-        this.user = response.data;
-        localStorage.setItem('user', JSON.stringify(response.data));
+        const user = await authService.getCurrentUser();
+        this.user = user;
+        localStorage.setItem('user', JSON.stringify(user));
+        // Устанавливаем токен для всех API клиентов
+        axiosConfigService.setAuthToken(this.token);
         return true;
       } catch (error) {
         this.logout();

@@ -126,6 +126,15 @@
               </v-btn>
               <v-btn
                 color="grey-darken-2"
+                variant="text"
+                :class="{ 'active-filter': true }"
+                @click="sortOrder = sortOrder === 'desc' ? 'asc' : 'desc'"
+              >
+                <v-icon>{{ sortOrder === 'desc' ? 'mdi-sort-calendar-descending' : 'mdi-sort-calendar-ascending' }}</v-icon>
+                {{ sortOrder === 'desc' ? 'Сначала новые' : 'Сначала старые' }}
+              </v-btn>
+              <v-btn
+                color="grey-darken-2"
                 prepend-icon="mdi-plus"
                 @click="openUploadDialog"
               >
@@ -307,10 +316,10 @@
             {{ isCheckingPair ? 'Проверка...' : 'Создать' }}
           </v-btn>
         </v-card-actions>
-      </v-card>
+        </v-card>
     </v-dialog>
   </div>
-</template>
+</template> 
 
 <script setup>
 import { ref, computed, onMounted } from 'vue';
@@ -331,6 +340,7 @@ const currentPage = ref(1);
 const itemsPerPage = 10;
 const isDragging = ref(false);
 const newPairDialog = ref(false);
+const sortOrder = ref('desc');
 const newPair = ref({
   sourceLanguage: '',
   targetLanguage: ''
@@ -350,7 +360,15 @@ const learningCards = ref([]);
 const paginatedCards = computed(() => {
   const start = (currentPage.value - 1) * itemsPerPage;
   const end = start + itemsPerPage;
-  return learningCards.value.slice(start, end);
+  
+  // Создаем копию массива для сортировки
+  const sortedCards = [...learningCards.value].sort((a, b) => {
+    const dateA = new Date(a.createdAt);
+    const dateB = new Date(b.createdAt);
+    return sortOrder.value === 'desc' ? dateB - dateA : dateA - dateB;
+  });
+  
+  return sortedCards.slice(start, end);
 });
 
 const totalPages = computed(() => {
@@ -385,6 +403,7 @@ const loadCards = async () => {
       rating: null,
       likes: card.likes,
       dislikes: card.dislikes,
+      createdAt: card.created_at
     }));
   } catch (error) {
     showError('Ошибка при загрузке карточек');

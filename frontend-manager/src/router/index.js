@@ -1,4 +1,5 @@
 import { createRouter, createWebHistory } from 'vue-router';
+import { useAuthStore } from '@/stores/auth';
 import HomeView from '../views/HomeView.vue';
 import NotFoundView from '../views/NotFoundView.vue';
 import LoginView from '../views/LoginView.vue';
@@ -12,23 +13,25 @@ const router = createRouter({
     {
       path: '/',
       name: 'home',
-      component: HomeView,
-      meta: { requiresAuth: true }
+      component: () => import('@/views/HomeView.vue'),
+      meta: { requiresAuth: false }
     },
     {
       path: '/login',
       name: 'login',
-      component: LoginView
+      component: () => import('@/views/LoginView.vue'),
+      meta: { requiresAuth: false }
     },
     {
       path: '/register',
       name: 'register',
-      component: RegisterView
+      component: () => import('@/views/RegisterView.vue'),
+      meta: { requiresAuth: false }
     },
     {
       path: '/profile',
       name: 'profile',
-      component: ProfileView,
+      component: () => import('@/views/ProfileView.vue'),
       meta: { requiresAuth: true }
     },
     {
@@ -49,30 +52,37 @@ const router = createRouter({
       path: '/translation-evaluation',
       name: 'translation-evaluation',
       component: () => import('../views/TranslationEvaluationView.vue'),
-      meta: { requiresAuth: true }
+      meta: { requiresAuth: false }
     },
     {
       path: '/learning',
       name: 'learning',
-      component: () => import('../views/LearningView.vue')
+      component: () => import('@/views/LearningView.vue'),
+      meta: { requiresAuth: true }
     },
     {
       path: '/translation-documents',
       name: 'translation-documents',
-      component: () => import('../views/TranslationDocumentsView.vue')
+      component: () => import('../views/TranslationDocumentsView.vue'),
+      meta: { requiresAuth: true }
     }
   ]
 });
 
-// Навигационный guard для проверки аутентификации
-// router.beforeEach((to, from, next) => {
-//   const isAuthenticated = localStorage.getItem('token'); // TODO: Заменить на реальную проверку
+// Навигационный guard
+router.beforeEach((to, from, next) => {
+  const authStore = useAuthStore();
+  const requiresAuth = to.matched.some(record => record.meta.requiresAuth);
 
-//   if (to.meta.requiresAuth && !isAuthenticated) {
-//     next('/login');
-//   } else {
-//     next();
-//   }
-// });
+  if (authStore.isAuthenticated && to.name === 'login' || to.name === 'register') {
+    next({ name: 'home' });
+  }
+
+  if (requiresAuth && !authStore.isAuthenticated) {
+    next({ name: 'login' });
+  } else {
+    next();
+  }
+});
 
 export default router; 
