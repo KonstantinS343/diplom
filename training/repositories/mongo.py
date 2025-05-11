@@ -47,11 +47,29 @@ class MongoService:
         return result.inserted_ids
 
     async def add_like(self, collection: str, document_id: str, user_id: str) -> bool:
-        vote_exists = await self.db["votes"].find_one(
+        vote = await self.db["votes"].find_one(
             {"document_id": ObjectId(document_id), "user_id": user_id}
         )
-        if vote_exists:
-            return False
+        
+        if vote:
+            # Если голос уже существует и это лайк - отменяем его
+            if vote["type"] == "like":
+                await self.db["votes"].delete_one(
+                    {"document_id": ObjectId(document_id), "user_id": user_id}
+                )
+                await self.db[collection].update_one(
+                    {"_id": ObjectId(document_id)}, {"$inc": {"likes": -1}}
+                )
+                return True
+            # Если был дизлайк - удаляем его и добавляем лайк
+            else:
+                await self.db["votes"].delete_one(
+                    {"document_id": ObjectId(document_id), "user_id": user_id}
+                )
+                await self.db[collection].update_one(
+                    {"_id": ObjectId(document_id)}, {"$inc": {"dislikes": -1}}
+                )
+        
         try:
             await self.db["votes"].insert_one(
                 {
@@ -70,11 +88,28 @@ class MongoService:
         return result.modified_count > 0
 
     async def add_dislike(self, collection: str, document_id: str, user_id: str) -> bool:
-        vote_exists = await self.db["votes"].find_one(
+        vote = await self.db["votes"].find_one(
             {"document_id": ObjectId(document_id), "user_id": user_id}
         )
-        if vote_exists:
-            return False
+        
+        if vote:
+            # Если голос уже существует и это дизлайк - отменяем его
+            if vote["type"] == "dislike":
+                await self.db["votes"].delete_one(
+                    {"document_id": ObjectId(document_id), "user_id": user_id}
+                )
+                await self.db[collection].update_one(
+                    {"_id": ObjectId(document_id)}, {"$inc": {"dislikes": -1}}
+                )
+                return True
+            # Если был лайк - удаляем его и добавляем дизлайк
+            else:
+                await self.db["votes"].delete_one(
+                    {"document_id": ObjectId(document_id), "user_id": user_id}
+                )
+                await self.db[collection].update_one(
+                    {"_id": ObjectId(document_id)}, {"$inc": {"likes": -1}}
+                )
 
         try:
             await self.db["votes"].insert_one(
@@ -95,6 +130,13 @@ class MongoService:
 
     async def get_collections(self) -> Sequence[str]:
         return await self.db.list_collection_names()
+
+    async def get_user_votes(self, user_id: str) -> Mapping[str, str]:
+        cursor = self.db["votes"].find({"user_id": user_id})
+        votes = await cursor.to_list(length=None)
+        
+        # Преобразуем список голосов в словарь {card_id: vote_type}
+        return {str(vote["document_id"]): vote["type"] for vote in votes}
 
     async def create_collection(self, collection_name: str) -> bool:
         try:

@@ -64,10 +64,30 @@ class TranslatorSupportService:
 
         return await self.respository.create_collection(f"{source_lang}-{target_lang}")
 
-    async def get_language_dataset(self, source_lang: str, target_lang: str) -> Mapping[str, str]:
+    async def get_language_dataset(self, source_lang: str, target_lang: str, user_id: str) -> Mapping[str, str]:
         supported_langs = (await self.translator_repo.get_languages()).keys()
 
         if source_lang not in supported_langs or target_lang not in supported_langs:
             raise HTTPException(status_code=400, detail="Unsupported language pair")
 
-        return await self.respository.get(f"{source_lang}-{target_lang}")
+        collection = f"{source_lang}-{target_lang}"
+        cards = await self.respository.get(collection)
+        
+        # Получаем голоса пользователя
+        user_votes = await self.respository.get_user_votes(user_id)
+        
+        # Добавляем информацию о голосе пользователя к каждой карточке
+        for card in cards:
+            card_id = card["_id"]
+            if card_id in user_votes:
+                card["user_vote"] = user_votes[card_id]
+            else:
+                card["user_vote"] = None
+
+        return cards
+
+    async def add_like(self, card_id: str, collection: str, user_id: str) -> bool:
+        return await self.respository.add_like(collection, card_id, user_id)
+
+    async def add_dislike(self, card_id: str, collection: str, user_id: str) -> bool:
+        return await self.respository.add_dislike(collection, card_id, user_id)

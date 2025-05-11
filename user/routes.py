@@ -1,5 +1,5 @@
-from fastapi import APIRouter, Depends
-from typing import Mapping, Any
+from fastapi import APIRouter, Depends, Header, HTTPException, status
+from typing import Mapping, Any, Optional
 
 from services import AuthService
 from schemas import LoginRequest, RegisterRequest, LogoutRequest
@@ -32,5 +32,16 @@ async def logout(request: LogoutRequest, service: AuthService = Depends()):
 
 
 @router.post("/me")
-async def profile(current_user: Mapping[str, Any] = Depends(AuthService.get_current_user), service: AuthService = Depends()):
-    return await service.me(current_user)
+async def profile(
+    authorization: Optional[str] = Header(None),
+    service: AuthService = Depends()
+):
+    if not authorization or not authorization.startswith("Bearer "):
+        raise HTTPException(
+            status_code=status.HTTP_401_UNAUTHORIZED,
+            detail="Invalid authorization header"
+        )
+    
+    token = authorization.split(" ")[1]
+    current_user = await service.verify_token(token)
+    return await service.me(token)

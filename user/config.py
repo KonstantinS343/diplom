@@ -2,6 +2,8 @@ from pydantic_settings import BaseSettings, SettingsConfigDict
 from fastapi.security import OAuth2AuthorizationCodeBearer
 from keycloak import KeycloakOpenID, KeycloakAdmin
 
+from typing import Sequence
+
 
 class AuthConfig(BaseSettings):
     url: str
@@ -10,6 +12,7 @@ class AuthConfig(BaseSettings):
     client_secret: str
     admin_user: str
     admin_password: str
+    aud: Sequence[str]
 
     model_config = SettingsConfigDict(
         env_file=".env", env_file_encoding="utf-8", extra="ignore", env_prefix="KEYCLOAK_"

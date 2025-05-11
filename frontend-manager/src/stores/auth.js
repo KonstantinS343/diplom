@@ -7,7 +7,8 @@ export const useAuthStore = defineStore('auth', {
     token: localStorage.getItem('token') || null,
     refreshToken: localStorage.getItem('refreshToken') || null,
     expiresIn: localStorage.getItem('expiresIn') || null,
-    user: JSON.parse(localStorage.getItem('user')) || null
+    user: JSON.parse(localStorage.getItem('user')) || null,
+    userId: localStorage.getItem('userId') || null
   }),
 
   getters: {
@@ -18,7 +19,7 @@ export const useAuthStore = defineStore('auth', {
   actions: {
     async login(email, password) {
       try {
-        const { token, refreshToken, expiresIn, user } = await authService.login(email, password);
+        const { id, token, refreshToken, expiresIn, user } = await authService.login(email, password);
         
         this.token = token;
         this.refreshToken = refreshToken;
@@ -29,6 +30,7 @@ export const useAuthStore = defineStore('auth', {
         localStorage.setItem('refreshToken', refreshToken);
         localStorage.setItem('expiresIn', expiresIn);
         localStorage.setItem('user', JSON.stringify(user));
+        localStorage.setItem('userId', id);
         
         // Устанавливаем токен для всех API клиентов
         axiosConfigService.setAuthToken(token);

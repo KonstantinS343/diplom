@@ -2,7 +2,8 @@ import json
 from fastapi import APIRouter, Depends, UploadFile, File, Form, HTTPException, Query
 
 from services.training_support import TranslatorSupportService
-from schemas import DatasetResponse, LanguageRequest
+from services.auth import get_current_user
+from schemas import DatasetResponse, LanguageRequest, RateCardRequest
 
 router = APIRouter(tags=["training"], prefix="/v1/api/training")
 
@@ -28,11 +29,21 @@ async def dataset_upload(
 
 
 @router.post("/dislike")
-async def dislike(): ...
+async def dislike(
+    request: RateCardRequest,
+    service: TranslatorSupportService = Depends(),
+    current_user: dict = Depends(get_current_user)
+):
+    return await service.add_dislike(request.card_id, request.collection, current_user["sub"])
 
 
 @router.post("/like")
-async def like(): ...
+async def like(
+    request: RateCardRequest,
+    service: TranslatorSupportService = Depends(),
+    current_user: dict = Depends(get_current_user)
+):
+    return await service.add_like(request.card_id, request.collection, current_user["sub"])
 
 
 @router.get("/pairs")
@@ -40,8 +51,9 @@ async def pairs(
     source_lang: str = Query(..., description="Source language"),
     target_lang: str = Query(..., description="Target language"),
     service: TranslatorSupportService = Depends(),
+    user: dict = Depends(get_current_user)
 ):
-    return await service.get_language_dataset(source_lang, target_lang)
+    return await service.get_language_dataset(source_lang, target_lang, user["sub"])
 
 
 @router.get("/sections")

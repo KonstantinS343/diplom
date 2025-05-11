@@ -154,24 +154,28 @@
                 <div class="source-text">{{ card.sourceText }}</div>
                 <div class="target-text">{{ card.targetText }}</div>
                 <div class="card-actions">
-                  <v-btn
-                    icon
-                    variant="text"
-                    :color="card.rating === 'like' ? 'success' : 'grey-darken-2'"
-                    :class="{ 'active': card.rating === 'like' }"
-                    @click="rateCard(card, 'like')"
-                  >
-                    <v-icon>mdi-thumb-up</v-icon>
-                  </v-btn>
-                  <v-btn
-                    icon
-                    variant="text"
-                    :color="card.rating === 'dislike' ? 'error' : 'grey-darken-2'"
-                    :class="{ 'active': card.rating === 'dislike' }"
-                    @click="rateCard(card, 'dislike')"
-                  >
-                    <v-icon>mdi-thumb-down</v-icon>
-                  </v-btn>
+                  <div class="vote-group">
+                    <v-btn
+                      icon
+                      variant="text"
+                      :color="card.user_vote === 'like' ? 'success' : 'grey-darken-2'"
+                      @click="rateCard(card, 'like')"
+                    >
+                      <v-icon>mdi-thumb-up</v-icon>
+                    </v-btn>
+                    <span class="vote-count">{{ card.likes }}</span>
+                  </div>
+                  <div class="vote-group">
+                    <v-btn
+                      icon
+                      variant="text"
+                      :color="card.user_vote === 'dislike' ? 'error' : 'grey-darken-2'"
+                      @click="rateCard(card, 'dislike')"
+                    >
+                      <v-icon>mdi-thumb-down</v-icon>
+                    </v-btn>
+                    <span class="vote-count">{{ card.dislikes }}</span>
+                  </div>
                 </div>
               </div>
             </div>
@@ -376,7 +380,7 @@ const totalPages = computed(() => {
 });
 
 const ratedCardsCount = computed(() => {
-  return learningCards.value.filter(card => card.rating !== null).length;
+  return learningCards.value.filter(card => card.user_vote !== null).length;
 });
 
 // Методы
@@ -400,19 +404,62 @@ const loadCards = async () => {
       id: card._id,
       sourceText: card[sourceLang],
       targetText: card[targetLang],
-      rating: null,
+
       likes: card.likes,
       dislikes: card.dislikes,
-      createdAt: card.created_at
+      createdAt: card.created_at,
+      user_vote: card.user_vote
     }));
   } catch (error) {
-    showError('Ошибка при загрузке карточек');
     learningCards.value = [];
   }
 };
 
 const rateCard = async (card, rating) => {
-  console.log('response');
+  try {
+    const collection = `${selectedPair.value.sourceLang}-${selectedPair.value.targetLang}`;
+    
+    // Если нажали на ту же кнопку, что уже была активна - отменяем голос
+    if (card.user_vote === rating) {
+      const response = await languagePairsService.rateCard(card.id, null, collection);
+      if (response.data) {
+        // Уменьшаем счетчик в зависимости от типа голоса
+        if (rating === 'like') {
+          card.likes--;
+        } else {
+          card.dislikes--;
+        }
+        card.user_vote = null;
+        showSuccess('Оценка отменена');
+      }
+      return;
+    }
+    
+    const response = await languagePairsService.rateCard(card.id, rating, collection);
+    
+    if (response.data) {
+      // Если был другой голос, уменьшаем его счетчик
+      if (card.user_vote === 'like') {
+        card.likes--;
+      } else if (card.user_vote === 'dislike') {
+        card.dislikes--;
+      }
+      
+      // Увеличиваем счетчик нового голоса
+      if (rating === 'like') {
+        card.likes++;
+      } else {
+        card.dislikes++;
+      }
+      card.user_vote = rating;
+      showSuccess('Оценка сохранена');
+    } else {
+      showError('Ошибка при сохранении оценки');
+    }
+  } catch (error) {
+    showError('Ошибка при сохранении оценки');
+    console.error('Error rating card:', error);
+  }
 };
 
 const getFlagUrl = (language) => {
@@ -662,6 +709,8 @@ onMounted(async () => {
   max-width: 1500px;
   margin: 0 auto;
   margin-block: 25px;
+  overflow-x: hidden;
+  height: 100%;
 }
 
 .content-wrapper {
@@ -912,32 +961,35 @@ onMounted(async () => {
   bottom: 24px;
   left: 24px;
   display: flex;
-  gap: 8px;
+  gap: 12px;
+  align-items: center;
+  background: rgba(255, 255, 255, 0.9);
+  padding: 4px 8px;
+  border-radius: 8px;
+  border: 1px solid rgba(0, 0, 0, 0.08);
+}
+
+.vote-group {
+  display: flex;
+  align-items: center;
+  gap: 4px;
+}
+
+.vote-count {
+  font-size: 13px;
+  color: rgba(0, 0, 0, 0.6);
+  min-width: 20px;
+  text-align: center;
 }
 
 .card-actions .v-btn {
-  transition: all 0.3s cubic-bezier(0.4, 0, 0.2, 1);
+  width: 32px;
+  height: 32px;
+  transition: transform 0.2s ease;
 }
 
-.card-actions .v-btn:active {
-  transform: scale(0.85);
-}
-
-.card-actions .v-btn.active {
-  transform: scale(1.15);
-  animation: pulse 0.3s ease-in-out;
-}
-
-@keyframes pulse {
-  0% {
-    transform: scale(1);
-  }
-  50% {
-    transform: scale(1.2);
-  }
-  100% {
-    transform: scale(1.15);
-  }
+.card-actions .v-btn:hover {
+  transform: scale(1.1);
 }
 
 .pagination {

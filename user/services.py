@@ -7,28 +7,31 @@ from fastapi import Depends, HTTPException, status
 
 class AuthService:
     @classmethod
-    async def get_current_user(csl, token: str = Depends(oauth2_scheme)) -> Mapping[str, Any]:
-        if not token:
-            raise HTTPException(
-                status_code=status.HTTP_401_UNAUTHORIZED,
-                detail="Not authenticated",
-                headers={"WWW-Authenticate": "Bearer"},
-            )
+    async def verify_token(cls, token: str) -> Mapping[str, Any]:
         try:
             public_key = keycloak_openid.public_key()
             payload = jwt.decode(
                 token,
                 "-----BEGIN PUBLIC KEY-----\n" + public_key + "\n-----END PUBLIC KEY-----",
                 algorithms=["RS256"],
-                audience=auth_settings.client_id,
+                options={"verify_aud": False},
             )
+
             return payload
-        except JWTError:
+        except Exception as e:
             raise HTTPException(
                 status_code=status.HTTP_401_UNAUTHORIZED,
-                detail="Invalid token",
-                headers={"WWW-Authenticate": "Bearer"},
+                detail="Invalid token"
             )
+
+    @classmethod
+    async def get_current_user(cls, token: str = Depends(oauth2_scheme)) -> Mapping[str, Any]:
+        payload = await cls.verify_token(token)
+        return {
+            "email": payload.get("email"),
+            "username": payload.get("preferred_username"),
+            "sub": payload.get("sub")
+        }
 
     @classmethod
     async def login(self, email: str, password: str) -> Mapping[str, Any]:
@@ -37,8 +40,10 @@ class AuthService:
                 username=email, password=password, grant_type="password"
             )
             user_info = keycloak_openid.userinfo(token["access_token"])
+            print(token)
 
             return {
+                "id": user_info.get("sub"),
                 "access_token": token["access_token"],
                 "refresh_token": token["refresh_token"],
                 "expires_in": token["expires_in"],
@@ -88,15 +93,16 @@ class AuthService:
             )
             
     @classmethod
-    async def me(csl, current_user: Mapping[str, Any] = Depends(get_current_user)) -> Mapping[str, Any]:
+    async def me(csl, token: str) -> Mapping[str, Any]:
         try:
-            user_info = keycloak_openid.userinfo(current_user["sub"])
+            user_info = keycloak_openid.userinfo(token)
             return {
                 "username": user_info.get("preferred_username"),
                 "email": user_info.get("email"),
                 "sub": user_info.get("sub")
             }
         except Exception as e:
+            print(e)
             raise HTTPException(
                 status_code=status.HTTP_400_BAD_REQUEST,
                 detail=f"Failed to fetch profile: {str(e)}"

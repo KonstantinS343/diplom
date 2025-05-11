@@ -12,9 +12,10 @@
   >
     <v-list v-if="authStore.isAuthenticated">
       <v-list-item
-        prepend-avatar="https://randomuser.me/api/portraits/men/85.jpg"
+        :prepend-avatar="`https://www.gravatar.com/avatar/${authStore.userId}?d=identicon`"
         :title="rail ? '' : authStore.user?.username || 'Пользователь'"
         :subtitle="rail ? '' : authStore.user?.email || ''"
+        class="menu-item"
       ></v-list-item>
     </v-list>
 
@@ -29,7 +30,7 @@
         :prepend-icon="item.icon"
         :title="rail ? '' : item.title"
         class="menu-item"
-        :class="{ 'active-route': $route.path === item.path }"
+        :class="{ 'active-route': isPageLoaded && $route.path === item.path }"
       >
         <template v-slot:prepend>
           <v-icon :icon="item.icon" class="menu-icon"></v-icon>
@@ -55,7 +56,8 @@
           :value="'Настройки'"
           :title="rail ? '' : 'Настройки'"
           class="menu-item"
-          :class="{ 'active-route': $route.path === '/profile' }"
+          style="margin: 0;"
+          :class="{ 'active-route': isPageLoaded && $route.path === '/profile' }"
         >
           <template v-slot:prepend>
             <v-icon :icon="'mdi-cog'" class="menu-icon"></v-icon>
@@ -67,14 +69,23 @@
 </template>
 
 <script setup>
-import { ref, computed } from 'vue';
+import { ref, computed, onMounted } from 'vue';
 import { useAuthStore } from '@/stores/auth';
-import { useRouter } from 'vue-router';
+import { useRouter, useRoute } from 'vue-router';
 
 const router = useRouter();
+const route = useRoute();
 const drawer = ref(true);
 const rail = ref(true);
 const authStore = useAuthStore();
+const isPageLoaded = ref(false);
+
+onMounted(() => {
+  // Даем время на инициализацию роутера
+  setTimeout(() => {
+    isPageLoaded.value = true;
+  }, 1000);
+});
 
 const handleLogout = async () => {
   await authStore.logout();
@@ -222,6 +233,7 @@ const menuItems = computed(() => {
 
 .logout-item {
   color: #d32f2f;
+  margin: 0;
 }
 
 .logout-item:hover {

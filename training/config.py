@@ -49,8 +49,13 @@ class MongoConfig(BaseSettings):
     model_config = SettingsConfigDict(
         env_file=".env", env_file_encoding="utf-8", extra="ignore", env_prefix="MONGO_"
     )
+    
+class Settings(BaseSettings):
+    # User Service
+    USER_SERVICE_URL: str = "http://user-service:1001"  # URL сервиса пользователей
 
 
 db_settings = DBConfig()
 fastapi_settings = FastAPIConfig()
 mongo_settings = MongoConfig()
+settings = Settings()

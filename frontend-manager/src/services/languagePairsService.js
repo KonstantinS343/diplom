@@ -35,4 +35,11 @@ export const languagePairsService = {
     });
   },
 
+  async rateCard(cardId, rating, collection) {
+    const endpoint = rating === 'like' ? API_CONFIG.learning.endpoints.like : API_CONFIG.learning.endpoints.dislike;
+    return learningApi.post(endpoint, { 
+      card_id: cardId,
+      collection: collection
+    });
+  }
 }; 

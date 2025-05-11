@@ -157,6 +157,18 @@ services:
     volumes:
       - ./user:/app
 
+  frontend:
+    container_name: frontend
+    build:
+      context: ./frontend-manager
+      dockerfile: Dockerfile
+    ports:
+      - "4000:80"
+    networks:
+      - backend
+    volumes:
+      - ./frontend-manager:/app
+
 networks:
   backend:
 

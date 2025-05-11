@@ -7,9 +7,10 @@ export const authService = {
       password
     });
     
-    const { access_token, refresh_token, expires_in, user } = response.data;
+    const { id, access_token, refresh_token, expires_in, user } = response.data;
     
     return {
+      id: id,
       token: access_token,
       refreshToken: refresh_token,
       expiresIn: expires_in,

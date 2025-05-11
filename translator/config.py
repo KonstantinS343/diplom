@@ -39,5 +39,10 @@ class FastAPIConfig(BaseSettings):
     )
 
 
+class Settings(BaseSettings):
+    # User Service
+    USER_SERVICE_URL: str = "http://user-service:1001"  # URL сервиса пользователей
+
 db_settings = DBConfig()
 fastapi_settings = FastAPIConfig()
+settings = Settings()
